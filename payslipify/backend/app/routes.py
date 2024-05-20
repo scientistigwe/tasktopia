@@ -1,7 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify
 
-bp = Blueprint('main', __name__)
+financial_routes = Blueprint('financial_routes', __name__)
 
-@bp.route('/')
-def home():
-    return 'Hello, World!'
+@financial_routes.route('/', methods=['GET'])
+def index():
+    return 'hello.html'
+
