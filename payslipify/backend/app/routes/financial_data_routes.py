@@ -1,8 +1,10 @@
-# fin_routes.py
-from flask import Blueprint
+from fastapi import APIRouter
+from typing import List
+from app.models import FinancialData  # Import your FinancialData model
 
-fin_routes = Blueprint('fin_routes', __name__)
+router = APIRouter()
 
-@fin_routes.route('/')
-def index():
-    return "Financial Routes Page"
+@router.get("/api/financial_data", response_model=List[FinancialData])
+async def get_financial_data():
+    financial_data = await FinancialData.all()
+    return financial_data
