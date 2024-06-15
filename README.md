@@ -17,7 +17,7 @@
     <img src="./main-logo.png" alt="Project Logo" width="200" height="200">
   </a>
 </div>
-  <h1 align="center">200 DAYS OF CODE: 13 PROJECTS IN 200 DAYS</h1>
+  <h1 align="center">Comprehensive Digital Solutions Suite</h1>
 
   <p align="center">
     A README template that can be adapted to suite your projects!
