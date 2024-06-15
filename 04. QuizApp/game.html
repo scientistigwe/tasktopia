@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Warriors: Ultimate Tournament</title>
+    <link rel="stylesheet" href="./game.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+    <header>
+        <nav class="container-fluid nav navbar d-flex justify-content-center">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Rules of engagement
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content container-fluid">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Weather Warriors: Ultimate
+                                Tournament</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <p class="modal-body">
+                        <h5>Aim of the Game:</h5>
+                        <p>Engage in elemental battles while adapting to dynamic weather conditions. Players select a
+                            city, a hero, and enter their name, then compete to reduce their opponent's life points to
+                            zero.
+                        </p>
+                        <br>
+
+                        <h5>Game Setup:</h5>
+                        <ul>
+                            <li>Select Continent: Use the dropdown menu to select a continent.</li>
+                            <li>Select City: The city dropdown is populated based on the selected continent. Choose a
+                                city.</li>
+                            <li>Initialize: The game fetches weather data for the selected city.</li>
+                            <li>Choose Hero & Enter Name: Select your hero and enter your name to start
+                                the
+                                game.</li>
+                        </ul>
+                        <br>
+
+                        <h5>Gameplay:</h5>
+                        <ul>
+                            <li>Make a Move:</strong> Choose one of five moves (rock, paper, scissors, spock,
+                                lizard).</li>
+                            <li>Determine Outcome: The outcome is determined by the move and current
+                                weather conditions.</li>
+                        </ul>
+                        <br>
+
+                        <h5>Weather Effects:</h5>
+                        <p>Each weather condition affects moves differently, providing advantages or disadvantages.</p>
+                        <ul>
+                            <li>Weather Types:</li> Thunderstorm, Drizzle, Rain, Snow, Atmosphere (fog), Clear, Clouds.
+                            <li>Impact:</li> Health changes based on move and weather compatibility.
+                        </ul>
+                        <br>
+
+                        <h5>Move Mechanics:</h5>
+                        <ul>
+                            <li>Rock: Wins against scissors and lizard; loses to paper and spock.</li>
+                            <li>Paper: Wins against rock and spock; loses to scissors and lizard.</li>
+                            <li>Scissors: Wins against paper and lizard; loses to rock and spock.</li>
+                            <li>Spock: Wins against rock and scissors; loses to paper and lizard.</li>
+                            <li>Lizard: Wins against spock and paper; loses to rock and scissors.</li>
+                        </ul>
+                        <br>
+
+                        <h5>Health Points:</h5>
+                        <p>Both players start with 100 life points. Correct move choices reduce opponent's life points
+                            based on weather impact.
+                            Each move has a health change value, influenced by the current weather.
+                        </p>
+                        <br>
+
+                        <h5>Winning the Round:</h5>
+                        <p>A player wins the round by reducing the opponent’s life points to zero. If both players have
+                            equal life points at the end, the round is a draw.
+                        </p>
+                        <br>
+
+                        <h5>Game Continuation:</h5>
+                        <p>The game can be played in multiple rounds. Players can view their life points and move
+                            outcomes after each round.
+                        </p>
+                        <br>
+
+                        <h5>Declaring the Winner:</h5>
+                        <p>After a set number of rounds, the player with the highest total life points wins. A summary
+                            of moves and weather effects is displayed at the end.
+                        </p>
+                        <br>
+
+                        <h5>Additional Features:</h5>
+                        <ul>
+                            <li>Hints/Clues: Use game-provided hints to make better moves.</li>
+                            <li>Historical Data: View past weather data to predict move impacts.</li>
+                            <li>Visual Elements: Icons and images represent different weather
+                                conditions.</li>
+                            <li>Multiplayer Mode: Play against other players to see who makes the best
+                                use of moves and weather conditions.</li>
+                        </ul>
+                        <br>
+
+                        <h5>Rules:</h5>
+                        <ul>
+                            <li>Fair Play: Make moves based on available information.</li>
+                            <li>Respect: Maintain sportsmanship in multiplayer mode.</li>
+                            <li>No Cheating: Manipulation of game data is prohibited.</li>
+                        </ul>
+                        <p style="color: blueviolet; text-align: center;">Enjoy playing Weather Warriors: Ultimate
+                            Tournament where strategy, adaptability, and knowledge of weather are key to becoming the
+                            ultimate warrior!
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Okay</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </nav>
+        <nav class="row">
+            <!-- Player 1 -->
+            <div class="col-md-4 d-flex justify-content-center">
+                <div class="card">
+                    <img src="./static/images/lady gaga.jpg" alt="Lady Gaga" class="img-fluid" ID="player1-img">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4 class="d-flex justify-content-center">Player 1</h4>
+                            <p>Name: <span id="p1-name"></span></p>
+                            <p>Character Name: <span id="p1-character"></span></p>
+                            <p>City: <span id="p1-city"></span></p>
+                            <div><span id="p1-temp"></span><span id="p1-weather-icon">
+                                </span><span id="p1-weather-info"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <span>Health Status: <span id="player-life">100</span>%
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Player Configuration -->
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="card">
+                        <img src="" alt="">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h4 class="d-flex justify-content-center">Player Configuration</h4>
+                                <div>
+                                    <label for="player-select">Choose Player:</label>
+                                    <select id="player-select">
+                                        <option value="Select Player">Select Player</option>
+                                        <option value="Player 1">Player 1</option>
+                                        <option value="Player 2">Player 2</option>
+                                    </select>
+                                </div>
+                                <div id="setup">
+
+                                    <div>
+                                        <label for="continent-select">Select Continent:</label>
+                                        <select id="continentSelect">
+                                            <option value="Select Player">Select Continent</option>
+                                            <option value="Africa">Africa</option>
+                                            <option value="Asia">Asia</option>
+                                            <option value="Europe">Europe</option>
+                                            <option value="North America">North America</option>
+                                            <option value="South America">South America</option>
+                                        </select>
+
+                                    </div>
+                                    <div> <label for="city-select">Select City:</label>
+                                        <select id="citySelect">
+                                            <!-- Cities will be populated dynamically based on the selected continent -->
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label for="celebritySelect">Choose a character:</label>
+                                        <select id="celebritySelect">
+                                            <option value="">Select Character</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div> <label for="p-name">Name:</label>
+                            <input type="text" id="p-name" placeholder="Enter Player Name">
+                            <button class="btn btn-primary" id='p-name-btn'>Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card">
+                        <div id="game-container">
+                            <h1>Weather Warriors: Ultimate Tournament</h1>
+                            <div id="battle-area">
+                                <div id="moves">
+                                    <button class="makeMove" data-move='rock'>Rock</button>
+                                    <button class="makeMove" data-move='paper'>Paper</button>
+                                    <button class="makeMove" data-move='scissors'>Scissors</button>
+                                    <button class="makeMove" data-move='spock'>Spock</button>
+                                    <button class="makeMove" data-move='lizard'>Lizard</button>
+                                </div>
+                                <div id="result"></div>
+                            </div>
+                            <div class="card-body">
+                                <img src="./static/images/scarlett-johansson" alt="" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Player 2 -->
+            <div class="col-md-4 d-flex justify-content-center">
+                <div class="card">
+                    <img src="./static/images/jay-z.jpg" alt="Jay-Z" class="img-fluid" ID="player2-img">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4 class="d-flex justify-content-center">Player 2</h4>
+                            <p>Name: <span id="p2-name"></span></p>
+
+                            <p>Character Name: <span id="p2-character"></span></p>
+
+                            <p>City: <span id="p2-city"></span></p>
+
+
+                            <div><span id="p2-temp"></span><span id="p2-weather-icon"></span><span
+                                    id="p2-weather-info"></span>
+                            </div>
+
+                            <div>
+                                <span><span id="opponent-life"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button type="submit" id="enter-tournament">Enter Tournament</button>
+        </nav>
+    </header>
+
+
+
+    <script src="https://kit.fontawesome.com/01058b62ac.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <script src="./game.js"></script>
+    <script src="./character-names.js"></script>
+</body>
+
+</html>
