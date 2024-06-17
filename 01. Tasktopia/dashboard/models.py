@@ -74,3 +74,6 @@ class Event(models.Model):
   event_time = models.DateTimeField
   user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events')
   task_id = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='events')
+
+  def __str__(self):
+     return f""
