@@ -565,3 +565,20 @@ Improved Task Completion: The app would guide you towards realistic goals and su
 Enhanced Focus: AI-powered prioritization and a focus mode would help you concentrate on the most important tasks at hand.
 Personalized Experience: The to-do list would adapt to your individual needs and preferences.
 Reduced Procrastination: Intelligent recommendations and timely reminders would help you stay on top of your tasks.
+
+Weather Table:
+weather_id: Primary key for the weather record.
+current_date: Date for the current weather record.
+forecast_date: Date for the forecasted weather.
+condition: Weather condition description.
+temperature: Temperature at the time of the record.
+current_location: Current location for the weather record.
+event_location: Location relevant to the weather event.
+user_id: Foreign key linking the weather record to the user.
+Forecast Day Table (New Table):
+forecast_id: Primary key for the forecasted day.
+weather_id: Foreign key linking to the specific weather record.
+forecast_day: Number indicating the projected day (e.g., 1 for current day, 2 for tomorrow).
+forecast_condition: Weather condition forecasted for that day.
+forecast_temperature: Projected temperature for that day.
+forecast_location: Specific location relevant to the forecast.
