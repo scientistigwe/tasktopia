@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.db.models import Count
 from datetime import datetime, timedelta
+from django.shortcuts import render
 from .models import UserProfile, Task, Category, Report, Notification, Weather, Forecast, EventLog
 from .serializers import UserProfileSerializer, TaskSerializer, CategorySerializer, ReportSerializer, NotificationSerializer, WeatherSerializer, ForecastSerializer, EventLogSerializer
 
@@ -91,6 +92,31 @@ class EventLogDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # Custom Views for Analysis
+
+@api_view(['GET'])
+def dashboard_view(request):
+    # Fetch data for the current user
+    tasks = Task.objects.filter(user=request.user)
+    completion_rate_response = task_completion_rate(request)
+    overdue_tasks_response = overdue_tasks(request)
+    priority_distribution_response = task_priority_distribution(request)
+    tasks_created_vs_completed_response = tasks_created_vs_completed(request)
+    productivity_trends_response = productivity_trends(request)
+    category_wise_task_completion_response = category_wise_task_completion(request)
+
+    # Prepare data for rendering in template
+    context = {
+        'tasks': tasks,
+        'completion_rate': completion_rate_response.data['completion_rate'],
+        'overdue_tasks': overdue_tasks_response.data,
+        'priority_distribution': priority_distribution_response.data,
+        'tasks_created_vs_completed': tasks_created_vs_completed_response.data,
+        'productivity_trends': productivity_trends_response.data,
+        'category_wise_task_completion': category_wise_task_completion_response.data,
+    }
+
+    return render(request, 'dashboard.html', context)
+
 
 @api_view(['GET'])
 def task_completion_rate(request):
