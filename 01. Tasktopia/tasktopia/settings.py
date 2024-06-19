@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-mqnrowkrk6%ayjkbr_q0gf(%yx_vx4-!(se@9y1besan2-jgsf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'http://127.0.0.1:3000/01. Tasktopia/tasks/templates/tasks/create-task.html'
+]
 
 
 # Application definition

@@ -7,29 +7,28 @@ from datetime import datetime, timedelta
 from django.shortcuts import render
 from .models import UserProfile, Task, Category, Report, Notification, Weather, Forecast, EventLog
 from .serializers import UserProfileSerializer, TaskSerializer, CategorySerializer, ReportSerializer, NotificationSerializer, WeatherSerializer, ForecastSerializer, EventLogSerializer
+from django.http import HttpRequest, HttpResponse
 
 # Core Views with CRUD operations
 
+# views.py
+
+from rest_framework import generics, permissions
+from .models import UserProfile, Task, Category, Report, Notification, Weather, Forecast, EventLog
+from .serializers import UserProfileSerializer, TaskSerializer, CategorySerializer, ReportSerializer, NotificationSerializer, WeatherSerializer, ForecastSerializer, EventLogSerializer
+
+# User Profile Views
 class UserProfileListView(generics.ListCreateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
-    permission_classes = [permissions.IsAuthenticated]  # Example permission: only authenticated users can access
+    permission_classes = [permissions.IsAuthenticated]
 
 class UserProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class TaskListView(generics.ListCreateAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
+# Category Views
 class CategoryListView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -40,6 +39,18 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]
 
+# Task Views
+class TaskListView(generics.ListCreateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+# Report Views
 class ReportListView(generics.ListCreateAPIView):
     queryset = Report.objects.all()
     serializer_class = ReportSerializer
@@ -50,6 +61,7 @@ class ReportDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ReportSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+# Notification Views
 class NotificationListView(generics.ListCreateAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
@@ -60,6 +72,7 @@ class NotificationDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = NotificationSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+# Weather Views
 class WeatherListView(generics.ListCreateAPIView):
     queryset = Weather.objects.all()
     serializer_class = WeatherSerializer
@@ -70,6 +83,7 @@ class WeatherDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = WeatherSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+# Forecast Views
 class ForecastListView(generics.ListCreateAPIView):
     queryset = Forecast.objects.all()
     serializer_class = ForecastSerializer
@@ -80,6 +94,7 @@ class ForecastDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ForecastSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+# EventLog Views
 class EventLogListView(generics.ListCreateAPIView):
     queryset = EventLog.objects.all()
     serializer_class = EventLogSerializer
@@ -94,7 +109,7 @@ class EventLogDetailView(generics.RetrieveUpdateDestroyAPIView):
 # Custom Views for Analysis
 
 @api_view(['GET'])
-def dashboard_view(request):
+def dashboard_view(request: HttpRequest) -> HttpResponse:
     # Fetch data for the current user
     tasks = Task.objects.filter(user=request.user)
     completion_rate_response = task_completion_rate(request)
