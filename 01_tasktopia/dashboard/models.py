@@ -111,3 +111,4 @@ class EventLog(models.Model):
 
     def __str__(self):
         return f"Event: {self.event}"
+
