@@ -4,24 +4,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Site</title>
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.72.0">
+    <title>Task Details</title>
 </head>
 
 <body>
     <!-- tasks/templates/tasks/task_detail.html -->
-    <div class="col-md-3 card">
-        <h1>{{ task.title }}</h1>
-        <div class="card-body">
-            <p class="card-title">{{ task.description }}</p>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+    <style>
+        .container {
+            max-width: 960px;
+        }
+
+        /*
+     * Custom translucent site header
+     */
+
+        .site-header {
+            background-color: rgba(0, 0, 0, .85);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            backdrop-filter: saturate(180%) blur(20px);
+        }
+
+        .site-header a {
+            color: #727272;
+            transition: color .15s ease-in-out;
+        }
+
+        .site-header a:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /*
+     * Extra utilities
+     */
+
+        .flex-equal>* {
+            flex: 1;
+        }
+
+        @media (min-width: 768px) {
+            .flex-md-equal>* {
+                flex: 1;
+            }
+        }
+    </style>
+
+
+
+
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="shadow-sm d-none d-md-block"></div>
+        <div class="shadow-sm d-none d-md-block"></div>
+        <div class="d-md-flex flex-md-equal w-70 my-md-3 pl-md-3">
+            <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                <div class="my-3 py-3">
+                    <h2 class="display-5">{{ task.title }}</h2>
+                    <p class="lead">{{ task.description }}</p>
+                </div>
+                <div class="bg-light shadow-sm mx-auto"
+                    style="width: 50%; height: 200px; border-radius: 21px 21px 0 0; color: black;">
+                    <p>Due Date: {{ task.due_date }}</p>
+                    <p>Priority: {{ task.priority }}</p>
+                    <p>Status: {{ task.status }}</p>
+                    <p>{{ task.category }}</p>
+                    <span class="btn btn-primary btn-sm"><a href="{% url 'update_task' task.pk %}">Edit</a></span>
+                    <span class="btn btn-primary btn-sm"><a
+                            href="{% url 'task_confirm_delete' task.pk %}">Delete</a></span>
+                    <span class="btn btn-primary btn-sm"><a href="{% url 'task_list' %}">Back to Task List</a></span>
+                </div>
+            </div>
         </div>
     </div>
-    <p>Due: {{ task.due_date }}</p>
-    <p>Priority: {{ task.priority }}</p>
-    <p>Status: {{ task.status }}</p>
-    <p>Category: {{ task.category }}</p>
-    <a href="{% url 'update_task' task.pk %}">Edit</a>
-    <a href="{% url 'task_confirm_delete' task.pk %}">Delete</a>
-    <a href="{% url 'task_list' %}">Back to Task List</a>
 
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"

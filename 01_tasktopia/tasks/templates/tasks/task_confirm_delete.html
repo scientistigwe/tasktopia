@@ -9,16 +9,17 @@
 
 <body>
     <!-- tasks/templates/tasks/task_confirm_delete.html -->
-    <h1>Confirm Delete</h1>
-    <p>Are you sure you want to delete "{{ task.title }}"?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Yes, delete</button>
-    </form>
-    <a href="{% url 'task_list' %}">Cancel</a>
-
-
-
+    <div class="card task-delete d-flex justify-content-center">
+        <h1>Confirm Delete</h1>
+        <div class="card-body">
+            <p>Are you sure you want to delete "{{ task.title }}"?</p>
+        </div>
+        <form method="post" class="card-footer">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Yes, delete</button>
+            <span class="btn btn-success"><a href="{% url 'task_list' %}">Cancel</a></span>
+        </form>
+    </div>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

@@ -11,14 +11,136 @@
 </head>
 
 <body>
-    <!-- tasks/templates/tasks/task_list.html -->
-    <h1>Task List</h1>
-    <ul>
-        {% for task in tasks %}
-        <li><a href="{% url 'task_details' task.pk %}">{{ task.title }}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'create_task' %}">Create New Task</a>
+
+    <div class="row">
+        <!-- To do card -->
+        <div class="col-md-4 to_do">
+            <div class="row">
+                <span class="col-md-6">
+                    <h4>To do</h4>
+                </span>
+                <span class="col-md-6">
+                    <a href="{% url 'create_task' %}"><i class="fa fa-plus" aria-hidden="true"></i> New
+                        Task</a>
+                </span>
+            </div>
+
+            <!-- Task Card-->
+            <ul>
+                {% for task in tasks %}
+                <span class="card mb-2">
+                    <!-- Title, description and task details icon-->
+                    <li class="col-12 card-title">{{ task.title }}</li>
+                    <li class="col-12 card-text">{{ task.description }}</li>
+
+                    <div class="col-6">
+                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><i
+                                    class="fa fa-dot-circle-o" aria-hidden="true">task details icon</i></span></a>
+                    </div>
+                    <!-- Status icon, status and completion ratio -->
+                    <span class="row">
+                        <li class="col-4">{{ task.title }}</li>
+                        <li class="col-4">{{ task.status }}</li>
+                        <li class="col-4">{{ task.title }}</li>
+                    </span>
+
+                    <!-- Due date, notifications and reports -->
+                    <span class="row">
+                        <li class="col-4">{{ task.due_date }}</li>
+                        <li class="col-4">{{ task.status }}</li>
+                        <li class="col-4">{{ task.category }}</li>
+                    </span>
+                </span>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- In progress card -->
+        <div class="col-md-4 to_do">
+            <div class="row">
+                <span class="col-md-6">
+                    <h4>In progress</h4>
+                </span>
+                <span class="col-md-6">
+                    <a href="{% url 'create_task' %}"><i class="fa fa-plus" aria-hidden="true"></i> New
+                        Task</a>
+                </span>
+            </div>
+
+            <!-- Task Card-->
+            <ul>
+                {% for task in tasks %}
+                <span class="card mb-2">
+                    <!-- Title, description and task details icon-->
+                    <li class="col-12 card-title">{{ task.title }}</li>
+                    <li class="col-12 card-text">{{ task.description }}</li>
+
+                    <div class="col-6">
+                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><i
+                                    class="fa fa-dot-circle-o" aria-hidden="true">task details icon</i></span></a>
+                    </div>
+                    <!-- Status icon, status and completion ratio -->
+                    <span class="row">
+                        <li class="col-4">{{ task.title }}</li>
+                        <li class="col-4">{{ task.status }}</li>
+                        <li class="col-4">{{ task.title }}</li>
+                    </span>
+
+                    <!-- Due date, notifications and reports -->
+                    <span class="row">
+                        <li class="col-4">{{ task.due_date }}</li>
+                        <li class="col-4">{{ task.status }}</li>
+                        <li class="col-4">{{ task.category }}</li>
+                    </span>
+                </span>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Done card -->
+        <div class="col-md-4 to_do">
+            <div class="row">
+                <span class="col-md-6">
+                    <h4>Done</h4>
+                </span>
+                <span class="col-md-6">
+                    <a href="{% url 'create_task' %}"><i class="fa fa-plus" aria-hidden="true"></i> New
+                        Task</a>
+                </span>
+            </div>
+
+            <!-- Task Card-->
+            <ul>
+                {% for task in tasks %}
+                <span class="card mb-2">
+                    <!-- Title, description and task details icon-->
+                    <li class="col-12 card-title">{{ task.title }}</li>
+                    <li class="col-12 card-text">{{ task.description }}</li>
+
+                    <div class="col-6">
+                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><i
+                                    class="fa fa-dot-circle-o" aria-hidden="true">task details icon</i></span></a>
+                    </div>
+                    <!-- Status icon, status and completion ratio -->
+                    <span class="row">
+                        <li class="col-4">{{ task.title }}</li>
+                        <li class="col-4">{{ task.status }}</li>
+                        <li class="col-4">{{ task.title }}</li>
+                    </span>
+
+                    <!-- Due date, notifications and reports -->
+                    <span class="row">
+                        <li class="col-4">{{ task.due_date }}</li>
+                        <li class="col-4">{{ task.status }}</li>
+                        <li class="col-4">{{ task.category }}</li>
+                    </span>
+                </span>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
 
 
 
