@@ -37,7 +37,7 @@ class Task(models.Model):
     task_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
     description = models.TextField()
-    due_date = models.DateField()
+    due_date = models.DateTimeField()
     priority = models.CharField(max_length=10, choices=Priority.choices, default=Priority.MEDIUM)
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)     
     created_at = models.DateTimeField(auto_now_add=True)

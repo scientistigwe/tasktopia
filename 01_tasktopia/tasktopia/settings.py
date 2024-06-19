@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-mqnrowkrk6%ayjkbr_q0gf(%yx_vx4-!(se@9y1besan2-jgsf
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'http://127.0.0.1:3000/01. Tasktopia/tasks/templates/tasks/create-task.html'
+    '127.0.0.1'
 ]
 
 
