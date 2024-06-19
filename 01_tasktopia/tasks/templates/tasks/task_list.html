@@ -11,7 +11,16 @@
 </head>
 
 <body>
-    <h1>Hello-Bootstrap</h1>
+    <!-- tasks/templates/tasks/task_list.html -->
+    <h1>Task List</h1>
+    <ul>
+        {% for task in tasks %}
+        <li><a href="{% url 'task_details' task.pk %}">{{ task.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_task' %}">Create New Task</a>
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

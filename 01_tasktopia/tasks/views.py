@@ -1,54 +1,32 @@
-from django.shortcuts import render
+# tasks/views.py
+
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import Task
+from .forms import TaskForm
 
-# Django Views - All use the same template
 class TaskListView(ListView):
     model = Task
-    template_name = 'tasks/create-task.html'
+    template_name = 'tasks/task_list.html'
     context_object_name = 'tasks'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['view_type'] = 'list'
-        return context
 
 class TaskCreateView(CreateView):
     model = Task
-    template_name = 'tasks/create-task.html'
-    fields = '__all__'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['view_type'] = 'create'
-        return context
+    form_class = TaskForm
+    template_name = 'tasks/create_task.html'
+    success_url = '/tasks/'
 
 class TaskDetailView(DetailView):
     model = Task
-    template_name = 'tasks/create-task.html'
+    template_name = 'tasks/task_details.html'
     context_object_name = 'task'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['view_type'] = 'detail'
-        return context
 
 class TaskUpdateView(UpdateView):
     model = Task
-    template_name = 'tasks/create-task.html'
-    fields = '__all__'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['view_type'] = 'update'
-        return context
+    form_class = TaskForm
+    template_name = 'tasks/update_task.html'
+    success_url = '/tasks/'
 
 class TaskDeleteView(DeleteView):
     model = Task
-    template_name = 'tasks/create-task.html'
+    template_name = 'tasks/task_confirm_delete.html'
     success_url = '/tasks/'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['view_type'] = 'delete'
-        return context

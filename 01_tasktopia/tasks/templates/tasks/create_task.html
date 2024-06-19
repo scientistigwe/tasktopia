@@ -11,7 +11,15 @@
 </head>
 
 <body>
-    <h1>Hello-Bootstrap</h1>
+
+    <!-- create_task.html -->
+    <h1>Create Task</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'task_list' %}">Back to Task List</a>
 
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
