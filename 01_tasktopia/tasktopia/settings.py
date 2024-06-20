@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,10 +57,23 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'tasktopia.urls'
 
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'dashboards/static'),
+    os.path.join(BASE_DIR, 'reports/static'),
+    os.path.join(BASE_DIR, 'tasks/static'),
+]
+
+# Template files
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'dashboards/templates'),
+            os.path.join(BASE_DIR, 'reports/templates'),
+            os.path.join(BASE_DIR, 'tasks/templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,6 +85,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'tasktopia.wsgi.application'
 

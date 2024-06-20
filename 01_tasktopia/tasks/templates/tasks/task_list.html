@@ -4,22 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Site</title>
+
+    {% load static %}
+
+    <!-- Bootstrap CSS Link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
+    <!-- Custom CSS Link -->
+    <link rel="stylesheet" href="{% static 'tasks/css/task.css' %}">
+
+    <!-- Favicon Link -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <title>Task List</title>
 </head>
 
 <body>
 
-    <div class="row">
+    <div class="container-fluid row task-list">
         <!-- To do card -->
         <div class="col-md-4 to_do">
             <div class="row">
                 <span class="col-md-6">
                     <h4>To do</h4>
                 </span>
-                <span class="col-md-6">
+                <span class="col-md-6 new-task">
                     <a href="{% url 'create_task' %}"><i class="fa fa-plus" aria-hidden="true"></i> New
                         Task</a>
                 </span>
@@ -33,9 +43,10 @@
                     <li class="col-12 card-title">{{ task.title }}</li>
                     <li class="col-12 card-text">{{ task.description }}</li>
 
-                    <div class="col-6">
-                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><i
-                                    class="fa fa-dot-circle-o" aria-hidden="true">task details icon</i></span></a>
+                    <div class="task-details-icon">
+                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
+                                    src="../../static/tasks/img/task-details.png" alt="task details icon" width="20"
+                                    height="20"></span></a>
                     </div>
                     <!-- Status icon, status and completion ratio -->
                     <span class="row">
@@ -75,10 +86,12 @@
                     <li class="col-12 card-title">{{ task.title }}</li>
                     <li class="col-12 card-text">{{ task.description }}</li>
 
-                    <div class="col-6">
-                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><i
-                                    class="fa fa-dot-circle-o" aria-hidden="true">task details icon</i></span></a>
+                    <div class="task-details-icon">
+                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
+                                    src="../../static/tasks/img/task-details.png" alt="task details icon" width="20"
+                                    height="20"></span></a>
                     </div>
+
                     <!-- Status icon, status and completion ratio -->
                     <span class="row">
                         <li class="col-4">{{ task.title }}</li>
@@ -117,10 +130,12 @@
                     <li class="col-12 card-title">{{ task.title }}</li>
                     <li class="col-12 card-text">{{ task.description }}</li>
 
-                    <div class="col-6">
-                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><i
-                                    class="fa fa-dot-circle-o" aria-hidden="true">task details icon</i></span></a>
+                    <div class="task-details-icon">
+                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
+                                    src="../../static/tasks/img/task-details.png" alt="task details icon" width="20"
+                                    height="20"></span></a>
                     </div>
+
                     <!-- Status icon, status and completion ratio -->
                     <span class="row">
                         <li class="col-4">{{ task.title }}</li>

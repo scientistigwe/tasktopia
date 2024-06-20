@@ -4,25 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Site</title>
+
+
+    {% load static %}
+
+    <!-- Bootstrap CSS Link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
+    <!-- Custom CSS Link -->
+    <link rel="stylesheet" href="{% static 'tasks/css/task.css' %}">
+
+    <!-- Favicon Link -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <title>Edit Task</title>
 </head>
 
 <body>
-    {% extends "base.html" %}
+    <div class="edit-task">
+        {% extends "base.html" %}
 
-    {% block content %}
-    <h1>Edit Task</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
-    <a href="{% url 'task_details' object.pk %}">Cancel</a>
-    {% endblock %}
+        {% block content %}
+        <h1>Edit Task</h1>
 
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+        </form>
+        <a href="{% url 'task_details' object.pk %}">Cancel</a>
+
+        {% endblock %}
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
