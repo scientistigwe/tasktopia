@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.72.0">
-    <title>Album example · Bootstrap</title>
+    <title>Tasktopia | <!-- Home --></title>
 
     <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/album/">
 
@@ -80,24 +80,23 @@
     </header>
 
     <main>
-
+        {% block content %}
         <section class="py-5 text-center container">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="font-weight-light">Tasktopia</h1>
-                    <p class="lead text-muted">Build your dream day, one task at a time.</p>
-                    <p>
+                    <h1 class="font-weight-light">Welcome to Tasktopia!</h1>
+                    <p class="lead text-muted">A place to build your daily dreams, one task at a time.</p>
 
                     <form method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <a href="#" class="btn btn-secondary my-2">Sign in</a>
+                        <span type="submit" class="btn btn-secondary my-2 signup"><a href="{% url 'signup' %}">Sign
+                                Up</a></span>
                     </form>
-                    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
-                    </p>
+
+                    <p>Already have an account? <a href="{% url 'login' %}">Log in here</a></p>
                 </div>
             </div>
         </section>
+        {% endblock %}
 
     </main>
 </body>

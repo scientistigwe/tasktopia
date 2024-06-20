@@ -3,7 +3,6 @@ from .models import UserProfile, Category, Notification, Report, Weather, Foreca
 
 # Register your models here.
 
-admin.site.register(UserProfile)
 admin.site.register(Category)
 admin.site.register(Notification)
 admin.site.register(Report)

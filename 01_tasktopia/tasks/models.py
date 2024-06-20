@@ -1,6 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
-from dashboard.models import UserProfile, Task, Category, Report, Weather, Forecast, EventLog
+from dashboard.models import Task, Category, Report, Weather, Forecast, EventLog
+from accounts.models import UserProfile 
+
 
 class UserTask(models.Model):
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

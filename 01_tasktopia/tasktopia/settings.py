@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'dashboard',
     'reports',
     'tasks',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -60,9 +61,10 @@ ROOT_URLCONF = 'tasktopia.urls'
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'dashboards/static'),
-    os.path.join(BASE_DIR, 'reports/static'),
-    os.path.join(BASE_DIR, 'tasks/static'),
+    os.path.join(BASE_DIR, 'accounts/static/registration'),
+    os.path.join(BASE_DIR, 'tasks/static/tasks'),
+    os.path.join(BASE_DIR, 'dashboard/static/dashboard'),
+    os.path.join(BASE_DIR, 'reports/static/reports'),
 ]
 
 # Template files
@@ -70,9 +72,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'dashboards/templates'),
-            os.path.join(BASE_DIR, 'reports/templates'),
+            os.path.join(BASE_DIR, 'accounts/templates/registration'),
             os.path.join(BASE_DIR, 'tasks/templates'),
+            os.path.join(BASE_DIR, 'dashboard/templates'),
+            os.path.join(BASE_DIR, 'reports/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

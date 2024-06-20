@@ -5,104 +5,82 @@ from rest_framework.decorators import api_view
 from django.db.models import Count
 from datetime import datetime, timedelta
 from django.shortcuts import render
-from .models import UserProfile, Task, Category, Report, Notification, Weather, Forecast, EventLog
-from .serializers import UserProfileSerializer, TaskSerializer, CategorySerializer, ReportSerializer, NotificationSerializer, WeatherSerializer, ForecastSerializer, EventLogSerializer
+from .models import Task, Category, Report, Notification, Weather, Forecast, EventLog
 from django.http import HttpRequest, HttpResponse
+from rest_framework import generics, permissions
+from accounts.models import UserProfile
 
 # Core Views with CRUD operations
-
-# views.py
-
-from rest_framework import generics, permissions
-from .models import UserProfile, Task, Category, Report, Notification, Weather, Forecast, EventLog
-from .serializers import UserProfileSerializer, TaskSerializer, CategorySerializer, ReportSerializer, NotificationSerializer, WeatherSerializer, ForecastSerializer, EventLogSerializer
-
 # User Profile Views
 class UserProfileListView(generics.ListCreateAPIView):
     queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class UserProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # Category Views
 class CategoryListView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
-    serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
-    serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # Task Views
 class TaskListView(generics.ListCreateAPIView):
     queryset = Task.objects.all()
-    serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Task.objects.all()
-    serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # Report Views
 class ReportListView(generics.ListCreateAPIView):
     queryset = Report.objects.all()
-    serializer_class = ReportSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class ReportDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Report.objects.all()
-    serializer_class = ReportSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # Notification Views
 class NotificationListView(generics.ListCreateAPIView):
     queryset = Notification.objects.all()
-    serializer_class = NotificationSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class NotificationDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Notification.objects.all()
-    serializer_class = NotificationSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # Weather Views
 class WeatherListView(generics.ListCreateAPIView):
     queryset = Weather.objects.all()
-    serializer_class = WeatherSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class WeatherDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Weather.objects.all()
-    serializer_class = WeatherSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # Forecast Views
 class ForecastListView(generics.ListCreateAPIView):
     queryset = Forecast.objects.all()
-    serializer_class = ForecastSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class ForecastDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Forecast.objects.all()
-    serializer_class = ForecastSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # EventLog Views
 class EventLogListView(generics.ListCreateAPIView):
     queryset = EventLog.objects.all()
-    serializer_class = EventLogSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class EventLogDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = EventLog.objects.all()
-    serializer_class = EventLogSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
@@ -159,7 +137,6 @@ def overdue_tasks(request):
     Retrieve all overdue tasks.
     """
     overdue_tasks = Task.objects.filter(status='Overdue').order_by('due_date')
-    serializer = TaskSerializer(overdue_tasks, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
