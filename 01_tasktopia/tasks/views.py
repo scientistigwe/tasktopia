@@ -20,10 +20,11 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('task_list')
 
     def form_valid(self, form):
-        # Automatically associate task relationship with the current user
-        form.instance.user = self.request.user
+        task_relationship = form.save(commit=False)
+        task_relationship.user = self.request.user
+        task_relationship.save()
         return super().form_valid(form)
-    
+
 class TaskDetailView(LoginRequiredMixin, DetailView):
     model = TaskRelationship
     template_name = 'tasks/task_details.html'

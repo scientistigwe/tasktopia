@@ -23,6 +23,7 @@
 <body>
 
     <div class="container-fluid row task-list">
+        <h2 style="color: beige;">My Tasks</h2>
         <!-- To do card -->
         <div class="col-md-4 to_do">
             <div class="row">
@@ -30,21 +31,13 @@
                     <h4>To do</h4>
                 </span>
                 <span class="col-md-6 new-task">
-                    <a href="{% url 'create_task' %}"><i class="fa fa-plus" aria-hidden="true"></i> New
+                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png" width="20"
+                            height="20" alt="Add task"></i> New
                         Task</a>
                 </span>
             </div>
             {% csrf_token %}
             {{ form.as_p }}
-            <p>
-                {% if request.user.is_authenticated %}
-                <a href="{% url 'logout' %}">Logout</a> |
-                <a href="{% url 'task_list' %}">My Tasks</a>
-                {% else %}
-                <a href="{% url 'login' %}">Login</a> |
-                <a href="{% url 'signup' %}">Signup</a>
-                {% endif %}
-            </p>
             <!-- Task Card-->
             <ul>
                 {% for task in tasks %}
@@ -83,7 +76,8 @@
                     <h4>In progress</h4>
                 </span>
                 <span class="col-md-6">
-                    <a href="{% url 'create_task' %}"><i class="fa fa-plus" aria-hidden="true"></i> New
+                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png" width="20"
+                            height="20" alt="Add task"></i> New
                         Task</a>
                 </span>
             </div>
@@ -127,7 +121,8 @@
                     <h4>Done</h4>
                 </span>
                 <span class="col-md-6">
-                    <a href="{% url 'create_task' %}"><i class="fa fa-plus" aria-hidden="true"></i> New
+                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png" width="20"
+                            height="20" alt="Add task"></i> New
                         Task</a>
                 </span>
             </div>
@@ -164,11 +159,20 @@
             </ul>
         </div>
     </div>
+    </div>
 
 
-
-
-
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}">Logout</a> |
+        <a href="{% url 'task_list' %}">My Tasks</a>
+        {% else %}
+        <a href="{% url 'login' %}">Login</a> |
+        <a href="{% url 'signup' %}">Signup</a>
+        {% endif %}
+    </p>
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"

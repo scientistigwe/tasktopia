@@ -4,23 +4,77 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.72.0">
+    <title>Tasktopia | Login</title>
+
+    <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/album/">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+    <!-- Custom CSS link -->
+    <link rel="stylesheet" href="../../static/registration/css/account-style.css">
+
 </head>
 
 <body>
-    <h2>Login</h2>
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        {% if error %}
-        <p style="color:red;">{{ error }}</p>
-        {% endif %}
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br>
-        <button type="submit">Login</button>
-    </form>
+    <header>
+        <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">About</h4>
+                        <p class="text-muted">A context-aware, intelligent to-do list.</p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4 class="text-white">Contact</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-white">Follow on Linkedin</a></li>
+                            <li><a href="#" class="text-white">Explore my Github</a></li>
+                            <li><a href="#" class="text-white">Visit my Profile</a></li>
+                            <li><a href="#" class="text-white">Email me</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container-fluid">
+                <a href="" class="navbar-brand d-flex align-items-center"><img
+                        src="../../static/registration/images/tasktopia-icon.png" alt="Main icon" width="40" height="40"
+                        style="background-color: white; border-radius: 50%; margin-right: 8px;"><strong>
+                        Tasktopia</strong>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid card login">
+        <h2 class="mb-5 d-flex justify-content-center">Login</h2>
+        <form method="post" action="{% url 'login' %}" class="form-input">
+            {% csrf_token %}
+            {% if error %}
+            <p style="color:red;">{{ error }}</p>
+            {% endif %}
+            <div class="username mb-2">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" required><br>
+            </div>
+            <div class="password mb-2">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required><br>
+            </div>
+            <button class="btn btn-secondary mt-3" type="submit">Login</button>
+        </form>
+    </div>
 </body>
 
 </html>
