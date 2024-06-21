@@ -1,37 +1,50 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from .models import Task
+from .models import TaskRelationship
 from .forms import TaskForm
+from accounts.models import User
 
-class TaskListView(ListView):
-    model = Task
+class TaskListView(LoginRequiredMixin, ListView):
+    model = TaskRelationship
     template_name = 'tasks/task_list.html'
     context_object_name = 'tasks'
 
+    def get_queryset(self):
+        return TaskRelationship.objects.filter(user=self.request.user)
+
 class TaskCreateView(LoginRequiredMixin, CreateView):
-    model = Task
+    model = TaskRelationship
     form_class = TaskForm
     template_name = 'tasks/create_task.html'
-    success_url = reverse_lazy('task_list')  # Adjust 'task_list' to your actual URL name
+    success_url = reverse_lazy('task_list')
 
     def form_valid(self, form):
-        # Set the user field to the current user before saving
+        # Automatically associate task relationship with the current user
         form.instance.user = self.request.user
         return super().form_valid(form)
-
-class TaskDetailView(DetailView):
-    model = Task
+    
+class TaskDetailView(LoginRequiredMixin, DetailView):
+    model = TaskRelationship
     template_name = 'tasks/task_details.html'
     context_object_name = 'task'
 
-class TaskUpdateView(UpdateView):
-    model = Task
+    def get_queryset(self):
+        return TaskRelationship.objects.filter(user=self.request.user)
+
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    model = TaskRelationship
     form_class = TaskForm
     template_name = 'tasks/update_task.html'
-    success_url = reverse_lazy('task_list')  # Adjust 'task_list' to your actual URL name
+    success_url = reverse_lazy('task_list')
 
-class TaskDeleteView(DeleteView):
-    model = Task
+    def get_queryset(self):
+        return TaskRelationship.objects.filter(user=self.request.user)
+
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    model = TaskRelationship
     template_name = 'tasks/task_confirm_delete.html'
-    success_url = reverse_lazy('task_list')  # Adjust 'task_list' to your actual URL name
+    success_url = reverse_lazy('task_list')
+
+    def get_queryset(self):
+        return TaskRelationship.objects.filter(user=self.request.user)

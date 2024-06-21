@@ -1,18 +1,16 @@
 from django.db import models
 from dashboard.models import Task, Category, Notification, Report, Weather, Forecast, EventLog
 from accounts.models import User
-from django.conf import settings
 from django.db import models
 
 class ReportDetail(models.Model):
-    user_profile = models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     notification = models.OneToOneField(Notification, on_delete=models.CASCADE)
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Report for {self.task.title} by {self.user_profile.user.username}"
+        return f"Report for {self.task.title} by {self.report.reported_by.username}"
 
 class ReportNotification(models.Model):
     notification = models.OneToOneField(Notification, on_delete=models.CASCADE)

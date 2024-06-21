@@ -1,0 +1,36 @@
+/* GENERIC STYLING */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* SIGNUP STYLING */
+
+.signup a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+}
+
+.signup-page {
+    max-width: 60vw;
+}
+
+.signup-page .signup-btn {
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+    }
+}

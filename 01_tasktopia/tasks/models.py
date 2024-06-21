@@ -1,16 +1,21 @@
 from django.db import models
 from dashboard.models import Task, Category, Report, Weather, Forecast, EventLog
 from accounts.models import User
+from django.contrib.auth import get_user_model
 
+def get_default_username():
+    first_user = get_user_model().objects.first()
+    if first_user:
+        return first_user.first_name
+    return ''  # Default to an empty string if no user exists
 
-class UserTask(models.Model):
-    user_profile = models.ForeignKey(User, on_delete=models.CASCADE)
+class TaskRelationship(models.Model):
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
     event_log = models.OneToOneField(EventLog, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_relationships', default=get_default_username)
 
     def __str__(self):
-        return f"UserTask: {self.task.title} assigned to {self.user_profile.user.username}"
-
+        return f"UserTask: {self.task.title} assigned to {self.user.username}"
 class TaskCategory(models.Model):
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -38,48 +43,3 @@ class TaskReport(models.Model):
 
     def __str__(self):
         return f"Task: {self.task.title}, Report: {self.report.content}"
-    
-
-class CurrentWeather(models.Model):
-    location = models.CharField(max_length=100)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-    temperature = models.FloatField()
-    humidity = models.FloatField()
-    wind_speed = models.FloatField()
-    wind_direction = models.CharField(max_length=50)
-    precipitation = models.FloatField()
-    uv_index = models.FloatField(default=0)  # Added default value
-    air_pressure = models.FloatField()
-    visibility = models.FloatField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name_plural = "Current Weather"
-        ordering = ['-timestamp']
-
-    def __str__(self):
-        return f"{self.location} - {self.timestamp}"
-
-class WeatherForecast(models.Model):
-    location = models.CharField(max_length=100)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-    temperature = models.FloatField()
-    humidity = models.FloatField()
-    wind_speed = models.FloatField()
-    wind_direction = models.CharField(max_length=50)
-    precipitation = models.FloatField()
-    uv_index = models.FloatField(default=0)  # Added default value
-    air_pressure = models.FloatField()
-    visibility = models.FloatField()
-    forecast_time = models.DateTimeField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name_plural = "Weather Forecasts"
-        ordering = ['-forecast_time']
-
-    def __str__(self):
-        return f"{self.location} - {self.forecast_time}"
-
