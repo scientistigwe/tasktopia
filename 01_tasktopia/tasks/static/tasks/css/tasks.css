@@ -39,6 +39,28 @@ body{
     position: absolute;
     right: 0;
 }
+
+.logout {
+    text-decoration: none;
+    color: rgb(227, 205, 11);
+}
+
+.logout a{
+    text-decoration: none;
+    color: beige;
+}
+
+#tasktopia {
+    text-decoration: none;
+    color: beige;
+    font-size: 1.5em;
+}
+
+#tasktopia img{
+    background-color: antiquewhite;
+    border-radius: 50%;
+}
+
 /* DELETE TASK STYLE */
 
 /* CREATE TASK STYLE */

@@ -28,7 +28,9 @@
 <body>
     <header>
         <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Tasktopia</a>
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#" id="tasktopia"><img
+                    src="../../static/tasks/img/tasktopia-icon.png" alt="brand logo" width="40" height="40">
+                Tasktopia</a>
             <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
                 data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -37,15 +39,15 @@
             <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="#">
+                    <span class="logout">
                         {% if request.user.is_authenticated %}
                         <a href="{% url 'logout' %}">Logout</a> |
-                        <a href="{% url 'task_list' %}">My Tasks</a>
+                        <a href="{% url 'task_list' %}">My Profile</a>
                         {% else %}
                         <a href="{% url 'login' %}">Login</a> |
                         <a href="{% url 'signup' %}">Signup</a>
                         {% endif %}
-                    </a>
+                    </span>
                 </li>
             </ul>
         </nav>
@@ -84,14 +86,13 @@
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">My Task</h1>
                         <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                            </div>
                             <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
                                 <span data-feather="calendar"></span>
                                 Filter
                             </button>
+                            <div class="btn-group mr-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            </div>
                         </div>
                     </div>
                     {% csrf_token %}
@@ -100,13 +101,12 @@
                         <!-- To do card -->
                         <div class="col-md-4 to_do card">
                             <div class="row">
-                                <span class="col-md-6">
-                                    <h4>To do</h4>
+                                <span class="col-md-7 d-flex justify-content-start">
+                                    <h6>To do</h6>
                                 </span>
-                                <span class="col-md-6 new-task">
+                                <span class="col-md-5 new-task d-flex justify-content-end">
                                     <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png"
-                                            width="20" height="20" alt="Add task"></i> New
-                                        Task</a>
+                                            width="20" height="20" alt="Add task"></i> New Task</a>
                                 </span>
                             </div>
 
@@ -144,15 +144,15 @@
                         <!-- In progress card -->
                         <div class="col-md-4 to_do card">
                             <div class="row">
-                                <span class="col-md-6">
-                                    <h4>In progress</h4>
+                                <span class="col-md-7  d-flex justify-content-start">
+                                    <h6>In Progress</h6>
                                 </span>
-                                <span class="col-md-6">
+                                <span class="col-md-5 new-task d-flex justify-content-end">
                                     <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png"
-                                            width="20" height="20" alt="Add task"></i> New
-                                        Task</a>
+                                            width="20" height="20" alt="Add task"></i> New Task</a>
                                 </span>
                             </div>
+
 
                             <!-- Task Card-->
                             <ul>
@@ -189,15 +189,15 @@
                         <!-- Done card -->
                         <div class="col-md-4 to_do card">
                             <div class="row">
-                                <span class="col-md-6">
-                                    <h4>Done</h4>
+                                <span class="col-md-7 d-flex justify-content-start">
+                                    <h6>Done</h6>
                                 </span>
-                                <span class="col-md-6">
+                                <span class="col-md-5 new-task d-flex justify-content-end">
                                     <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png"
-                                            width="20" height="20" alt="Add task"></i> New
-                                        Task</a>
+                                            width="20" height="20" alt="Add task"></i> New Task</a>
                                 </span>
                             </div>
+
 
                             <!-- Task Card-->
                             <ul>
