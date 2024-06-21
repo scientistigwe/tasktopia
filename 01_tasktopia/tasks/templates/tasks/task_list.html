@@ -12,9 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
-    {% load static %}
     <!-- Custom CSS Link -->
-    <!--<link rel="stylesheet" href="{% static 'tasks/css/task.css' %}"> -->
     <link rel="stylesheet" href="../../static/tasks/css/tasks.css">
 
     <!-- Favicon Link -->
@@ -95,8 +93,7 @@
                             </div>
                         </div>
                     </div>
-                    {% csrf_token %}
-                    {{ form.as_p }}
+
                     <div class="container-fluid row task-list">
                         <!-- To do card -->
                         <div class="col-md-4 to_do card">
@@ -110,38 +107,30 @@
                                 </span>
                             </div>
 
-                            <!-- Task Card-->
+                            <!-- Task Cards -->
                             <ul>
                                 {% for task in tasks %}
-                                <span class="card mb-2">
-                                    <!-- Title, description and task details icon-->
-                                    <li class="col-12 card-title">{{ task.title }}</li>
-                                    <li class="col-12 card-text">{{ task.description }}</li>
-
+                                {% if task.status == 'To do' %}
+                                <li class="card mb-2">
+                                    <span class="col-12 card-title">{{ task.title }}</span>
+                                    <span class="col-12 card-text">{{ task.description }}</span>
                                     <div class="task-details-icon">
                                         <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
                                                     src="../../static/tasks/img/task-details.png"
-                                                    alt="task details icon" width="20" height="20"></span></a>
+                                                    alt="task details icon" width="20" height="20"></a></span>
                                     </div>
-                                    <!-- Status icon, status and completion ratio -->
                                     <span class="row">
-                                        <li class="col-4">{{ task.title }}</li>
-                                        <li class="col-4">{{ task.status }}</li>
-                                        <li class="col-4">{{ task.title }}</li>
+                                        <span class="col-4">{{ task.due_date }}</span>
+                                        <span class="col-4">{{ task.status }}</span>
+                                        <span class="col-4">{{ task.category }}</span>
                                     </span>
-
-                                    <!-- Due date, notifications and reports -->
-                                    <span class="row">
-                                        <li class="col-4">{{ task.due_date }}</li>
-                                        <li class="col-4">{{ task.status }}</li>
-                                        <li class="col-4">{{ task.category }}</li>
-                                    </span>
-                                </span>
+                                </li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
 
-                        <!-- In progress card -->
+                        <!-- In Progress card -->
                         <div class="col-md-4 to_do card">
                             <div class="row">
                                 <span class="col-md-7  d-flex justify-content-start">
@@ -153,35 +142,25 @@
                                 </span>
                             </div>
 
-
-                            <!-- Task Card-->
+                            <!-- Task Cards -->
                             <ul>
                                 {% for task in tasks %}
-                                <span class="card mb-2">
-                                    <!-- Title, description and task details icon-->
-                                    <li class="col-12 card-title">{{ task.title }}</li>
-                                    <li class="col-12 card-text">{{ task.description }}</li>
-
+                                {% if task.status == 'In Progress' %}
+                                <li class="card mb-2">
+                                    <span class="col-12 card-title">{{ task.title }}</span>
+                                    <span class="col-12 card-text">{{ task.description }}</span>
                                     <div class="task-details-icon">
                                         <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
                                                     src="../../static/tasks/img/task-details.png"
-                                                    alt="task details icon" width="20" height="20"></span></a>
+                                                    alt="task details icon" width="20" height="20"></a></span>
                                     </div>
-
-                                    <!-- Status icon, status and completion ratio -->
                                     <span class="row">
-                                        <li class="col-4">{{ task.title }}</li>
-                                        <li class="col-4">{{ task.status }}</li>
-                                        <li class="col-4">{{ task.title }}</li>
+                                        <span class="col-4">{{ task.due_date }}</span>
+                                        <span class="col-4">{{ task.status }}</span>
+                                        <span class="col-4">{{ task.category }}</span>
                                     </span>
-
-                                    <!-- Due date, notifications and reports -->
-                                    <span class="row">
-                                        <li class="col-4">{{ task.due_date }}</li>
-                                        <li class="col-4">{{ task.status }}</li>
-                                        <li class="col-4">{{ task.category }}</li>
-                                    </span>
-                                </span>
+                                </li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -198,46 +177,37 @@
                                 </span>
                             </div>
 
-
-                            <!-- Task Card-->
+                            <!-- Task Cards -->
                             <ul>
                                 {% for task in tasks %}
-                                <span class="card mb-2">
-                                    <!-- Title, description and task details icon-->
-                                    <li class="col-12 card-title">{{ task.title }}</li>
-                                    <li class="col-12 card-text">{{ task.description }}</li>
-
+                                {% if task.status == 'Done' %}
+                                <li class="card mb-2">
+                                    <span class="col-12 card-title">{{ task.title }}</span>
+                                    <span class="col-12 card-text">{{ task.description }}</span>
                                     <div class="task-details-icon">
                                         <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
                                                     src="../../static/tasks/img/task-details.png"
-                                                    alt="task details icon" width="20" height="20"></span></a>
+                                                    alt="task details icon" width="20" height="20"></a></span>
                                     </div>
-
-                                    <!-- Status icon, status and completion ratio -->
                                     <span class="row">
-                                        <li class="col-4">{{ task.title }}</li>
-                                        <li class="col-4">{{ task.status }}</li>
-                                        <li class="col-4">{{ task.title }}</li>
+                                        <span class="col-4">{{ task.due_date }}</span>
+                                        <span class="col-4">{{ task.status }}</span>
+                                        <span class="col-4">{{ task.category }}</span>
                                     </span>
-
-                                    <!-- Due date, notifications and reports -->
-                                    <span class="row">
-                                        <li class="col-4">{{ task.due_date }}</li>
-                                        <li class="col-4">{{ task.status }}</li>
-                                        <li class="col-4">{{ task.category }}</li>
-                                    </span>
-                                </span>
+                                </li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
                     </div>
-
                 </main>
             </div>
         </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+
+    <!-- Bootstrap JS and Feather Icons JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+VcL9Y1pXiNQhI4u+IWtpARmshOhIwA3J5A6nuSrJQJwV7"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
         integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
@@ -246,6 +216,7 @@
         integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF"
         crossorigin="anonymous"></script>
 
+    <!-- Your Custom JavaScript -->
     <script src="../../static/tasks/js/task.js"></script>
 </body>
 

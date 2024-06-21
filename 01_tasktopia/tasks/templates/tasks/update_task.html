@@ -21,24 +21,101 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
     <title>Update Task</title>
+
+    <style>
+        .update-task {
+            max-width: 600px;
+            margin: auto;
+            margin-top: 50px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .mw-70 {
+                max-width: 70%;
+                margin: auto;
+            }
+        }
+    </style>
+
 </head>
 
-<body class="mw-70">
-    <div class="mw-70 update-task">
-        <!-- update_task.html -->
-        <h1 style="color: red;">Edit Task</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-success" type="submit">Update</button>
-            <span class="btn btn-outline-secondary"> <a href="{% url 'task_list' %}">Cancel</a></span>
-        </form>
-    </div>
+<body>
+    <header>
+        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#" id="tasktopia"><img
+                    src="../../static/tasks/img/tasktopia-icon.png" alt="brand logo" width="40" height="40">
+                Tasktopia</a>
+            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+                data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <span class="logout">
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}">Logout</a> |
+                        <a href="{% url 'task_list' %}">My Profile</a>
+                        {% else %}
+                        <a href="{% url 'login' %}">Login</a> |
+                        <a href="{% url 'signup' %}">Signup</a>
+                        {% endif %}
+                    </span>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    <main class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">
+                                <span data-feather="home"></span>
+                                Tasks
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="bar-chart-2"></span>
+                                Analytics & Insights
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="layers"></span>
+                                Reports
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="mw-70 update-task">
+                    <h1>Edit Task</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button class="btn btn-success" type="submit">Update</button>
+                        <a class="btn btn-outline-secondary" href="{% url 'task_list' %}">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+VcL9Y1pXiNQhI4u+IWtpARmshOhIwA3J5A6nuSrJQJwV7"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
         integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"

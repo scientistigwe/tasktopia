@@ -2,51 +2,131 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="author" content="Chibueze C. Igwe">
     <meta name="generator" content="Hugo 0.72.0">
-
-    {% load static %}
 
     <!-- Bootstrap CSS Link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
     <!-- Custom CSS Link -->
-    <link rel="stylesheet" href="{% static 'tasks/css/task.css' %}">
+    <link rel="stylesheet" href="../../static/tasks/css/task.css">
 
     <!-- Favicon Link -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./../../../accounts/static/registration/images/tasktopia-icon.png"
+        type="image/x-icon">
 
-    <title>Task Form</title>
+    <title>Create/Edit Task | Tasktopia</title>
 
 </head>
 
 <body>
-    <!-- task_list.html -->
-    <h1>Task List</h1>
-    <ul>
-        {% for task in tasks %}
-        <li>{{ task.title }}</li>
-        <ul>
-            <li><a href="{% url 'task_details' task.pk %}">View Details</a></li>
-            <li><a href="{% url 'update_task' task.pk %}">Edit</a></li>
-            <li><a href="{% url 'task_confirm_delete' task.pk %}">Delete</a></li>
-        </ul>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'task-create' %}">Create New Task</a>
+    <header>
+        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#" id="tasktopia"><img
+                    src="../../static/tasks/img/tasktopia-icon.png" alt="brand logo" width="40" height="40">
+                Tasktopia</a>
+            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+                data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <span class="logout">
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}">Logout</a> |
+                        <a href="{% url 'task_list' %}">My Profile</a>
+                        {% else %}
+                        <a href="{% url 'login' %}">Login</a> |
+                        <a href="{% url 'signup' %}">Signup</a>
+                        {% endif %}
+                    </span>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <div class="position-sticky pt-3">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">
+                                    <span data-feather="home"></span>
+                                    Tasks
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="bar-chart-2"></span>
+                                    Analytics & Insights
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="layers"></span>
+                                    Reports
+                                </a>
+                            </li>
+                        </ul>
 
+                    </div>
+                </nav>
 
+                <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                    <h1 class="h2 mb-3">Create/Edit Task</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status" required>
+                                <option value="To do">To do</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Done">Done</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="due_date" class="form-label">Due Date</label>
+                            <input type="date" class="form-control" id="due_date" name="due_date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <input type="text" class="form-control" id="category" name="category">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </main>
+            </div>
+        </div>
+    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    <!-- Bootstrap JS and Feather Icons JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+VcL9Y1pXiNQhI4u+IWtpARmshOhIwA3J5A6nuSrJQJwV7"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
         integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
+        integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF"
+        crossorigin="anonymous"></script>
+
+    <!-- Your Custom JavaScript -->
+    <script src="../../static/tasks/js/task.js"></script>
 </body>
 
 </html>

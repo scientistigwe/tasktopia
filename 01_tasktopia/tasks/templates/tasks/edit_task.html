@@ -1,10 +1,10 @@
+<!-- edit_task.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 
     {% load static %}
 
@@ -22,22 +22,44 @@
 </head>
 
 <body>
-    <div class="edit-task">
-        {% extends "base.html" %}
+    {% extends "base.html" %}
 
-        {% block content %}
+    {% block content %}
+    <div class="container edit-task card">
         <h1>Edit Task</h1>
-
-        <form method="post">
+        <form method="post" class="row g-3 needs-validation" novalidate>
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Save</button>
+            <div class="col-md-6">
+                <label for="id_title" class="form-label">Title</label>
+                {{ form.title }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_due_date" class="form-label">Due Date</label>
+                {{ form.due_date }}
+            </div>
+            <div class="col-md-12">
+                <label for="id_description" class="form-label">Description</label>
+                {{ form.description }}
+            </div>
+            <div class="col-md-4">
+                <label for="id_priority" class="form-label">Priority</label>
+                {{ form.priority }}
+            </div>
+            <div class="col-md-4">
+                <label for="id_status" class="form-label">Status</label>
+                {{ form.status }}
+            </div>
+            <div class="col-md-4">
+                <label for="id_category" class="form-label">Category</label>
+                {{ form.category }}
+            </div>
+            <div class="col-12">
+                <button class="btn btn-outline-success" type="submit">Save</button>
+                <a class="btn btn-outline-info" href="{% url 'task_details' object.pk %}">Cancel</a>
+            </div>
         </form>
-        <a href="{% url 'task_details' object.pk %}">Cancel</a>
-
-        {% endblock %}
     </div>
-
+    {% endblock %}
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
