@@ -2,184 +2,251 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Chibueze C. Igwe">
+    <meta name="generator" content="Hugo 0.72.0">
 
     <!-- Bootstrap CSS Link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
+    {% load static %}
     <!-- Custom CSS Link -->
-    <link rel="stylesheet" href="{% static 'tasks/css/task.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'tasks/css/task.css' %}"> -->
+    <link rel="stylesheet" href="../../static/tasks/css/tasks.css">
 
     <!-- Favicon Link -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./../../../accounts/static/registration/images/tasktopia-icon.png"
+        type="image/x-icon">
 
-    <title>Task List</title>
+    <title>Tasktopia | Tasks</title>
+
 </head>
 
 <body>
-
-    <div class="container-fluid row task-list">
-        <h2 style="color: beige;">My Tasks</h2>
-        <!-- To do card -->
-        <div class="col-md-4 to_do">
-            <div class="row">
-                <span class="col-md-6">
-                    <h4>To do</h4>
-                </span>
-                <span class="col-md-6 new-task">
-                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png" width="20"
-                            height="20" alt="Add task"></i> New
-                        Task</a>
-                </span>
-            </div>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <!-- Task Card-->
-            <ul>
-                {% for task in tasks %}
-                <span class="card mb-2">
-                    <!-- Title, description and task details icon-->
-                    <li class="col-12 card-title">{{ task.title }}</li>
-                    <li class="col-12 card-text">{{ task.description }}</li>
-
-                    <div class="task-details-icon">
-                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
-                                    src="../../static/tasks/img/task-details.png" alt="task details icon" width="20"
-                                    height="20"></span></a>
-                    </div>
-                    <!-- Status icon, status and completion ratio -->
-                    <span class="row">
-                        <li class="col-4">{{ task.title }}</li>
-                        <li class="col-4">{{ task.status }}</li>
-                        <li class="col-4">{{ task.title }}</li>
-                    </span>
-
-                    <!-- Due date, notifications and reports -->
-                    <span class="row">
-                        <li class="col-4">{{ task.due_date }}</li>
-                        <li class="col-4">{{ task.status }}</li>
-                        <li class="col-4">{{ task.category }}</li>
-                    </span>
-                </span>
-                {% endfor %}
+    <header>
+        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Tasktopia</a>
+            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+                data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="#">
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}">Logout</a> |
+                        <a href="{% url 'task_list' %}">My Tasks</a>
+                        {% else %}
+                        <a href="{% url 'login' %}">Login</a> |
+                        <a href="{% url 'signup' %}">Signup</a>
+                        {% endif %}
+                    </a>
+                </li>
             </ul>
-        </div>
-
-        <!-- In progress card -->
-        <div class="col-md-4 to_do">
+        </nav>
+    </header>
+    <main>
+        <div class="container-fluid">
             <div class="row">
-                <span class="col-md-6">
-                    <h4>In progress</h4>
-                </span>
-                <span class="col-md-6">
-                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png" width="20"
-                            height="20" alt="Add task"></i> New
-                        Task</a>
-                </span>
-            </div>
+                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <div class="position-sticky pt-3">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">
+                                    <span data-feather="home"></span>
+                                    Tasks
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="bar-chart-2"></span>
+                                    Analytics & Insights
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="layers"></span>
+                                    Reports
+                                </a>
+                            </li>
+                        </ul>
 
-            <!-- Task Card-->
-            <ul>
-                {% for task in tasks %}
-                <span class="card mb-2">
-                    <!-- Title, description and task details icon-->
-                    <li class="col-12 card-title">{{ task.title }}</li>
-                    <li class="col-12 card-text">{{ task.description }}</li>
+                    </div>
+                </nav>
 
-                    <div class="task-details-icon">
-                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
-                                    src="../../static/tasks/img/task-details.png" alt="task details icon" width="20"
-                                    height="20"></span></a>
+                <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                    <div
+                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">My Task</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group mr-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                                <span data-feather="calendar"></span>
+                                Filter
+                            </button>
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="container-fluid row task-list">
+                        <!-- To do card -->
+                        <div class="col-md-4 to_do card">
+                            <div class="row">
+                                <span class="col-md-6">
+                                    <h4>To do</h4>
+                                </span>
+                                <span class="col-md-6 new-task">
+                                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png"
+                                            width="20" height="20" alt="Add task"></i> New
+                                        Task</a>
+                                </span>
+                            </div>
+
+                            <!-- Task Card-->
+                            <ul>
+                                {% for task in tasks %}
+                                <span class="card mb-2">
+                                    <!-- Title, description and task details icon-->
+                                    <li class="col-12 card-title">{{ task.title }}</li>
+                                    <li class="col-12 card-text">{{ task.description }}</li>
+
+                                    <div class="task-details-icon">
+                                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
+                                                    src="../../static/tasks/img/task-details.png"
+                                                    alt="task details icon" width="20" height="20"></span></a>
+                                    </div>
+                                    <!-- Status icon, status and completion ratio -->
+                                    <span class="row">
+                                        <li class="col-4">{{ task.title }}</li>
+                                        <li class="col-4">{{ task.status }}</li>
+                                        <li class="col-4">{{ task.title }}</li>
+                                    </span>
+
+                                    <!-- Due date, notifications and reports -->
+                                    <span class="row">
+                                        <li class="col-4">{{ task.due_date }}</li>
+                                        <li class="col-4">{{ task.status }}</li>
+                                        <li class="col-4">{{ task.category }}</li>
+                                    </span>
+                                </span>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <!-- In progress card -->
+                        <div class="col-md-4 to_do card">
+                            <div class="row">
+                                <span class="col-md-6">
+                                    <h4>In progress</h4>
+                                </span>
+                                <span class="col-md-6">
+                                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png"
+                                            width="20" height="20" alt="Add task"></i> New
+                                        Task</a>
+                                </span>
+                            </div>
+
+                            <!-- Task Card-->
+                            <ul>
+                                {% for task in tasks %}
+                                <span class="card mb-2">
+                                    <!-- Title, description and task details icon-->
+                                    <li class="col-12 card-title">{{ task.title }}</li>
+                                    <li class="col-12 card-text">{{ task.description }}</li>
+
+                                    <div class="task-details-icon">
+                                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
+                                                    src="../../static/tasks/img/task-details.png"
+                                                    alt="task details icon" width="20" height="20"></span></a>
+                                    </div>
+
+                                    <!-- Status icon, status and completion ratio -->
+                                    <span class="row">
+                                        <li class="col-4">{{ task.title }}</li>
+                                        <li class="col-4">{{ task.status }}</li>
+                                        <li class="col-4">{{ task.title }}</li>
+                                    </span>
+
+                                    <!-- Due date, notifications and reports -->
+                                    <span class="row">
+                                        <li class="col-4">{{ task.due_date }}</li>
+                                        <li class="col-4">{{ task.status }}</li>
+                                        <li class="col-4">{{ task.category }}</li>
+                                    </span>
+                                </span>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <!-- Done card -->
+                        <div class="col-md-4 to_do card">
+                            <div class="row">
+                                <span class="col-md-6">
+                                    <h4>Done</h4>
+                                </span>
+                                <span class="col-md-6">
+                                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png"
+                                            width="20" height="20" alt="Add task"></i> New
+                                        Task</a>
+                                </span>
+                            </div>
+
+                            <!-- Task Card-->
+                            <ul>
+                                {% for task in tasks %}
+                                <span class="card mb-2">
+                                    <!-- Title, description and task details icon-->
+                                    <li class="col-12 card-title">{{ task.title }}</li>
+                                    <li class="col-12 card-text">{{ task.description }}</li>
+
+                                    <div class="task-details-icon">
+                                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
+                                                    src="../../static/tasks/img/task-details.png"
+                                                    alt="task details icon" width="20" height="20"></span></a>
+                                    </div>
+
+                                    <!-- Status icon, status and completion ratio -->
+                                    <span class="row">
+                                        <li class="col-4">{{ task.title }}</li>
+                                        <li class="col-4">{{ task.status }}</li>
+                                        <li class="col-4">{{ task.title }}</li>
+                                    </span>
+
+                                    <!-- Due date, notifications and reports -->
+                                    <span class="row">
+                                        <li class="col-4">{{ task.due_date }}</li>
+                                        <li class="col-4">{{ task.status }}</li>
+                                        <li class="col-4">{{ task.category }}</li>
+                                    </span>
+                                </span>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
 
-                    <!-- Status icon, status and completion ratio -->
-                    <span class="row">
-                        <li class="col-4">{{ task.title }}</li>
-                        <li class="col-4">{{ task.status }}</li>
-                        <li class="col-4">{{ task.title }}</li>
-                    </span>
-
-                    <!-- Due date, notifications and reports -->
-                    <span class="row">
-                        <li class="col-4">{{ task.due_date }}</li>
-                        <li class="col-4">{{ task.status }}</li>
-                        <li class="col-4">{{ task.category }}</li>
-                    </span>
-                </span>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <!-- Done card -->
-        <div class="col-md-4 to_do">
-            <div class="row">
-                <span class="col-md-6">
-                    <h4>Done</h4>
-                </span>
-                <span class="col-md-6">
-                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png" width="20"
-                            height="20" alt="Add task"></i> New
-                        Task</a>
-                </span>
+                </main>
             </div>
-
-            <!-- Task Card-->
-            <ul>
-                {% for task in tasks %}
-                <span class="card mb-2">
-                    <!-- Title, description and task details icon-->
-                    <li class="col-12 card-title">{{ task.title }}</li>
-                    <li class="col-12 card-text">{{ task.description }}</li>
-
-                    <div class="task-details-icon">
-                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
-                                    src="../../static/tasks/img/task-details.png" alt="task details icon" width="20"
-                                    height="20"></span></a>
-                    </div>
-
-                    <!-- Status icon, status and completion ratio -->
-                    <span class="row">
-                        <li class="col-4">{{ task.title }}</li>
-                        <li class="col-4">{{ task.status }}</li>
-                        <li class="col-4">{{ task.title }}</li>
-                    </span>
-
-                    <!-- Due date, notifications and reports -->
-                    <span class="row">
-                        <li class="col-4">{{ task.due_date }}</li>
-                        <li class="col-4">{{ task.status }}</li>
-                        <li class="col-4">{{ task.category }}</li>
-                    </span>
-                </span>
-                {% endfor %}
-            </ul>
         </div>
-    </div>
-    </div>
-
-
-    {% csrf_token %}
-    {{ form.as_p }}
-    <p>
-        {% if request.user.is_authenticated %}
-        <a href="{% url 'logout' %}">Logout</a> |
-        <a href="{% url 'task_list' %}">My Tasks</a>
-        {% else %}
-        <a href="{% url 'login' %}">Login</a> |
-        <a href="{% url 'signup' %}">Signup</a>
-        {% endif %}
-    </p>
-
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
         integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
+        integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF"
+        crossorigin="anonymous"></script>
+
+    <script src="../../static/tasks/js/task.js"></script>
 </body>
 
 </html>

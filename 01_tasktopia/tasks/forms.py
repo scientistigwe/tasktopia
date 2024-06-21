@@ -1,5 +1,5 @@
 from django import forms
-from .models import TaskRelationship, Task, Category
+from.models import TaskRelationship, Task, Category
 
 class TaskForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -14,7 +14,6 @@ class TaskForm(forms.ModelForm):
         fields = ['title', 'description', 'due_date', 'priority', 'status', 'category']
 
     def save(self, commit=True):
-        task_relationship = super().save(commit=False)
         task_data = {
             'title': self.cleaned_data['title'],
             'description': self.cleaned_data['description'],
@@ -24,7 +23,7 @@ class TaskForm(forms.ModelForm):
             'category': self.cleaned_data['category']
         }
         task = Task.objects.create(**task_data)
-        task_relationship.task = task
+        task_relationship = TaskRelationship(task=task)
         if commit:
             task_relationship.save()
         return task_relationship
@@ -32,4 +31,4 @@ class TaskForm(forms.ModelForm):
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ['category']
+        fields = ['category']  
