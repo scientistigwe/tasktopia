@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import UserProfile, Category, Notification, Report, Weather, Forecast, EventLog
+from .models import Category, Notification, Report, Weather, Forecast, EventLog
+from accounts.models import User
 
 # Register your models here.
 

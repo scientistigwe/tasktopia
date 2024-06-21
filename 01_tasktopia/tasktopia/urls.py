@@ -8,10 +8,9 @@ from django.views.generic.base import TemplateView
 urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
-    path('reports/', include('reports.urls')),
-    path('tasks/', include('tasks.urls')),  # Updated path for tasks
+    path('accounts/', include('django.contrib.auth.urls')),
+    #path('reports/', include('reports.urls')),
+    path('tasks/', include('tasks.urls')), 
     #path('dashboard/', dashboard_view, name='dashboard'),
-
 ]

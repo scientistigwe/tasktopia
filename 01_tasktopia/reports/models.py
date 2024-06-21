@@ -1,10 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
-from dashboard.models import UserProfile, Task, Category, Notification, Report, Weather, Forecast, EventLog
+from dashboard.models import Task, Category, Notification, Report, Weather, Forecast, EventLog
+from accounts.models import User
+from django.conf import settings
+from django.db import models
 
 class ReportDetail(models.Model):
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    task = models.OneToOneField(Task, on_delete=models.CASCADE)  # Assuming task app is named 'task'
+    user_profile = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.OneToOneField(Task, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     notification = models.OneToOneField(Notification, on_delete=models.CASCADE)
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
@@ -24,8 +26,8 @@ class UserReport(models.Model):
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"User: {self.user.username}, Report: {self.report}"
-    
+        return f'Report by {self.user.username}'
+
 class ReportWeather(models.Model):
     report = models.OneToOneField(Report, on_delete=models.CASCADE)
     weather = models.ForeignKey(Weather, on_delete=models.CASCADE)

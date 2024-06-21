@@ -6,10 +6,10 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    path('login/', views.LoginView.as_view(), name='login'),  # Use LoginView class-based view
-    path('logout/', views.LogoutView.as_view(), name='logout'),  # Use LogoutView class-based view
-    path('signup/', views.SignupView.as_view(), name='signup'),  # Use SignupView class-based view
-    path('tasks/', views.TaskListView.as_view(), name='task_list'),  # Use TaskListView class-based view
+    path('login/', views.LoginView.as_view(), name='login'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('signup/', views.SignupView.as_view(), name='signup'),
+    path('tasks/', views.TaskListView.as_view(), name='task_list'),
     path('password_reset/', auth_views.PasswordResetView.as_view(
         template_name='registration/password_reset_form.html'
     ), name='password_reset'),

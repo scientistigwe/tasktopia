@@ -1,10 +1,10 @@
 from django.db import models
 from dashboard.models import Task, Category, Report, Weather, Forecast, EventLog
-from accounts.models import UserProfile 
+from accounts.models import User
 
 
 class UserTask(models.Model):
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
     event_log = models.OneToOneField(EventLog, on_delete=models.CASCADE)
 

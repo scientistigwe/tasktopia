@@ -58,15 +58,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'tasktopia.urls'
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'accounts/static/registration'),
-    os.path.join(BASE_DIR, 'tasks/static/tasks'),
-    os.path.join(BASE_DIR, 'dashboard/static/dashboard'),
-    os.path.join(BASE_DIR, 'reports/static/reports'),
-]
-
 # Template files
 TEMPLATES = [
     {
@@ -140,7 +131,19 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'accounts/static/registration'),
+    os.path.join(BASE_DIR, 'tasks/static/tasks'),
+    os.path.join(BASE_DIR, 'dashboard/static/dashboard'),
+    os.path.join(BASE_DIR, 'reports/static/reports'),
+]
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/tasks/'  # Redirect to tasks page after login
+LOGOUT_REDIRECT_URL = '/'
+
