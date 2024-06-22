@@ -11,13 +11,14 @@ class Task(models.Model):
         PENDING = 'Pending'
         COMPLETED = 'Completed'
         OVERDUE = 'Overdue'
+        IN_PROGRESS = 'In Progress'
 
     task_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
     description = models.TextField()
     due_date = models.DateTimeField()
     priority = models.CharField(max_length=10, choices=Priority.choices, default=Priority.MEDIUM)
-    status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='category_tasks')
@@ -28,11 +29,11 @@ class Task(models.Model):
 
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
-    category = models.CharField(max_length=225)
+    category_name = models.CharField(max_length=225)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Category: {self.category}"
+        return f"Category: {self.category_name}"
 
 class Notification(models.Model):
     notification_id = models.AutoField(primary_key=True)

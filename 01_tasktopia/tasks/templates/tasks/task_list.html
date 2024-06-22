@@ -110,7 +110,7 @@
                             <!-- Task Cards -->
                             <ul>
                                 {% for task in tasks %}
-                                {% if task.status == 'To do' %}
+                                {% if task.status == 'Pending' or task.status == 'Overdue' %}
                                 <li class="card mb-2">
                                     <span class="col-12 card-title">{{ task.title }}</span>
                                     <span class="col-12 card-text">{{ task.description }}</span>
@@ -180,7 +180,7 @@
                             <!-- Task Cards -->
                             <ul>
                                 {% for task in tasks %}
-                                {% if task.status == 'Done' %}
+                                {% if task.status == 'Completed' %}
                                 <li class="card mb-2">
                                     <span class="col-12 card-title">{{ task.title }}</span>
                                     <span class="col-12 card-text">{{ task.description }}</span>

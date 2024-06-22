@@ -26,6 +26,8 @@ from .views import (
     productivity_trends,
     category_wise_task_completion,
 )
+from django.urls import path
+from . import views
 
 urlpatterns = [
     # User Profile URLs
@@ -68,4 +70,7 @@ urlpatterns = [
     path('dashboard/tasks-created-vs-completed/', tasks_created_vs_completed, name='tasks-created-vs-completed'),
     path('dashboard/productivity-trends/', productivity_trends, name='productivity-trends'),
     path('dashboard/category-wise-task-completion/', category_wise_task_completion, name='category-wise-task-completion'),
+      path('dash/', views.dashboard_view, name='dash-view'),  # Existing Django view
+    path('dash-dash/', views.DashView.as_view(), name='dash-dash-view'),  # Example Dash view
+   
 ]
