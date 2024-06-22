@@ -13,28 +13,32 @@
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
     <!-- Custom CSS Link -->
-    <link rel="stylesheet" href="../../static/tasks/css/tasks.css">
+    <link rel="stylesheet" href="../../static/tasks/css/task.css">
 
     <!-- Favicon Link -->
     <link rel="shortcut icon" href="./../../../accounts/static/registration/images/tasktopia-icon.png"
         type="image/x-icon">
 
     <title>Tasktopia | Tasks</title>
-
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#" id="tasktopia"><img
-                    src="../../static/tasks/img/tasktopia-icon.png" alt="brand logo" width="40" height="40">
-                Tasktopia</a>
+        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow mb-4">
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#" id="tasktopia">
+                <img src="../../static/tasks/img/tasktopia-icon.png" alt="brand logo" width="40" height="40">
+                Tasktopia
+            </a>
             <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
                 data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+            <div class="d-flex justify-content-between flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+                id="my-task">
+                <h4>Welcome, {{ user.first_name }} <img src="../../static/tasks/img/clap.png" width="30" height="30"
+                        alt="welcome clap"> </h4>
+            </div>
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
                     <span class="logout">
@@ -53,156 +57,194 @@
     <main>
         <div class="container-fluid">
             <div class="row">
-                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                    <div class="position-sticky pt-3">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">
-                                    <span data-feather="home"></span>
-                                    Tasks
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="bar-chart-2"></span>
-                                    Analytics & Insights
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="layers"></span>
-                                    Reports
-                                </a>
-                            </li>
-                        </ul>
-
-                    </div>
-                </nav>
-
-                <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                    <div
-                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">My Task</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                                <span data-feather="calendar"></span>
-                                Filter
-                            </button>
-                            <div class="btn-group mr-2">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="container-fluid row task-list">
-                        <!-- To do card -->
-                        <div class="col-md-4 to_do card">
-                            <div class="row">
-                                <span class="col-md-7 d-flex justify-content-start">
-                                    <h6>To do</h6>
-                                </span>
-                                <span class="col-md-5 new-task d-flex justify-content-end">
-                                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png"
-                                            width="20" height="20" alt="Add task"></i> New Task</a>
-                                </span>
-                            </div>
-
-                            <!-- Task Cards -->
-                            <ul>
-                                {% for task in tasks %}
-                                {% if task.status == 'Pending' or task.status == 'Overdue' %}
-                                <li class="card mb-2">
-                                    <span class="col-12 card-title">{{ task.title }}</span>
-                                    <span class="col-12 card-text">{{ task.description }}</span>
-                                    <div class="task-details-icon">
-                                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
-                                                    src="../../static/tasks/img/task-details.png"
-                                                    alt="task details icon" width="20" height="20"></a></span>
-                                    </div>
-                                    <span class="row">
-                                        <span class="col-4">{{ task.due_date }}</span>
-                                        <span class="col-4">{{ task.status }}</span>
-                                        <span class="col-4">{{ task.category }}</span>
-                                    </span>
+                <div class="row">
+                    <nav id="sidebarMenu" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse show card">
+                        <div class="drag-handle"></div>
+                        <div class="position-sticky pt-5">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/">
+                                        <span data-feather="home"></span>
+                                        Tasks
+                                    </a>
                                 </li>
-                                {% endif %}
-                                {% endfor %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <span data-feather="bar-chart-2"></span>
+                                        Analytics & Insights
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <span data-feather="layers"></span>
+                                        Reports
+                                    </a>
+                                </li>
                             </ul>
                         </div>
+                    </nav>
 
-                        <!-- In Progress card -->
-                        <div class="col-md-4 to_do card">
-                            <div class="row">
-                                <span class="col-md-7  d-flex justify-content-start">
-                                    <h6>In Progress</h6>
-                                </span>
-                                <span class="col-md-5 new-task d-flex justify-content-end">
-                                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png"
-                                            width="20" height="20" alt="Add task"></i> New Task</a>
-                                </span>
+                    <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                        <div class="row task-list">
+                            <!-- To do card -->
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="row">
+                                        <span class="col-md-7 d-flex justify-content-start">
+                                            <h6>To do</h6>
+                                        </span>
+                                        <span class="col-md-5 new-task d-flex justify-content-end">
+                                            <a href="{% url 'create_task' %}">
+                                                Task <img src="../../static/tasks/img/add-task.png" width="15"
+                                                    height="15" alt="Add task">
+                                            </a>
+                                        </span>
+                                    </div>
+
+                                    <!-- Task Cards -->
+                                    <ul>
+                                        {% for task in tasks %}
+                                        {% if task.status == 'Pending' %}
+                                        <div class="to_do">
+                                            <li class="card mb-1">
+                                                <span class="col-12 card-title" style="color: purple;">
+                                                    {{ task.title }}
+                                                </span>
+                                                <span class="col-12 card-text">{{ task.description }}</span>
+                                                <div class="task-details-icon">
+                                                    <span class="col-12 card-title">
+                                                        <a href="{% url 'task_details' task.pk %}">
+                                                            <img src="../../static/tasks/img/task-detail.png"
+                                                                alt="task details icon" width="20" height="20">
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                                <span class="row">
+                                                    <span class="col-4">{{ task.due_date }}</span>
+                                                    <span class="col-4" style="color: purple;">{{ task.status }}</span>
+                                                    <span class="col-4">{{ task.category }}</span>
+                                                </span>
+                                            </li>
+                                            {% endif %}
+                                            {% endfor %}
+
+                                            {% for task in tasks %}
+                                            {% if task.status == 'Overdue' %}
+                                        </div>
+                                        <li class="card mb-1">
+                                            <span class="col-12 card-title" style="color: red;">
+                                                {{ task.title }}
+                                            </span>
+                                            <span class="col-12 card-text">{{ task.description }}</span>
+                                            <div class="task-details-icon">
+                                                <span class="col-12 card-title">
+                                                    <a href="{% url 'task_details' task.pk %}">
+                                                        <img src="../../static/tasks/img/task-detail.png"
+                                                            alt="task details icon" width="20" height="20">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                            <span class="row">
+                                                <span class="col-4">{{ task.due_date }}</span>
+                                                <span class="col-4" style="color: red;">{{ task.status }}</span>
+                                                <span class="col-4">{{ task.category }}</span>
+                                            </span>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+
+                                </div>
+                            </div>
+                            <!-- In Progress card -->
+                            <div class="col-md-4">
+                                <div class="to_do card">
+                                    <div class="row">
+                                        <span class="col-md-7 d-flex justify-content-start">
+                                            <h6>In Progress</h6>
+                                        </span>
+                                        <span class="col-md-5 new-task d-flex justify-content-end">
+                                            <a href="{% url 'create_task' %}">
+                                                Task <img src="../../static/tasks/img/add-task.png" width="15"
+                                                    height="15" alt="Add task">
+                                            </a>
+                                        </span>
+                                    </div>
+
+                                    <!-- Task Cards -->
+                                    <ul>
+                                        {% for task in tasks %}
+                                        {% if task.status == 'In Progress' %}
+                                        <li class="card mb-1">
+                                            <span class="col-12 card-title" style="color:goldenrod;">{{ task.title
+                                                }}</span>
+                                            <span class="col-12 card-text">{{ task.description }}</span>
+                                            <div class="task-details-icon">
+                                                <span class="col-12 card-title">
+                                                    <a href="{% url 'task_details' task.pk %}">
+                                                        <img src="../../static/tasks/img/task-detail.png"
+                                                            alt="task details icon" width="20" height="20">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                            <span class="row">
+                                                <span class="col-4">{{ task.due_date }}</span>
+                                                <span class="col-4" style="color: goldenrod;">{{ task.status }}</span>
+                                                <span class="col-4">{{ task.category }}</span>
+                                            </span>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             </div>
 
-                            <!-- Task Cards -->
-                            <ul>
-                                {% for task in tasks %}
-                                {% if task.status == 'In Progress' %}
-                                <li class="card mb-2">
-                                    <span class="col-12 card-title">{{ task.title }}</span>
-                                    <span class="col-12 card-text">{{ task.description }}</span>
-                                    <div class="task-details-icon">
-                                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
-                                                    src="../../static/tasks/img/task-details.png"
-                                                    alt="task details icon" width="20" height="20"></a></span>
+                            <!-- Done card -->
+                            <div class="col-md-4">
+                                <div class="to_do card">
+                                    <div class="row">
+                                        <span class="col-md-7 d-flex justify-content-start">
+                                            <h6>Done</h6>
+                                        </span>
+                                        <span class="col-md-5 new-task d-flex justify-content-end">
+                                            <a href="{% url 'create_task' %}">
+                                                Task <img src="../../static/tasks/img/add-task.png" width="15"
+                                                    height="15" alt="Add task">
+                                            </a>
+                                        </span>
                                     </div>
-                                    <span class="row">
-                                        <span class="col-4">{{ task.due_date }}</span>
-                                        <span class="col-4">{{ task.status }}</span>
-                                        <span class="col-4">{{ task.category }}</span>
-                                    </span>
-                                </li>
-                                {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </div>
 
-                        <!-- Done card -->
-                        <div class="col-md-4 to_do card">
-                            <div class="row">
-                                <span class="col-md-7 d-flex justify-content-start">
-                                    <h6>Done</h6>
-                                </span>
-                                <span class="col-md-5 new-task d-flex justify-content-end">
-                                    <a href="{% url 'create_task' %}"><img src="../../static/tasks/img/add-task.png"
-                                            width="20" height="20" alt="Add task"></i> New Task</a>
-                                </span>
+                                    <!-- Task Cards -->
+                                    <ul>
+                                        {% for task in tasks %}
+                                        {% if task.status == 'Completed' %}
+                                        <li class="card mb-1">
+                                            <span class="col-12 card-title" style="color: green;">{{ task.title
+                                                }}</span>
+                                            <span class="col-12 card-text">{{ task.description }}</span>
+                                            <div class="task-details-icon">
+                                                <span class="col-12 card-title">
+                                                    <a href="{% url 'task_details' task.pk %}">
+                                                        <img src="../../static/tasks/img/task-detail.png"
+                                                            alt="task details icon" width="20" height="20">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                            <span class="row">
+                                                <span class="col-4">{{ task.due_date }}</span>
+                                                <span class="col-4" style="color: green;">{{ task.status }}</span>
+                                                <span class="col-4">{{ task.category }}</span>
+                                            </span>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             </div>
-
-                            <!-- Task Cards -->
-                            <ul>
-                                {% for task in tasks %}
-                                {% if task.status == 'Completed' %}
-                                <li class="card mb-2">
-                                    <span class="col-12 card-title">{{ task.title }}</span>
-                                    <span class="col-12 card-text">{{ task.description }}</span>
-                                    <div class="task-details-icon">
-                                        <span class="col-12 card-title"><a href="{% url 'task_details' task.pk %}"><img
-                                                    src="../../static/tasks/img/task-details.png"
-                                                    alt="task details icon" width="20" height="20"></a></span>
-                                    </div>
-                                    <span class="row">
-                                        <span class="col-4">{{ task.due_date }}</span>
-                                        <span class="col-4">{{ task.status }}</span>
-                                        <span class="col-4">{{ task.category }}</span>
-                                    </span>
-                                </li>
-                                {% endif %}
-                                {% endfor %}
-                            </ul>
                         </div>
-                    </div>
-                </main>
+                    </main>
+                </div>
             </div>
-        </div>
     </main>
 
     <!-- Bootstrap JS and Feather Icons JS -->
