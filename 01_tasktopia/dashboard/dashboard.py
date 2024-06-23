@@ -1,56 +1,56 @@
-# dashboard/dashboard.py
-
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc, html
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output
 from django_plotly_dash import DjangoDash
-from django.conf import settings
-from dashboard.views import task_completion_rate, overdue_tasks, task_priority_distribution, tasks_created_vs_completed, productivity_trends, category_wise_task_completion
+import requests
 
-# Define your Dash app
-app = DjangoDash(name='dashboard', serve_locally=False)  # serve_locally=False for production
+# Initialize DjangoDash app with serve_locally=True for local development
+app = DjangoDash(name='TasktopiaDashboard', serve_locally=True)
 
-# Define the layout of your Dash app
+# Define the layout of the dashboard using Dash components
 app.layout = html.Div(
     [
-        html.H1('Your Dashboard Title'),
+        html.H1('Tasktopia | Analytics & Insights'),
         
-        # Example of a bar chart
+        # Placeholder graphs that will be populated dynamically
         dcc.Graph(id='task-completion-bar'),
-        
-        # Example of a pie chart
         dcc.Graph(id='task-priority-pie'),
-
-        # Example of a line chart
         dcc.Graph(id='productivity-trends-line'),
         
-        # Example of a table
         html.H2('Category-wise Task Completion'),
-        html.Table(id='category-task-completion-table'),
         
-        # Example of refreshing data button
+        # Table to display category-wise task completion
+        html.Table(id='category-task-completion-table', 
+                   children=[
+                       html.Tr([
+                           html.Th("Category"), 
+                           html.Th("Completed Tasks"), 
+                           html.Th("Total Tasks"), 
+                           html.Th("Completion Rate (%)")
+                       ])
+                   ]),
+        
+        # Button to trigger data refresh
         html.Button('Refresh Data', id='refresh-button'),
         
-        # Example of a hidden div to store data
+        # Hidden div to store data from callbacks
         html.Div(id='hidden-div', style={'display': 'none'})
     ]
 )
 
-# Example callback for task completion bar chart
+# Callback to update the Task Completion Rate bar chart
 @app.callback(
     Output('task-completion-bar', 'figure'),
-    [Input('refresh-button', 'n_clicks')]  # Example input (could be a button to refresh data)
+    [Input('refresh-button', 'n_clicks')]
 )
 def update_task_completion_bar(n_clicks):
-    # Fetch data using your existing Django views functions
-    completion_rate_response = task_completion_rate(None)  # Pass None for request parameter
+    response = requests.get('http://127.0.0.1:8000/dashboard/task-completion-rate/')
+    data = response.json()
 
-    # Construct a bar chart
     figure = {
         'data': [
-            {'x': ['Completion Rate'], 'y': [completion_rate_response.data['completion_rate']], 'type': 'bar', 'name': 'Completion Rate'}
+            {'x': ['Completion Rate'], 'y': [data['completion_rate']], 'type': 'bar', 'name': 'Completion Rate'}
         ],
         'layout': {
             'title': 'Task Completion Rate',
@@ -60,18 +60,17 @@ def update_task_completion_bar(n_clicks):
 
     return figure
 
-# Example callback for task priority pie chart
+# Callback to update the Task Priority Distribution pie chart
 @app.callback(
     Output('task-priority-pie', 'figure'),
-    [Input('refresh-button', 'n_clicks')]  # Example input (could be a button to refresh data)
+    [Input('refresh-button', 'n_clicks')]
 )
 def update_task_priority_pie(n_clicks):
-    # Fetch data using your existing Django views functions
-    priority_distribution_response = task_priority_distribution(None)
+    response = requests.get('http://127.0.0.1:8000/dashboard/task-priority-distribution/')
+    data = response.json()
 
-    # Construct a pie chart
-    labels = [item['priority'] for item in priority_distribution_response.data]
-    values = [item['count'] for item in priority_distribution_response.data]
+    labels = [item['priority'] for item in data]
+    values = [item['count'] for item in data]
 
     figure = {
         'data': [
@@ -84,18 +83,17 @@ def update_task_priority_pie(n_clicks):
 
     return figure
 
-# Example callback for productivity trends line chart
+# Callback to update the Productivity Trends line chart
 @app.callback(
     Output('productivity-trends-line', 'figure'),
-    [Input('refresh-button', 'n_clicks')]  # Example input (could be a button to refresh data)
+    [Input('refresh-button', 'n_clicks')]
 )
 def update_productivity_trends_line(n_clicks):
-    # Fetch data using your existing Django views functions
-    productivity_trends_response = productivity_trends(None)
+    response = requests.get('http://127.0.0.1:8000/dashboard/productivity-trends/')
+    data = response.json()
 
-    # Construct a line chart
-    x_data = [item['created_at__date'] for item in productivity_trends_response.data]
-    y_data = [item['count'] for item in productivity_trends_response.data]
+    x_data = [item['created_at__date'] for item in data]
+    y_data = [item['count'] for item in data]
 
     figure = {
         'data': [
@@ -110,24 +108,22 @@ def update_productivity_trends_line(n_clicks):
 
     return figure
 
-# Example callback for category-wise task completion table
+# Callback to update the Category-wise Task Completion table
 @app.callback(
     Output('category-task-completion-table', 'children'),
-    [Input('refresh-button', 'n_clicks')]  # Example input (could be a button to refresh data)
+    [Input('refresh-button', 'n_clicks')]
 )
 def update_category_task_completion_table(n_clicks):
-    # Fetch data using your existing Django views functions
-    category_wise_task_completion_response = category_wise_task_completion(None)
+    response = requests.get('http://127.0.0.1:8000/dashboard/category-wise-task-completion/')
+    data = response.json()
 
-    # Construct an HTML table
-    table_rows = []
-    for item in category_wise_task_completion_response.data:
-        table_rows.append(
-            html.Tr([
-                html.Td(item['category']),
-                html.Td(f"{item['completed_tasks']} / {item['total_tasks']}"),
-                html.Td(f"{item['completion_rate']:.2f}%")
-            ])
-        )
+    table_rows = [
+        html.Tr([
+            html.Td(item['category']),
+            html.Td(item['completed_tasks']),
+            html.Td(item['total_tasks']),
+            html.Td(f"{item['completion_rate']:.2f}%")
+        ]) for item in data
+    ]
 
     return table_rows

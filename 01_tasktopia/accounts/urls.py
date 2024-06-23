@@ -8,6 +8,14 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('signup/', views.SignupView.as_view(), name='signup'),
     path('tasks/', views.TaskListView.as_view(), name='task_list'),
+    path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('profile/edit/', views.ProfileEditView.as_view(), name='profile_edit'),
+    path('password_change/', auth_views.PasswordChangeView.as_view(
+        template_name='registration/password_change_form.html'
+    ), name='password_change'),
+    path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(
+        template_name='registration/password_change_done.html'
+    ), name='password_change_done'),
     path('password_reset/', auth_views.PasswordResetView.as_view(
         template_name='registration/password_reset_form.html'
     ), name='password_reset'),
@@ -20,4 +28,5 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
         template_name='registration/password_reset_complete.html'
     ), name='password_reset_complete'),
+    path('delete_account/', views.DeleteAccountView.as_view(), name='delete_account'),
 ]

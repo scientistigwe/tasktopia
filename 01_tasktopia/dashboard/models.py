@@ -1,17 +1,28 @@
 from django.db import models
+from django.utils import timezone
 from accounts.models import User
+from django.conf import settings
+
+class Category(models.Model):
+    category_id = models.AutoField(primary_key=True)
+    category_name = models.CharField(max_length=225)
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_category')
+
+    def __str__(self):
+        return self.category_name
 
 class Task(models.Model):
     class Priority(models.TextChoices):
-        HIGH = 'High'
-        MEDIUM = 'Medium'
-        LOW = 'Low'
+        HIGH = 'High', 'High'
+        MEDIUM = 'Medium', 'Medium'
+        LOW = 'Low', 'Low'
 
     class Status(models.TextChoices):
-        PENDING = 'Pending'
-        COMPLETED = 'Completed'
-        OVERDUE = 'Overdue'
-        IN_PROGRESS = 'In Progress'
+        PENDING = 'Pending', 'Pending'
+        COMPLETED = 'Completed', 'Completed'
+        OVERDUE = 'Overdue', 'Overdue'
+        IN_PROGRESS = 'In Progress', 'In Progress'
 
     task_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
@@ -19,27 +30,19 @@ class Task(models.Model):
     due_date = models.DateTimeField()
     priority = models.CharField(max_length=10, choices=Priority.choices, default=Priority.MEDIUM)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='category_tasks')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_tasks')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category_tasks')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_tasks')
 
     def __str__(self):
-        return f"Title: {self.title}, Description: {self.description}, Priority: {self.priority}, Status: {self.status}"
-
-class Category(models.Model):
-    category_id = models.AutoField(primary_key=True)
-    category_name = models.CharField(max_length=225)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Category: {self.category_name}"
+        return f"Title: {self.title}, Priority: {self.priority}, Status: {self.status}"
 
 class Notification(models.Model):
     notification_id = models.AutoField(primary_key=True)
     message = models.TextField()
     sent_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_notifications')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_notifications')
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_notifications')
 
     def __str__(self):
@@ -49,10 +52,10 @@ class Report(models.Model):
     report_id = models.AutoField(primary_key=True)
     generated_at = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_reports')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_reports')
 
     def __str__(self):
-        return f"Content: {self.content}"
+        return f"Generated at: {self.generated_at}"
 
 class Weather(models.Model):
     weather_id = models.AutoField(primary_key=True)
@@ -62,7 +65,7 @@ class Weather(models.Model):
     temperature = models.IntegerField()
     current_location = models.CharField(max_length=50)
     event_location = models.CharField(max_length=50)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_weather')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_weather')
 
     def __str__(self):
         return f"Condition: {self.condition}, Current Location: {self.current_location}, Event Location: {self.event_location}"
@@ -73,7 +76,7 @@ class Forecast(models.Model):
     forecast_condition = models.CharField(max_length=50)
     forecast_temperature = models.IntegerField()
     forecast_location = models.CharField(max_length=50)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_forecasts')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_forecast')
     weather = models.OneToOneField(Weather, on_delete=models.CASCADE, related_name='forecast')
 
     def __str__(self):
@@ -83,7 +86,7 @@ class EventLog(models.Model):
     eventlog_id = models.AutoField(primary_key=True)
     event = models.CharField(max_length=225)
     event_time = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_event_logs')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_eventlog')
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_event_logs')
 
     def __str__(self):

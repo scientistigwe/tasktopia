@@ -3,11 +3,32 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.generic import TemplateView, ListView
 from .forms import SignupForm
 from dashboard.models import Task
 from .models import User
+from django.shortcuts import redirect
+from django.views.generic import TemplateView, UpdateView, View, ListView
+from django.contrib.auth.forms import UserChangeForm
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'registration/profile.html'
+
+class ProfileEditView(LoginRequiredMixin, UpdateView):
+    form_class = UserChangeForm
+    template_name = 'registration/profile_edit.html'
+    success_url = reverse_lazy('profile')
+
+    def get_object(self):
+        return self.request.user
+
+class DeleteAccountView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        user.delete()
+        return redirect('index')
+    
 class SignupView(View):
     template_name = 'registration/signup.html'
 

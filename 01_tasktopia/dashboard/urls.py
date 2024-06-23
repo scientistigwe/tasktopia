@@ -1,9 +1,7 @@
-# urls.py
-
 from django.urls import path
 from .views import (
-    UserProfileListView,
-    UserProfileDetailView,
+    UserListView,
+    UserDetailView,
     TaskListView,
     TaskDetailView,
     CategoryListView,
@@ -18,21 +16,27 @@ from .views import (
     ForecastDetailView,
     EventLogListView,
     EventLogDetailView,
-    dashboard_view,
+    DashboardView,
     task_completion_rate,
     overdue_tasks,
     task_priority_distribution,
-    tasks_created_vs_completed,
+    TotalTasksView,
+    PercentOverdueView,
+    PercentCompletedView,
     productivity_trends,
     category_wise_task_completion,
+    tasks_created_vs_completed,
+    user_activity_levels,
+    filtered_tasks,
+    real_time_tasks,
+    get_real_time_tasks_created,
+    get_real_time_tasks_completed,
 )
-from django.urls import path
-from . import views
 
 urlpatterns = [
-    # User Profile URLs
-    path('user-profiles/', UserProfileListView.as_view(), name='userprofile-list'),
-    path('user-profiles/<int:pk>/', UserProfileDetailView.as_view(), name='userprofile-detail'),
+    # User URLs
+    path('users/', UserListView.as_view(), name='user-list'),
+    path('users/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
 
     # Task URLs
     path('tasks/', TaskListView.as_view(), name='task-list'),
@@ -59,18 +63,23 @@ urlpatterns = [
     path('forecasts/<int:pk>/', ForecastDetailView.as_view(), name='forecast-detail'),
 
     # EventLog URLs
-    path('event-logs/', EventLogListView.as_view(), name='eventlog-list'),
-    path('event-logs/<int:pk>/', EventLogDetailView.as_view(), name='eventlog-detail'),
+    path('event-logs/', EventLogListView.as_view(), name='event-log-list'),
+    path('event-logs/<int:pk>/', EventLogDetailView.as_view(), name='event-log-detail'),
 
     # Dashboard URLs
-    path('dashboard/', dashboard_view, name='dashboard'),
-    path('dashboard/task-completion-rate/', task_completion_rate, name='task-completion-rate'),
-    path('dashboard/overdue-tasks/', overdue_tasks, name='overdue-tasks'),
-    path('dashboard/task-priority-distribution/', task_priority_distribution, name='task-priority-distribution'),
-    path('dashboard/tasks-created-vs-completed/', tasks_created_vs_completed, name='tasks-created-vs-completed'),
-    path('dashboard/productivity-trends/', productivity_trends, name='productivity-trends'),
-    path('dashboard/category-wise-task-completion/', category_wise_task_completion, name='category-wise-task-completion'),
-      path('dash/', views.dashboard_view, name='dash-view'),  # Existing Django view
-    path('dash-dash/', views.DashView.as_view(), name='dash-dash-view'),  # Example Dash view
-   
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
+    path('task-completion-rate/', task_completion_rate, name='task-completion-rate'),
+    path('overdue-tasks/', overdue_tasks, name='overdue-tasks'),
+    path('task-priority-distribution/', task_priority_distribution, name='task-priority-distribution'),
+    path('tasks-created-vs-completed/', tasks_created_vs_completed, name='tasks-created-vs-completed'),
+    path('productivity-trends/', productivity_trends, name='productivity-trends'),
+    path('category-wise-task-completion/', category_wise_task_completion, name='category-wise-task-completion'),
+    path('total-tasks/', TotalTasksView.as_view(), name='total_tasks'),
+    path('percent-overdue/', PercentOverdueView.as_view(), name='percent-overdue'),
+    path('percent-completed/', PercentCompletedView.as_view(), name='percent-completed'),
+    path('user-activity-levels/', user_activity_levels, name='user-activity-levels'),
+    path('filtered-tasks/', filtered_tasks, name='filtered-tasks'),
+    path('real-time-tasks/', real_time_tasks, name='real-time-tasks'),
+    path('get-real-time-tasks-created/', get_real_time_tasks_created, name='get-real-time-tasks-created'),
+    path('get-real-time-tasks-completed/', get_real_time_tasks_completed, name='get-real-time-tasks-completed'),
 ]

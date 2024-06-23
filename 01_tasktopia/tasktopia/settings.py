@@ -44,9 +44,13 @@ INSTALLED_APPS = [
     'reports',
     'tasks',
     'accounts',
+    'rest_framework',
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
+
 ]
 
 MIDDLEWARE = [
+    'django_plotly_dash.middleware.BaseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,8 +68,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'accounts/templates/registration'),
-            os.path.join(BASE_DIR, 'tasks/templates'),
-            os.path.join(BASE_DIR, 'dashboard/templates'),
+            os.path.join(BASE_DIR, 'tasks/templates/tasks'),
+            os.path.join(BASE_DIR, 'dashboard/templates/dashboard'),
             os.path.join(BASE_DIR, 'reports/templates'),
         ],
         'APP_DIRS': True,
@@ -128,6 +132,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+# This is where `collectstatic` will put all static files.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = 'static/'
 
@@ -150,3 +156,6 @@ LOGOUT_REDIRECT_URL = 'login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+PLOTLY_DASH = {
+    'serve_locally': True
+}
