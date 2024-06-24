@@ -7,7 +7,14 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.72.0">
-    <title>Tasktopia | Home</title>
+
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
 
     <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/album/">
 
@@ -18,6 +25,7 @@
     <!-- Custom CSS link -->
     <link rel="stylesheet" href="../../static/registration/css/account-styles.css">
 
+    <title>Home | Tasktopia</title>
 </head>
 
 <body>
@@ -25,13 +33,153 @@
         <div class="collapse bg-dark" id="navbarHeader">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-8 col-md-7 py-4">
-                        <h4 class="text-white">About</h4>
-                        <p class="text-muted">A context-aware, intelligent to-do list.</p>
+                    <div class="col-sm-8 col-md-8 py-4 ">
+                        <h4 style="color: aqua;">About</h4>
+                        <h6 class="" style="font-size: 1.2em; color: beige;">
+                            <strong>TaskTopia: A place to build your daily dreams, one task at a time.</strong>
+                            <p>Overview</p>
+                            <p>TaskTopia is a context-aware, intelligent to-do list tool designed to help individuals
+                                and teams organize, track, and complete tasks efficiently. It offers a range of features
+                                including task prioritization, category management, notifications, reports, weather
+                                forecasting,
+                                and event logging. The platform is built with flexibility and scalability in mind,
+                                making it
+                                suitable for both personal use and organizational workflows.</p>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#intro-to-tasktopia">
+                                Read more
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="intro-to-tasktopia" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="about-tasktopia-modal"
+                                                style="color: black !important;">
+                                                TaskTopia: A place to build your daily dreams, one task at a time.</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" style="color: gray;">
+                                            <p>Overview</p>
+                                            <p>TaskTopia is a context-aware, intelligent to-do list tool designed to
+                                                help individuals and
+                                                teams organize, track, and complete tasks efficiently. It offers a range
+                                                of features including
+                                                task prioritization, category management, notifications, reports,
+                                                weather forecasting, and event
+                                                logging. The platform is built with flexibility and scalability in mind,
+                                                making it suitable for
+                                                both personal use and organizational workflows.</p>
+
+                                            <p>Key Features</p>
+                                            Task Management: Create, update, and manage tasks with various priority
+                                            levels and statuses.
+                                            Tasks can be categorized for better organization.</p>
+                                            Category Management: Organize tasks into categories for easier tracking and
+                                            reporting.</p>
+                                            <p>Notifications: Receive notifications for important events and deadlines
+                                                to stay on top of
+                                                your
+                                                tasks.</p>
+                                            <p>Reports: Generate and view reports to analyze task completion rates,
+                                                productivity trends,
+                                                and
+                                                other metrics.</p>
+                                            <p>Weather Forecasting: Plan tasks around weather conditions with integrated
+                                                weather
+                                                forecasts.
+                                            </p>
+                                            <p>Event Logging: Keep a log of events related to tasks for better
+                                                historical tracking and
+                                                analysis.</p>
+                                            <p>User Management: Manage user accounts and assign tasks to different
+                                                users.</p>
+                                            <p>Getting Started</p>
+                                            <p>For New Users</p>
+                                            <p>Create an Account: Sign up by providing your personal information and
+                                                creating a username
+                                                and
+                                                password.</p>
+                                            <p>Set Up Your Profile: Complete your profile with relevant details to
+                                                personalize your
+                                                TaskTopia
+                                                experience.</p>
+                                            <p>Create Your First Task: Navigate to the 'Tasks' section and click on
+                                                'Create Task'. Fill
+                                                in
+                                                the
+                                                task details including title, description, due date, priority, and
+                                                category.
+                                                Organize Tasks into Categories: Create categories in the 'Categories'
+                                                section and assign
+                                                tasks
+                                                to these categories for better organization.</p>
+                                            <p>Set Notifications: Enable notifications for your tasks to receive timely
+                                                reminders.</p>
+                                            For Continuing Users</p>
+                                            <p>Dashboard Overview: Start your day by reviewing your dashboard, which
+                                                provides a snapshot
+                                                of
+                                                your tasks, completion rates, overdue tasks, and productivity trends.
+                                            </p>
+                                            Update Task Statuses: Regularly update the statuses of your tasks (e.g.,
+                                            Pending, In
+                                            Progress,
+                                            Completed, Overdue) to keep track of your progress.</p>
+                                            <p>Generate Reports: Use the 'Reports' section to generate reports on your
+                                                productivity,
+                                                task
+                                                completion rates, and other metrics to gain insights into your
+                                                performance.</p>
+                                            Check Weather Forecasts: Utilize the weather forecasting feature to plan
+                                            your outdoor tasks
+                                            effectively.</p>
+                                            <p>Review Event Logs: Keep track of important events and changes in the
+                                                'Event Logs' section
+                                                for
+                                                better historical analysis.</p>
+                                            <p>User Tips</p>
+                                            <p>Prioritize Effectively: Use the task priority levels (High, Medium, Low)
+                                                to focus on the
+                                                most
+                                                important tasks first.</p>
+                                            <p>Set Realistic Deadlines: Ensure that the due dates for your tasks are
+                                                achievable to avoid
+                                                unnecessary stress and overdue tasks.</p>
+                                            <p>Regularly Review and Adjust: Regularly review your tasks and adjust
+                                                priorities,
+                                                deadlines,
+                                                and
+                                                statuses as needed to stay on track.</p>
+                                            <p>Utilize Reports: Take advantage of the reporting features to understand
+                                                your productivity
+                                                trends
+                                                and make informed decisions.</p>
+                                            <p>By leveraging the full range of features TaskTopia offers, users can
+                                                enhance their
+                                                productivity,
+                                                stay organized, and achieve their goals more effectively. Welcome to
+                                                TaskTopia, your
+                                                ultimate
+                                                task management and productivity companion!</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Understood</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h6>
                     </div>
-                    <div class="col-sm-4 offset-md-1 py-4">
+                    <div class="col-sm-3 offset-md-1 py-4">
                         <h4 class="text-white">Contact</h4>
-                        <ul class="list-unstyled">
+                        <ul class="list-unstyled" style="font-size: 1.3em;">
                             <li><a href="#" class="text-white">Follow on Linkedin</a></li>
                             <li><a href="#" class="text-white">Explore my Github</a></li>
                             <li><a href="#" class="text-white">Visit my Profile</a></li>

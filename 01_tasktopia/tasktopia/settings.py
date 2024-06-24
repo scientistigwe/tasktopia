@@ -12,6 +12,15 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import django_heroku
+import dj_database_url
+from celery.schedules import crontab
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
+
+# Database configuration
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,15 +30,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-mqnrowkrk6%ayjkbr_q0gf(%yx_vx4-!(se@9y1besan2-jgsf'
+
+SECRET_KEY = os.environ['SECRET KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
+    '*',
     '127.0.0.1'
 ]
 
+# Celery Configuration Options
+CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+# Celery Beat Schedule
+from celery.schedules import crontab
+CELERY_BEAT_SCHEDULE = {
+    'check-and-update-task-statuses-every-hour': {
+        'task': 'your_app.tasks.check_and_update_task_statuses',
+        'schedule': crontab(minute=0, hour='*/1'),
+    },
+}
 
 # Application definition
 
@@ -45,8 +72,6 @@ INSTALLED_APPS = [
     'tasks',
     'accounts',
     'rest_framework',
-    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
-
 ]
 
 MIDDLEWARE = [
@@ -155,7 +180,3 @@ LOGIN_REDIRECT_URL = 'task_list'
 LOGOUT_REDIRECT_URL = 'login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-PLOTLY_DASH = {
-    'serve_locally': True
-}

@@ -156,3 +156,8 @@ background-color: transparent;
     border-width: 0;
     border-radius: 0;
 }
+
+.about {
+    font-size: 1.5em !important;
+    color: white !important;
+}
