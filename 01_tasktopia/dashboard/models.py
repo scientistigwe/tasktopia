@@ -82,4 +82,12 @@ class Forecast(models.Model):
     def __str__(self):
         return f"Forecast Condition: {self.forecast_condition}, Forecast Location: {self.forecast_location}"
 
+class EventLog(models.Model):
+    eventlog_id = models.AutoField(primary_key=True)
+    event = models.CharField(max_length=225)
+    event_time = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_eventlog')
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_event_logs')
 
+    def __str__(self):
+        return f"Event: {self.event}"
