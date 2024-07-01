@@ -10,13 +10,13 @@ from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.http import JsonResponse
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View
+import logging
 
 # View to render dashboard.html
 class DashboardView(TemplateView):
-    template_name = 'dashboard.html'
+    template_name = 'dashboard/dashboard.html'
 
 # User Views
 class UserListView(generics.ListCreateAPIView):
@@ -240,40 +240,30 @@ def tasks_created_vs_completed(request: HttpRequest) -> JsonResponse:
 
 def productivity_trends(request: HttpRequest) -> JsonResponse:
     """
-    Calculate productivity trends based on tasks created over time.
+     Calculate productivity trends based on tasks created over time.
     """
+   
     thirty_days_ago = datetime.now() - timedelta(days=30)
     tasks = Task.objects.filter(user=request.user, created_at__gte=thirty_days_ago)
     if request.user.is_superuser:
         tasks = Task.objects.filter(created_at__gte=thirty_days_ago)
     
     productivity_trends = tasks.values('created_at__date').annotate(count=Count('task_id')).order_by('created_at__date')
-    return JsonResponse(list(productivity_trends), safe=False)  # Set safe=False for non-dict objects
-
+    return JsonResponse(list(productivity_trends), safe=False)
 
 def category_wise_task_completion(request):
     """
-    Calculate completion rate of tasks by category.
+    Calculate completion rate of tasks by category with filters.
     """
     categories = Category.objects.filter(user=request.user)
-    if request.user.is_superuser:
-        categories = Category.objects.all()
-
     category_completion = []
 
     for category in categories:
-        if request.user.is_superuser:
-            tasks = Task.objects.filter(category=category)
-        else:
-            tasks = Task.objects.filter(user=request.user, category=category)
-        
+        tasks = filtered_tasks(request).filter(category=category)
         total_tasks = tasks.count()
         completed_tasks = tasks.filter(status='Completed').count()
 
-        if total_tasks > 0:
-            completion_rate = (completed_tasks / total_tasks) * 100
-        else:
-            completion_rate = 0.0
+        completion_rate = (completed_tasks / total_tasks) * 100 if total_tasks > 0 else 0.0
 
         category_completion.append({
             'category': category.category_name,
@@ -317,7 +307,6 @@ class PercentOverdueView(LoginRequiredMixin, View):
 
         return JsonResponse({'percent_overdue': percent_overdue})
 
-
 class PercentCompletedView(LoginRequiredMixin, View):
 
     def get_queryset(self):
@@ -337,72 +326,3 @@ class PercentCompletedView(LoginRequiredMixin, View):
             percent_completed = (completed_tasks / total_tasks) * 100.0  # Ensure division result is float
 
         return JsonResponse({'percent_completed': percent_completed})
-# User Analytics
-def user_activity_levels(request):
-    """
-    Calculate user activity levels.
-    Example: Tasks created and completed per user.
-    """
-    users = User.objects.all()
-    user_activity = []
-    
-    for user in users:
-        tasks_created = Task.objects.filter(user=user).count()
-        tasks_completed = Task.objects.filter(user=user, status='Completed').count()
-        
-        if tasks_created > 0:
-            completion_rate = (tasks_completed / tasks_created) * 100
-        else:
-            completion_rate = 0.0
-        
-        user_activity.append({
-            'user': user.username,
-            'tasks_created': tasks_created,
-            'tasks_completed': tasks_completed,
-            'completion_rate': completion_rate
-        })
-    
-    return JsonResponse(user_activity, safe=False)
-
-def filtered_tasks(request):
-    """
-    Retrieve tasks based on filters (date range, category, priority, etc.).
-    """
-    tasks = Task.objects.filter(user=request.user)
-
-    # Filtering by category
-    category_id = request.GET.get('category_id')
-    if category_id:
-        tasks = tasks.filter(category_id=category_id)
-
-    # Filtering by priority
-    priority = request.GET.get('priority')
-    if priority:
-        tasks = tasks.filter(priority=priority)
-
-    # Filtering by date range
-    start_date = request.GET.get('start_date')
-    end_date = request.GET.get('end_date')
-    if start_date and end_date:
-        tasks = tasks.filter(due_date__range=[start_date, end_date])
-
-def real_time_tasks(request):
-    """
-    Retrieve real-time updates for tasks created vs. completed.
-    """
-    tasks_created = get_real_time_tasks_created()
-    tasks_completed = get_real_time_tasks_completed()
-    
-    data = {
-        'tasks_created': tasks_created,
-        'tasks_completed': tasks_completed,
-    }
-    return JsonResponse(data)
-
-def get_real_time_tasks_created():
-    # Implement real-time data fetching logic (example)
-    return Task.objects.filter(created_at__gte=datetime.now() - timedelta(days=1)).count()
-
-def get_real_time_tasks_completed():
-    # Implement real-time data fetching logic (example)
-    return Task.objects.filter(status='Completed', updated_at__gte=datetime.now() - timedelta(days=1)).count()

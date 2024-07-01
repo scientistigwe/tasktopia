@@ -1,189 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'registration/base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Chibueze C. Igwe">
-    <meta name="generator" content="Hugo 0.72.0">
+{% block title %}Analytics & Insights | Tasktopia{% endblock %}
 
-    <!-- Bootstrap CSS Link -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-
-    <!-- Custom CSS Link -->
-    <link rel="stylesheet" href="../../static/dashboard/css/dashboard.css">
-
-    <!-- Favicon Link -->
-    <link rel="shortcut icon" href="./../../../dashboard/static/dashboard/img/tasktopia-icon.png" type="image/x-icon">
-
-    <title>Tasktopia | Analytics & Insights</title>
-</head>
-
-<body>
-    <header>
-        <nav
-            class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow mb-4 col-md-9 ml-sm-auto col-lg-10 px-md-4 w-100">
-            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#" id="tasktopia">
-                <img src="../../static/tasks/img/tasktopia-icon.png" alt="brand logo" width="40" height="40">
-                Tasktopia
-            </a>
-            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
-                data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="d-flex justify-content-between flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-                id="my-task">
-                <h4>Welcome, {{ user.first_name }} <img src="../../static/tasks/img/clap.png" width="30" height="30"
-                        alt="welcome clap"> </h4>
-            </div>
-            <ul class="navbar-nav px-3">
-                <li class="nav-item text-nowrap">
-                    <span class="logout">
-                        {% if request.user.is_authenticated %}
-                        <a href="{% url 'logout' %}">Logout</a> |
-                        <a href="{% url 'profile' %}">My Profile</a>
-                        {% else %}
-                        <a href="{% url 'login' %}">Login</a> |
-                        <a href="{% url 'signup' %}">Signup</a>
-                        {% endif %}
-                    </span>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <div class="container-fluid">
-            <!-- Navigation Bar -->
-            <div class="row">
-                <nav id="sidebarMenu" class="col-md-2 col-lg-2 sidebar collapse show bg-transparent">
-                    <div class="drag-handle"></div>
-                    <div class="position-sticky pt-0">
-                        <ul class="nav ">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{% url 'task_list' %}">
-                                    <span data-feather="home"></span>
-                                    Tasks
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{% url 'dashboard' %}">
-                                    <span data-feather="bar-chart-2"></span>
-                                    Analytics & Insights
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/">
-                                    <span data-feather="layers"></span>
-                                    Reports
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-
-            <h4>Tasktopia Dashboard</h4>
-            <div id="kpiCardsContainer" class="kpi-cards-container">
-                <div id="totalTasksCard" class="kpi-card">
-                    <div class="kpi-card-content">
-                        <h3>Total Tasks</h3>
-                        <p id="totalTasksValue" class="kpi-value">Loading...</p>
-                    </div>
-                </div>
-                <div id="percentOverdueCard" class="kpi-card">
-                    <div class="kpi-card-content">
-                        <h3>Overdue</h3>
-                        <p id="percentOverdueValue" class="kpi-value">Loading...</p>
-                    </div>
-                </div>
-                <div id="percentCompletedCard" class="kpi-card">
-                    <div class="kpi-card-content">
-                        <h3>Completed</h3>
-                        <p id="percentCompletedValue" class="kpi-value">Loading...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Task Completion Rate Chart -->
-            <div class="row mt-4">
-                <div class="col-md-4 reduce-size">
-                    <canvas id="taskCompletionRateChart" width="400" height="300"></canvas>
-                </div>
-
-                <!-- Task Priority Distribution Chart -->
-                <div class="col-md-4 reduce-size">
-                    <canvas id="taskPriorityDistributionChart" width="400" height="300"></canvas>
-                </div>
-
-                <!-- Productivity Trends Chart -->
-                <div class="col-md-4 reduce-size">
-                    <canvas id="productivityTrendsChart" width="400" height="300"></canvas>
-                </div>
-            </div>
-
-            <!-- Category-wise Task Completion Table -->
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <h2>Category-wise Task Completion</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>Completed Tasks</th>
-                                <th>Total Tasks</th>
-                                <th>Completion Rate (%)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="categoryTaskCompletionTableBody">
-                            <!-- Table rows will be dynamically populated -->
-                        </tbody>
-                    </table>
-                </div>
+{% block content %}
+{% load static %}
+<div class="container-fluid">
+    <!-- KPI Task container -->
+    <div id="kpiCardsContainer" class="kpi-cards-container d-flex flex-row justify-content-center">
+        <div id="totalTasksCard" class="kpi-card card mr-sm-5">
+            <div class="kpi-card-content">
+                <h3>Total Tasks</h3>
+                <p id="totalTasksValue" class="kpi-value">Loading...</p>
             </div>
         </div>
-        <!-- User Activity Levels -->
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <h2>User Activity Levels</h2>
-                <canvas id="user-activity-chart"></canvas>
+        <div id="percentOverdueCard" class="kpi-card card mr-sm-5">
+            <div class="kpi-card-content">
+                <h3>Overdue</h3>
+                <p id="percentOverdueValue" class="kpi-value">Loading...</p>
             </div>
         </div>
-
-        <!-- Interactive Filtering -->
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <h2>Interactive Filtering</h2>
-                <label for="filter-select">Filter by:</label>
-                <select id="filter-select">
-                    <option value="date-range">Date Range</option>
-                    <option value="category">Category</option>
-                    <option value="priority">Priority</option>
-                </select>
-                <div id="filtered-tasks"></div>
+        <div id="percentCompletedCard" class="kpi-card card mr-sm-5">
+            <div class="kpi-card-content">
+                <h3>Completed</h3>
+                <p id="percentCompletedValue" class="kpi-value">Loading...</p>
             </div>
         </div>
+    </div>
 
-        <!-- Real-time Updates -->
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <h2>Real-time Updates</h2>
-                <div id="real-time-stats"></div>
-            </div>
+    <!-- Task Completion Rate Chart -->
+    <div class="row mt-4">
+        <div class="col-md-4 reduce-size card">
+            <canvas id="taskCompletionRateChart" width="400" height="300"></canvas>
         </div>
+
+        <!-- Task Priority Distribution Chart -->
+        <div class="col-md-4 reduce-size  card">
+            <canvas id="taskPriorityDistributionChart" width="400" height="300"></canvas>
         </div>
-    </main>
-    <!-- Chart.js Link -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Bootstrap.js & Popper Link -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+        <!-- Productivity Trends Chart -->
+        <div class="col-md-4 reduce-size  card">
+            <canvas id="productivityTrendsChart" width="400" height="300"></canvas>
+        </div>
+    </div>
 
-    <!-- Custom dashboard JS Link -->
-    <script src="../../static/dashboard/js/dashboard.js"></script>
-</body>
+    <!-- Category-wise Task Completion Table -->
+    <div class="row mt-4 card">
+        <div class="col-md-12">
+            <h2>Category-wise Task Completion</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Completed Tasks</th>
+                        <th>Total Tasks</th>
+                        <th>Completion Rate (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="categoryTaskCompletionTableBody">
+                    <!-- Table rows will be dynamically populated -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-</html>
+{% endblock %}

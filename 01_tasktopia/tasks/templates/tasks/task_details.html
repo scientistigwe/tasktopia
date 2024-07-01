@@ -1,105 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'registration/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.72.0">
+{% block title %}Task Details | Tasktopia{% endblock %}
 
-    {% load static %}
-
-    <!-- Bootstrap CSS Link -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-
-    <!-- Custom CSS Link -->
-    <link rel="stylesheet" href="{% static 'tasks/css/task.css' %}">
-
-    <!-- Favicon Link -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-
-    <title>Task Details</title>
-</head>
-
-<body>
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-        .container {
-            max-width: 960px;
-        }
-
-        .site-header {
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
-        }
-
-        .site-header a {
-            color: #727272;
-            transition: color .15s ease-in-out;
-        }
-
-        .site-header a:hover {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .flex-equal>* {
-            flex: 1;
-        }
-
-        @media (min-width: 768px) {
-            .flex-md-equal>* {
-                flex: 1;
-            }
-        }
-    </style>
-
-    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-        <div class="shadow-sm d-none d-md-block"></div>
-        <div class="shadow-sm d-none d-md-block"></div>
-        <div class="d-md-flex flex-md-equal w-70 my-md-3 pl-md-3">
-            <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-                <div class="my-3 py-3">
-                    <h2 class="display-5">{{ task.title }}</h2>
-                    <p class="lead">{{ task.description }}</p>
-                </div>
-                <div class="bg-light shadow-sm mx-auto"
-                    style="width: 50%; height: 200px; border-radius: 21px 21px 0 0; color: black;">
-                    <p>Due Date: {{ task.due_date }}</p>
-                    <p>Priority: {{ task.priority }}</p>
-                    <p>Status: {{ task.status }}</p>
-                    <p>{{ task.category }}</p>
-                    <span class="btn btn-primary btn-sm"><a href="{% url 'update_task' task.pk %}">Edit</a></span>
-                    <span class="btn btn-primary btn-sm"><a
-                            href="{% url 'task_confirm_delete' task.pk %}">Delete</a></span>
-                    <span class="btn btn-primary btn-sm"><a href="{% url 'task_list' %}">Back to Task List</a></span>
-                </div>
+{% block content %}
+<div class="task-detail">
+    <div class="card">
+        <div class="my-3 py-3 text-center">
+            <h2 class="display-5">{{ task.title }}</h2>
+            <p class="lead">{{ task.description }}</p>
+        </div>
+        <div class="card-body">
+            <p class="card-title">Due Date: {{ task.due_date }}</p>
+            <p>Priority: {{ task.priority }}</p>
+            {% if task.status == 'Overdue' %}
+            <p style="color: red;">Status: {{ task.status }}</p>
+            {% elif task.status == 'Completed' %}
+            <p style="color: green;">Status: {{ task.status }}</p>
+            {% else %}
+            <p>Status: {{ task.status }}</p>
+            {% endif %}
+            <p>{{ task.category }}</p>
+            <div class="cta">
+                <span class="btn btn-outline-success btn-sm"><a href="{% url 'update_task' task.pk %}">Edit</a></span>
+                <span class="btn btn-outline-danger btn-sm"><a
+                        href="{% url 'task_confirm_delete' task.pk %}">Delete</a></span>
+                <span class="btn btn-outline-info btn-sm"><a href="{% url 'task_list' %}">Back to Task List</a></span>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
-        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+{% endblock%}

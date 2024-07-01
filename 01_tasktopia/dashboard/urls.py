@@ -26,12 +26,7 @@ from .views import (
     productivity_trends,
     category_wise_task_completion,
     tasks_created_vs_completed,
-    user_activity_levels,
-    filtered_tasks,
-    real_time_tasks,
-    get_real_time_tasks_created,
-    get_real_time_tasks_completed,
-)
+    )
 
 urlpatterns = [
     # User URLs
@@ -47,7 +42,7 @@ urlpatterns = [
     path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category-detail'),
 
     # Report URLs
-    path('reports/', ReportListView.as_view(), name='report-list'),
+    path('reports/', ReportListView.as_view(), name='report_list'),
     path('reports/<int:pk>/', ReportDetailView.as_view(), name='report-detail'),
 
     # Notification URLs
@@ -77,9 +72,4 @@ urlpatterns = [
     path('total-tasks/', TotalTasksView.as_view(), name='total_tasks'),
     path('percent-overdue/', PercentOverdueView.as_view(), name='percent-overdue'),
     path('percent-completed/', PercentCompletedView.as_view(), name='percent-completed'),
-    path('user-activity-levels/', user_activity_levels, name='user-activity-levels'),
-    path('filtered-tasks/', filtered_tasks, name='filtered-tasks'),
-    path('real-time-tasks/', real_time_tasks, name='real-time-tasks'),
-    path('get-real-time-tasks-created/', get_real_time_tasks_created, name='get-real-time-tasks-created'),
-    path('get-real-time-tasks-completed/', get_real_time_tasks_completed, name='get-real-time-tasks-completed'),
 ]
