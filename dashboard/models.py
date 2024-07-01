@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from accounts.models import User
 from django.conf import settings
 
 class Category(models.Model):
@@ -27,13 +26,31 @@ class Task(models.Model):
     task_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
     description = models.TextField()
+    start_date = models.DateTimeField()
     due_date = models.DateTimeField()
     priority = models.CharField(max_length=10, choices=Priority.choices, default=Priority.MEDIUM)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
+    progress = models.IntegerField(default=0)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category_tasks')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_tasks')
+
+    def update_status(self):
+        now = timezone.now()
+        if self.progress == 100:
+            self.status = 'Completed'
+        elif now > self.due_date and self.progress < 100:
+            self.status = 'Overdue'
+        elif self.start_date <= now < self.due_date and 0 < self.progress < 100:
+            self.status = 'In Progress'
+        else:
+            self.status = 'Pending'
+        self.save()
+
+    def save(self, *args, **kwargs):
+        self.update_status()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Title: {self.title}, Priority: {self.priority}, Status: {self.status}"

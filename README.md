@@ -582,3 +582,47 @@ forecast_day: Number indicating the projected day (e.g., 1 for current day, 2 fo
 forecast_condition: Weather condition forecasted for that day.
 forecast_temperature: Projected temperature for that day.
 forecast_location: Specific location relevant to the forecast.
+
+Automation logic:
+To automate the status updates for your to-do list, you could implement a system that combines due dates, current time, and task progress. Here's a potential approach:
+
+Add required fields:
+
+Due date
+Start date (optional)
+Estimated time to complete
+Progress indicator (e.g., percentage complete)
+
+Automate status updates based on these rules:
+
+Todo:
+
+Task is created but not started
+
+In Progress:
+
+Task has a start date and has been started
+Progress is between 1% and 99%
+Current date is before or on the due date
+
+Completed:
+
+Progress reaches 100%
+
+Overdue:
+
+Current date is past the due date
+Progress is less than 100%
+
+Implement a background process:
+
+Run periodically (e.g., daily or hourly)
+Check all tasks and update statuses based on the rules
+
+Real-time updates:
+
+Update status immediately when user modifies progress or marks a task as complete
+
+Notifications:
+
+Alert users when tasks are nearing their due date or becoming overdue

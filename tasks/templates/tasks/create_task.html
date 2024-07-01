@@ -13,6 +13,10 @@
                 {{ form.title }}
             </div>
             <div class="mb-3">
+                <label for="id_start_date" class="form-label">Start Date</label>
+                {{ form.start_date }}
+            </div>
+            <div class="mb-3">
                 <label for="id_due_date" class="form-label">Due Date</label>
                 {{ form.due_date }}
             </div>
@@ -24,10 +28,6 @@
                 <div class="col-md-4">
                     <label for="id_priority" class="form-label">Priority</label>
                     {{ form.priority }}
-                </div>
-                <div class="col-md-4">
-                    <label for="id_status" class="form-label">Status</label>
-                    {{ form.status }}
                 </div>
                 <div class="col-md-4">
                     <label for="id_category" class="form-label">Category</label>

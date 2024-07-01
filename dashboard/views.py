@@ -1,18 +1,13 @@
 from rest_framework import generics, permissions
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
 from django.db.models import Count
 from datetime import datetime, timedelta
-from django.shortcuts import render
 from .models import Task, Category, Report, Notification, Weather, Forecast, EventLog
 from .serializers import UserSerializer, TaskSerializer, CategorySerializer, ReportSerializer, NotificationSerializer, WeatherSerializer, ForecastSerializer, EventLogSerializer
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
 from django.contrib.auth.models import User
-from django.utils import timezone
 from django.http import JsonResponse
 from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-import logging
 
 # View to render dashboard.html
 class DashboardView(TemplateView):

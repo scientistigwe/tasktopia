@@ -12,8 +12,13 @@ const fetchData = async (url) => {
 
 // Chart update functions
 const updateChart = (elementId, chartType, data, options) => {
-  const ctx = document.getElementById(elementId).getContext("2d");
-  new Chart(ctx, { type: chartType, data, options });
+  const element = document.getElementById(elementId);
+  if (element) {
+    const ctx = element.getContext("2d");
+    new Chart(ctx, { type: chartType, data, options });
+  } else {
+    console.error(`Element with ID ${elementId} not found.`);
+  }
 };
 
 const updateTaskCompletionRateChart = async () => {
@@ -27,7 +32,6 @@ const updateTaskCompletionRateChart = async () => {
       labels: ["Total Tasks", "Tasks Completed", "Completion Rate"],
       datasets: [
         {
-          label: "Value",
           data: [
             data.total_tasks,
             data.completed_tasks,
@@ -42,7 +46,13 @@ const updateTaskCompletionRateChart = async () => {
       ],
     },
     {
-      // ... (chart options)
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: "Task Completion Rate",
+        },
+      },
     }
   );
 };
@@ -71,7 +81,23 @@ const updateTaskPriorityDistributionChart = async () => {
       ],
     },
     {
-      // ... (chart options)
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: "Task Priority Distribution",
+        },
+        tooltip: {
+          callbacks: {
+            label: function (tooltipItem) {
+              return `${tooltipItem.label}: ${tooltipItem.raw}`;
+            },
+          },
+        },
+      },
     }
   );
 };
@@ -96,30 +122,23 @@ const updateProductivityTrendsChart = async () => {
       ],
     },
     {
-      // ... (chart options)
-    }
-  );
-};
-
-const updateUserActivityChart = async () => {
-  const data = await fetchData("/dashboard/user-activity-levels/");
-  if (!data) return;
-
-  updateChart(
-    "user-activity-chart",
-    "bar",
-    {
-      labels: data.map((item) => item.user),
-      datasets: [
-        {
-          label: "Tasks Completed",
-          data: data.map((item) => item.tasks_completed),
-          backgroundColor: "rgba(54, 162, 235, 0.6)",
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
         },
-      ],
-    },
-    {
-      // ... (chart options)
+        title: {
+          display: true,
+          text: "Productivity Trends Over Time",
+        },
+        tooltip: {
+          callbacks: {
+            label: function (tooltipItem) {
+              return `Count: ${tooltipItem.raw}`;
+            },
+          },
+        },
+      },
     }
   );
 };
@@ -130,9 +149,10 @@ const updateCategoryTaskCompletionTable = async () => {
   if (!data) return;
 
   const tableBody = document.getElementById("categoryTaskCompletionTableBody");
-  tableBody.innerHTML = data
-    .map(
-      (item) => `
+  if (tableBody) {
+    tableBody.innerHTML = data
+      .map(
+        (item) => `
     <tr>
       <td>${item.category}</td>
       <td>${item.completed_tasks}</td>
@@ -140,15 +160,23 @@ const updateCategoryTaskCompletionTable = async () => {
       <td>${item.completion_rate.toFixed(1)}</td>
     </tr>
   `
-    )
-    .join("");
+      )
+      .join("");
+  } else {
+    console.error(`Element with ID categoryTaskCompletionTableBody not found.`);
+  }
 };
 
 // KPI update functions
 const updateKPICard = async (url, elementId, formatFunc) => {
   const data = await fetchData(url);
   if (!data) return;
-  document.getElementById(elementId).textContent = formatFunc(data);
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.textContent = formatFunc(data);
+  } else {
+    console.error(`Element with ID ${elementId} not found.`);
+  }
 };
 
 const updateKPIs = async () => {
@@ -172,9 +200,6 @@ const updateKPIs = async () => {
 // Event listeners
 document.addEventListener("DOMContentLoaded", () => {
   refreshDashboard();
-  document
-    .getElementById("filter-select")
-    .addEventListener("change", (e) => updateFilteredTasks(e.target.value));
 });
 
 // Main refresh function
@@ -183,7 +208,5 @@ const refreshDashboard = () => {
   updateTaskPriorityDistributionChart();
   updateProductivityTrendsChart();
   updateCategoryTaskCompletionTable();
-  updateUserActivityChart();
   updateKPIs();
-  updateRealTimeStats();
 };

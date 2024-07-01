@@ -35,19 +35,20 @@ ALLOWED_HOSTS = [
 ]
 
 # Celery Configuration Options
-CELERY_BROKER_URL = os.environ.get('REDIS_URL')
-CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
+#CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+#CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 # Celery Beat Schedule
-from celery.schedules import crontab
 CELERY_BEAT_SCHEDULE = {
-    'check-and-update-task-statuses-every-hour': {
-        'task': 'your_app.tasks.check_and_update_task_statuses',
-        'schedule': crontab(minute=0, hour='*/1'),
+    'update-task-statuses-every-hour': {
+        'task': 'tasks.tasks.update_task_statuses',
+        'schedule': 3600.0,  # 1 hour
     },
 }
 

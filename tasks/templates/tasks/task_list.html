@@ -5,7 +5,6 @@
 {% block content %}
 {% load static %}
 <div class="container-fluid">
-    <!-- Create new task -->
     <div class="new-task">
         <span class="col-md-5">
             <a href="{% url 'create_task' %}" id="new-task-text">
@@ -21,14 +20,9 @@
                 <span class="col-md-7 d-flex justify-content-start">
                     <h6>To do</h6>
                 </span>
-                <span class="col-md-5 new-task d-flex justify-content-end">
-                    <a href="{% url 'create_task' %}"></a>
-                </span>
-                <!-- Task Cards -->
                 <ul>
                     {% for task in tasks %}
                     {% if task.status == 'Pending' %}
-
                     <li class="card mb-1">
                         <span class="task-detail-icon d-flex align-self-end position-absolute">
                             <a href="{% url 'task_details' task.pk %}">
@@ -40,7 +34,6 @@
                             {{ task.title }}
                         </span>
                         <span class="col-12 card-text">{{ task.description }}</span>
-
                         <span class="row">
                             <span class="col-4">{{ task.due_date }}</span>
                             <span class="col-4" style="color: purple;">{{ task.status }}</span>
@@ -49,42 +42,16 @@
                     </li>
                     {% endif %}
                     {% endfor %}
-
-                    {% for task in tasks %}
-                    {% if task.status == 'Overdue' %}
-                    <li class="card mb-1">
-                        <span class="task-detail-icon d-flex align-self-end position-absolute">
-                            <a href="{% url 'task_details' task.pk %}">
-                                <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20"
-                                    height="20">
-                            </a>
-                        </span>
-                        <span class="col-12 card-title" style="color: rgb(230, 71, 71);">
-                            {{ task.title }}
-                        </span>
-                        <span class="col-12 card-text">{{ task.description }}</span>
-
-                        <span class="row">
-                            <span class="col-4">{{ task.due_date }}</span>
-                            <span class="col-4" style="color: rgb(230, 71, 71);">{{ task.status }}</span>
-                            <span class="col-4">{{ task.category }}</span>
-                        </span>
-                    </li>
-                    {% endif %}
-                    {% endfor %}
                 </ul>
             </div>
         </div> <!-- End of To do card -->
+
         <!-- In Progress card -->
         <div class="col-md-4">
             <div class="row">
                 <span class="col-md-7 d-flex justify-content-start">
                     <h6>In Progress</h6>
                 </span>
-                <span class="col-md-5 new-task d-flex justify-content-end">
-                    <a href="{% url 'create_task' %}"></a>
-                </span>
-                <!-- Task Cards -->
                 <ul>
                     {% for task in tasks %}
                     {% if task.status == 'In Progress' %}
@@ -96,27 +63,34 @@
                             </a>
                         </span>
                         <span class="col-12 card-title" style="color:rgb(15, 123, 238);">
-                            {{ task.title }}</span>
+                            {{ task.title }}
+                        </span>
                         <span class="col-12 card-text">{{ task.description }}</span>
                         <span class="row">
-                            <span class="col-4">{{ task.due_date }}</span>
-                            <span class="col-4" style="color: rgb(15, 123, 238);">
-                                {{ task.status }}</span>
-                            <span class="col-4">{{ task.category }}</span>
+                            <span class="col-4">Start Date: {{ task.start_date }}</span>
+                            <span class="col-4">End Date: {{ task.due_date }}</span>
+                            <span class="col-4" style="color: rgb(15, 123, 238);">{{ task.status }}</span>
+                            <span class="col-4">Category: {{ task.category }}</span>
                         </span>
+                        <div class="progress mt-2">
+                            <div class="progress-bar" role="progressbar" style="width: {{ task.progress }}%;"
+                                aria-valuenow="{{ task.progress }}" aria-valuemin="0" aria-valuemax="100">
+                                {{ task.progress }}%
+                            </div>
+                        </div>
                     </li>
                     {% endif %}
                     {% endfor %}
                 </ul>
             </div>
         </div> <!-- End of In progress card -->
+
         <!-- Done card -->
         <div class="col-md-4">
             <div class="row">
                 <span class="col-md-7 d-flex justify-content-start">
                     <h6>Done</h6>
                 </span>
-                <!-- Task Cards -->
                 <ul>
                     {% for task in tasks %}
                     {% if task.status == 'Completed' %}
@@ -128,12 +102,12 @@
                             </a>
                         </span>
                         <span class="col-12 card-title" style="color: green;">
-                            {{ task.title }}</span>
+                            {{ task.title }}
+                        </span>
                         <span class="col-12 card-text">{{ task.description }}</span>
                         <span class="row">
                             <span class="col-4">{{ task.due_date }}</span>
-                            <span class="col-4" style="color: green;">
-                                {{ task.status }}</span>
+                            <span class="col-4" style="color: green;">{{ task.status }}</span>
                             <span class="col-4">{{ task.category }}</span>
                         </span>
                     </li>
