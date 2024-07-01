@@ -253,17 +253,27 @@ def productivity_trends(request: HttpRequest) -> JsonResponse:
 
 def category_wise_task_completion(request):
     """
-    Calculate completion rate of tasks by category with filters.
+    Calculate completion rate of tasks by category.
     """
     categories = Category.objects.filter(user=request.user)
+    if request.user.is_superuser:
+        categories = Category.objects.all()
+
     category_completion = []
 
     for category in categories:
-        tasks = filtered_tasks(request).filter(category=category)
+        if request.user.is_superuser:
+            tasks = Task.objects.filter(category=category)
+        else:
+            tasks = Task.objects.filter(user=request.user, category=category)
+        
         total_tasks = tasks.count()
         completed_tasks = tasks.filter(status='Completed').count()
 
-        completion_rate = (completed_tasks / total_tasks) * 100 if total_tasks > 0 else 0.0
+        if total_tasks > 0:
+            completion_rate = (completed_tasks / total_tasks) * 100
+        else:
+            completion_rate = 0.0
 
         category_completion.append({
             'category': category.category_name,

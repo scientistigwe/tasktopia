@@ -5,6 +5,7 @@
 {% block content %}
 {% load static %}
 <div class="container-fluid">
+    <!-- Create new task -->
     <div class="new-task">
         <span class="col-md-5">
             <a href="{% url 'create_task' %}" id="new-task-text">
@@ -12,6 +13,7 @@
             </a>
         </span>
     </div>
+
     <div class="row task-list">
         <!-- To do card -->
         <div class="col-md-4">
@@ -28,18 +30,17 @@
                     {% if task.status == 'Pending' %}
 
                     <li class="card mb-1">
+                        <span class="task-detail-icon d-flex align-self-end position-absolute">
+                            <a href="{% url 'task_details' task.pk %}">
+                                <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20"
+                                    height="20">
+                            </a>
+                        </span>
                         <span class="col-12 card-title" style="color: purple;">
                             {{ task.title }}
                         </span>
                         <span class="col-12 card-text">{{ task.description }}</span>
-                        <div class="task-details-icon">
-                            <span class="col-12 card-title">
-                                <a href="{% url 'task_details' task.pk %}">
-                                    <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon"
-                                        width="20" height="20">
-                                </a>
-                            </span>
-                        </div>
+
                         <span class="row">
                             <span class="col-4">{{ task.due_date }}</span>
                             <span class="col-4" style="color: purple;">{{ task.status }}</span>
@@ -52,18 +53,17 @@
                     {% for task in tasks %}
                     {% if task.status == 'Overdue' %}
                     <li class="card mb-1">
+                        <span class="task-detail-icon d-flex align-self-end position-absolute">
+                            <a href="{% url 'task_details' task.pk %}">
+                                <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20"
+                                    height="20">
+                            </a>
+                        </span>
                         <span class="col-12 card-title" style="color: rgb(230, 71, 71);">
                             {{ task.title }}
                         </span>
                         <span class="col-12 card-text">{{ task.description }}</span>
-                        <div class="task-details-icon">
-                            <span class="col-12 card-title">
-                                <a href="{% url 'task_details' task.pk %}">
-                                    <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon"
-                                        width="20" height="20">
-                                </a>
-                            </span>
-                        </div>
+
                         <span class="row">
                             <span class="col-4">{{ task.due_date }}</span>
                             <span class="col-4" style="color: rgb(230, 71, 71);">{{ task.status }}</span>
@@ -89,17 +89,15 @@
                     {% for task in tasks %}
                     {% if task.status == 'In Progress' %}
                     <li class="card mb-1">
+                        <span class="task-detail-icon d-flex align-self-end position-absolute">
+                            <a href="{% url 'task_details' task.pk %}">
+                                <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20"
+                                    height="20">
+                            </a>
+                        </span>
                         <span class="col-12 card-title" style="color:rgb(15, 123, 238);">
                             {{ task.title }}</span>
                         <span class="col-12 card-text">{{ task.description }}</span>
-                        <div class="task-details-icon">
-                            <span class="col-12 card-title">
-                                <a href="{% url 'task_details' task.pk %}">
-                                    <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon"
-                                        width="20" height="20">
-                                </a>
-                            </span>
-                        </div>
                         <span class="row">
                             <span class="col-4">{{ task.due_date }}</span>
                             <span class="col-4" style="color: rgb(15, 123, 238);">
@@ -123,17 +121,15 @@
                     {% for task in tasks %}
                     {% if task.status == 'Completed' %}
                     <li class="card mb-1">
+                        <span class="task-detail-icon d-flex align-self-end position-absolute">
+                            <a href="{% url 'task_details' task.pk %}">
+                                <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20"
+                                    height="20">
+                            </a>
+                        </span>
                         <span class="col-12 card-title" style="color: green;">
                             {{ task.title }}</span>
                         <span class="col-12 card-text">{{ task.description }}</span>
-                        <div class="task-details-icon">
-                            <span class="col-12 card-title">
-                                <a href="{% url 'task_details' task.pk %}">
-                                    <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon"
-                                        width="20" height="20">
-                                </a>
-                            </span>
-                        </div>
                         <span class="row">
                             <span class="col-4">{{ task.due_date }}</span>
                             <span class="col-4" style="color: green;">

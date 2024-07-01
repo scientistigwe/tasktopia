@@ -1,0 +1,65 @@
+{% extends 'registration/base.html' %}
+
+{% block title %}User Profile | Tasktopia{% endblock %}
+
+{% block content %}
+<div class="container-fluid card mt-5">
+    <h2 class="mb-5 d-flex justify-content-center">User Profile</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Profile Information</h4>
+            <form method="post" action="{% url 'profile_edit' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">Username</label>
+                    <input type="text" id="id_username" name="username" value="{{ user.username }}" class="form-control"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="id_email" class="form-label">Email</label>
+                    <input type="email" id="id_email" name="email" value="{{ user.email }}" class="form-control"
+                        required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <h4>Change Password</h4>
+            <form method="post" action="{% url 'password_change' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="old_password" class="form-label">Old Password</label>
+                    <input type="password" id="old_password" name="old_password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="new_password1" class="form-label">New Password</label>
+                    <input type="password" id="new_password1" name="new_password1" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="new_password2" class="form-label">Confirm New Password</label>
+                    <input type="password" id="new_password2" name="new_password2" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-warning">Change Password</button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <h4>Account Actions</h4>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{% url 'password_reset' %}">Forgot Password</a></li>
+                <li class="list-group-item"><a href="{% url 'logout' %}">Logout</a></li>
+                <li class="list-group-item">
+                    <form method="post" action="{% url 'delete_account' %}"
+                        onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete Account</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock%}
