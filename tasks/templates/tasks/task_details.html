@@ -26,13 +26,6 @@
                             {{ task.get_status_display }}
                         </span>
                     </p>
-                    <p><strong>Progress:</strong></p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: {{ task.progress }}%;"
-                            aria-valuenow="{{ task.progress }}" aria-valuemin="0" aria-valuemax="100">
-                            {{ task.progress }}%
-                        </div>
-                    </div>
                     <p class="mt-2"><strong>Created:</strong> {{ task.created_at|date:"F d, Y, H:i" }}</p>
                     <p><strong>Last Updated:</strong> {{ task.updated_at|date:"F d, Y, H:i" }}</p>
                 </div>

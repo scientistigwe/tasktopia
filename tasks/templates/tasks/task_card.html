@@ -21,16 +21,19 @@
         </span>
         <span class="col-4">Category: {{ task.category }}</span>
     </span>
-    {% if task.status == 'In Progress' %}
-    <div class="progress mt-2">
-        <div class="progress-bar custom-progress-bar" role="progressbar" data-progress="{{ task.progress }}"
-            aria-valuenow="{{ task.progress }}" aria-valuemin="0" aria-valuemax="100">
-            {{ task.progress }}%
-        </div>
-    </div>
-    {% elif task.status == 'Completed' %}
+    {% if task.status == 'Completed' %}
     <span class="col-4">Completed: {{ task.updated_at|date:"M d, Y" }}</span>
     {% elif task.status == 'Overdue' %}
     <span class="col-12 task-overdue">Overdue</span>
     {% endif %}
+
+    <!-- Form with Bootstrap switch -->
+    <form action="{% url 'mark_completed' task.pk %}" method="post" class="form-inline">
+        {% csrf_token %}
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="completedSwitch{{ task.id }}" name="completed"
+                onChange="this.form.submit()" {% if task.status=='Completed' %}checked{% endif %}>
+            <label class="form-check-label" for="completedSwitch{{ task.id }}">Mark as Completed</label>
+        </div>
+    </form>
 </li>

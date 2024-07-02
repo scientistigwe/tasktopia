@@ -38,7 +38,6 @@ class Task(models.Model):
     due_date = models.DateTimeField()
     priority = models.CharField(max_length=10, choices=Priority.choices, default=Priority.MEDIUM)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
-    progress = models.IntegerField(default=0)
     completion_date = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)

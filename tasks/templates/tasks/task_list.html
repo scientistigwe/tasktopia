@@ -55,29 +55,8 @@
                 <ul>
                     {% for task in tasks %}
                     {% if task.status == 'Completed' %}
-                    <li class="card mb-1">
-                        <span class="col-12 card-title" style="color: green;">
-                            {{ task.title }}
-                        </span>
-                        <span class="col-12 card-text">{{ task.description }}</span>
-                        <span class="row">
-                            <span class="col-4">Completed: {{ task.updated_at|date:"M d, Y" }}</span>
-                            <span class="col-4" style="color: green;">{{ task.get_priority_display }}</span>
-                            <span class="col-4">{{ task.category }}</span>
-                        </span>
-                        <div>
-                            <!-- Bootstrap switch -->
-                            <form action="{% url 'mark_completed' task.pk %}" method="post">
-                                {% csrf_token %}
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="completedSwitch{{ task.id }}" {%
-                                        if task.status=='Completed' %}checked{% endif %}>
-                                    <label class="form-check-label" for="completedSwitch{{ task.id }}">Mark as
-                                        Completed</label>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
+                    {% include 'tasks/task_card.html' %}
+                    {% endif %}
                     {% endfor %}
                 </ul>
             </div>
