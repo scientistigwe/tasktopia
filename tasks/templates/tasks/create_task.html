@@ -11,27 +11,45 @@
             <div class="mb-3">
                 <label for="id_title" class="form-label">Title</label>
                 {{ form.title }}
+                <div class="invalid-feedback">
+                    {{ form.title.errors }}
+                </div>
             </div>
             <div class="mb-3">
                 <label for="id_start_date" class="form-label">Start Date</label>
                 {{ form.start_date }}
+                <div class="invalid-feedback">
+                    {{ form.start_date.errors }}
+                </div>
             </div>
             <div class="mb-3">
                 <label for="id_due_date" class="form-label">Due Date</label>
                 {{ form.due_date }}
+                <div class="invalid-feedback">
+                    {{ form.due_date.errors }}
+                </div>
             </div>
             <div class="mb-3">
                 <label for="id_description" class="form-label">Description</label>
                 {{ form.description }}
+                <div class="invalid-feedback">
+                    {{ form.description.errors }}
+                </div>
             </div>
             <div class="row g-3">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="id_priority" class="form-label">Priority</label>
                     {{ form.priority }}
+                    <div class="invalid-feedback">
+                        {{ form.priority.errors }}
+                    </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="id_category" class="form-label">Category</label>
                     {{ form.category }}
+                    <div class="invalid-feedback">
+                        {{ form.category.errors }}
+                    </div>
                 </div>
             </div>
             <div class="mt-3 cta">
@@ -41,4 +59,24 @@
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Form validation
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
 {% endblock %}

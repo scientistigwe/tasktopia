@@ -1,0 +1,36 @@
+{% load static %}
+<li class="card mb-1">
+    <span class="task-detail-icon d-flex align-self-end position-absolute">
+        <a href="{% url 'task_details' task.pk %}">
+            <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20" height="20">
+        </a>
+    </span>
+    <span
+        class="col-12 card-title {% if task.status == 'Overdue' %}task-overdue{% elif task.status == 'In Progress' %}task-in-progress{% elif task.status == 'Completed' %}task-completed{% else %}task-pending{% endif %}">
+        {{ task.title }}
+    </span>
+    <span class="col-12 card-text">{{ task.description }}</span>
+    <span class="row">
+        {% if task.status == 'In Progress' %}
+        <span class="col-4">Start: {{ task.start_date|date:"M d, Y" }}</span>
+        {% endif %}
+        <span class="col-4">Due: {{ task.due_date|date:"M d, Y" }}</span>
+        <span
+            class="col-4 {% if task.status == 'Overdue' %}task-overdue{% elif task.status == 'In Progress' %}task-in-progress{% elif task.status == 'Completed' %}task-completed{% else %}task-pending{% endif %}">
+            {{ task.get_priority_display }}
+        </span>
+        <span class="col-4">Category: {{ task.category }}</span>
+    </span>
+    {% if task.status == 'In Progress' %}
+    <div class="progress mt-2">
+        <div class="progress-bar custom-progress-bar" role="progressbar" data-progress="{{ task.progress }}"
+            aria-valuenow="{{ task.progress }}" aria-valuemin="0" aria-valuemax="100">
+            {{ task.progress }}%
+        </div>
+    </div>
+    {% elif task.status == 'Completed' %}
+    <span class="col-4">Completed: {{ task.updated_at|date:"M d, Y" }}</span>
+    {% elif task.status == 'Overdue' %}
+    <span class="col-12 task-overdue">Overdue</span>
+    {% endif %}
+</li>

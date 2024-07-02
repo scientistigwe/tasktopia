@@ -3,31 +3,48 @@
 {% block title %}Task Details | Tasktopia{% endblock %}
 
 {% block content %}
-<div class="task-detail">
+<div class="task-detail container mt-4">
     <div class="card">
-        <div class="my-3 py-3 text-center">
-            <h2 class="display-5">{{ task.title }}</h2>
-            <p class="lead">{{ task.description }}</p>
+        <div class="card-header bg-light">
+            <h2 class="display-5 text-center mb-0">{{ task.title }}</h2>
         </div>
         <div class="card-body">
-            <p class="card-title">Due Date: {{ task.due_date }}</p>
-            <p>Priority: {{ task.priority }}</p>
-            {% if task.status == 'Overdue' %}
-            <p style="color: red;">Status: {{ task.status }}</p>
-            {% elif task.status == 'Completed' %}
-            <p style="color: green;">Status: {{ task.status }}</p>
-            {% else %}
-            <p>Status: {{ task.status }}</p>
-            {% endif %}
-            <p>{{ task.category }}</p>
-            <div class="cta">
-                <span class="btn btn-outline-success btn-sm"><a href="{% url 'update_task' task.pk %}">Edit</a></span>
-                <span class="btn btn-outline-danger btn-sm"><a
-                        href="{% url 'task_confirm_delete' task.pk %}">Delete</a></span>
-                <span class="btn btn-outline-info btn-sm"><a href="{% url 'task_list' %}">Back to Task List</a></span>
+            <p class="lead text-center mb-4">{{ task.description }}</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Start Date:</strong> {{ task.start_date|date:"F d, Y, H:i" }}</p>
+                    <p><strong>Due Date:</strong> {{ task.due_date|date:"F d, Y, H:i" }}</p>
+                    <p><strong>Priority:</strong> {{ task.get_priority_display }}</p>
+                    <p><strong>Category:</strong> {{ task.category }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Status:</strong>
+                        <span class="badge {% if task.status == 'Completed' %}bg-success
+                                     {% elif task.status == 'Overdue' %}bg-danger
+                                     {% elif task.status == 'In Progress' %}bg-primary
+                                     {% else %}bg-secondary{% endif %}">
+                            {{ task.get_status_display }}
+                        </span>
+                    </p>
+                    <p><strong>Progress:</strong></p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ task.progress }}%;"
+                            aria-valuenow="{{ task.progress }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ task.progress }}%
+                        </div>
+                    </div>
+                    <p class="mt-2"><strong>Created:</strong> {{ task.created_at|date:"F d, Y, H:i" }}</p>
+                    <p><strong>Last Updated:</strong> {{ task.updated_at|date:"F d, Y, H:i" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'update_task' task.pk %}" class="btn btn-outline-success">Edit</a>
+                <a href="{% url 'task_confirm_delete' task.pk %}" class="btn btn-outline-danger">Delete</a>
+                <a href="{% url 'task_list' %}" class="btn btn-outline-info">Back to Task List</a>
             </div>
         </div>
     </div>
 </div>
-
-{% endblock%}
+{% endblock %}

@@ -22,24 +22,8 @@
                 </span>
                 <ul>
                     {% for task in tasks %}
-                    {% if task.status == 'Pending' %}
-                    <li class="card mb-1">
-                        <span class="task-detail-icon d-flex align-self-end position-absolute">
-                            <a href="{% url 'task_details' task.pk %}">
-                                <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20"
-                                    height="20">
-                            </a>
-                        </span>
-                        <span class="col-12 card-title" style="color: purple;">
-                            {{ task.title }}
-                        </span>
-                        <span class="col-12 card-text">{{ task.description }}</span>
-                        <span class="row">
-                            <span class="col-4">{{ task.due_date }}</span>
-                            <span class="col-4" style="color: purple;">{{ task.status }}</span>
-                            <span class="col-4">{{ task.category }}</span>
-                        </span>
-                    </li>
+                    {% if task.status == 'Pending' or task.status == 'Overdue' %}
+                    {% include 'tasks/task_card.html' %}
                     {% endif %}
                     {% endfor %}
                 </ul>
@@ -55,30 +39,7 @@
                 <ul>
                     {% for task in tasks %}
                     {% if task.status == 'In Progress' %}
-                    <li class="card mb-1">
-                        <span class="task-detail-icon d-flex align-self-end position-absolute">
-                            <a href="{% url 'task_details' task.pk %}">
-                                <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20"
-                                    height="20">
-                            </a>
-                        </span>
-                        <span class="col-12 card-title" style="color:rgb(15, 123, 238);">
-                            {{ task.title }}
-                        </span>
-                        <span class="col-12 card-text">{{ task.description }}</span>
-                        <span class="row">
-                            <span class="col-4">Start Date: {{ task.start_date }}</span>
-                            <span class="col-4">End Date: {{ task.due_date }}</span>
-                            <span class="col-4" style="color: rgb(15, 123, 238);">{{ task.status }}</span>
-                            <span class="col-4">Category: {{ task.category }}</span>
-                        </span>
-                        <div class="progress mt-2">
-                            <div class="progress-bar" role="progressbar" style="width: {{ task.progress }}%;"
-                                aria-valuenow="{{ task.progress }}" aria-valuemin="0" aria-valuemax="100">
-                                {{ task.progress }}%
-                            </div>
-                        </div>
-                    </li>
+                    {% include 'tasks/task_card.html' %}
                     {% endif %}
                     {% endfor %}
                 </ul>
@@ -95,23 +56,28 @@
                     {% for task in tasks %}
                     {% if task.status == 'Completed' %}
                     <li class="card mb-1">
-                        <span class="task-detail-icon d-flex align-self-end position-absolute">
-                            <a href="{% url 'task_details' task.pk %}">
-                                <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20"
-                                    height="20">
-                            </a>
-                        </span>
                         <span class="col-12 card-title" style="color: green;">
                             {{ task.title }}
                         </span>
                         <span class="col-12 card-text">{{ task.description }}</span>
                         <span class="row">
-                            <span class="col-4">{{ task.due_date }}</span>
-                            <span class="col-4" style="color: green;">{{ task.status }}</span>
+                            <span class="col-4">Completed: {{ task.updated_at|date:"M d, Y" }}</span>
+                            <span class="col-4" style="color: green;">{{ task.get_priority_display }}</span>
                             <span class="col-4">{{ task.category }}</span>
                         </span>
+                        <div>
+                            <!-- Bootstrap switch -->
+                            <form action="{% url 'mark_completed' task.pk %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="completedSwitch{{ task.id }}" {%
+                                        if task.status=='Completed' %}checked{% endif %}>
+                                    <label class="form-check-label" for="completedSwitch{{ task.id }}">Mark as
+                                        Completed</label>
+                                </div>
+                            </form>
+                        </div>
                     </li>
-                    {% endif %}
                     {% endfor %}
                 </ul>
             </div>
