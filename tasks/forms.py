@@ -45,3 +45,8 @@ class TaskForm(forms.ModelForm):
             raise ValidationError("Start date cannot be later than due date.")
 
         return cleaned_data
+
+class MarkTaskAsCompletedForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['status']

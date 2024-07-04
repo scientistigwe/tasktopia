@@ -3,8 +3,8 @@
 {% block title %}Tasks | Tasktopia{% endblock %}
 
 {% block content %}
-{% load static %}
 <div class="container-fluid">
+    {% load static %}
     <div class="new-task">
         <span class="col-md-5">
             <a href="{% url 'create_task' %}" id="new-task-text">

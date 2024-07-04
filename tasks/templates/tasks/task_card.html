@@ -1,4 +1,7 @@
 {% load static %}
+{% load i18n %}
+
+{% with status_class=task.status|lower %}
 <li class="card mb-1">
     <span class="task-detail-icon d-flex align-self-end position-absolute">
         <a href="{% url 'task_details' task.pk %}">
@@ -6,34 +9,91 @@
         </a>
     </span>
     <span
-        class="col-12 card-title {% if task.status == 'Overdue' %}task-overdue{% elif task.status == 'In Progress' %}task-in-progress{% elif task.status == 'Completed' %}task-completed{% else %}task-pending{% endif %}">
+        class="col-12 card-title {% if status_class == 'overdue' %}task-overdue{% elif status_class == 'in progress' %}task-in-progress{% elif status_class == 'completed' %}task-completed{% else %}task-pending{% endif %}">
         {{ task.title }}
     </span>
     <span class="col-12 card-text">{{ task.description }}</span>
     <span class="row">
-        {% if task.status == 'In Progress' %}
+        {% if status_class == 'in progress' %}
         <span class="col-4">Start: {{ task.start_date|date:"M d, Y" }}</span>
         {% endif %}
         <span class="col-4">Due: {{ task.due_date|date:"M d, Y" }}</span>
         <span
-            class="col-4 {% if task.status == 'Overdue' %}task-overdue{% elif task.status == 'In Progress' %}task-in-progress{% elif task.status == 'Completed' %}task-completed{% else %}task-pending{% endif %}">
+            class="col-4 {% if status_class == 'overdue' %}task-overdue{% elif status_class == 'in progress' %}task-in-progress{% elif status_class == 'completed' %}task-completed{% else %}task-pending{% endif %}">
             {{ task.get_priority_display }}
         </span>
         <span class="col-4">Category: {{ task.category }}</span>
     </span>
-    {% if task.status == 'Completed' %}
-    <span class="col-4">Completed: {{ task.updated_at|date:"M d, Y" }}</span>
-    {% elif task.status == 'Overdue' %}
+    {% if status_class == 'completed' %}
+    <span class="col-4">Completed: {{ task.completion_date|date:"M d, Y" }}</span>
+    {% elif status_class == 'overdue' %}
     <span class="col-12 task-overdue">Overdue</span>
     {% endif %}
 
-    <!-- Form with Bootstrap switch -->
-    <form action="{% url 'mark_completed' task.pk %}" method="post" class="form-inline">
+    <form id="completeTaskForm{{ task.id }}" action="{% url 'mark_completed' task.pk %}" method="post"
+        class="form-inline" data-status="{{ task.status }}">
         {% csrf_token %}
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="completedSwitch{{ task.id }}" name="completed"
-                onChange="this.form.submit()" {% if task.status=='Completed' %}checked{% endif %}>
-            <label class="form-check-label" for="completedSwitch{{ task.id }}">Mark as Completed</label>
+            <input class="form-check-input" type="checkbox" id="cSwitch{{ task.id }}" name="completed"
+                data-status="{{ task.status }}">
+            <label class="form-check-label" for="cSwitch{{ task.id }}">Mark as Completed</label>
         </div>
     </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to get the CSRF token from the meta tag
+            function getCSRFToken() {
+                return $('meta[name="csrf-token"]').attr('content');
+            }
+
+            // Initialize checkbox state based on data-status attribute
+            $('.form-check-input').each(function () {
+                var status = $(this).data('status');
+                if (status.toLowerCase() === 'completed') {
+                    $(this).prop('checked', true);
+                }
+            });
+
+            // Handle checkbox change event
+            $('.form-check-input').on('change', function (event) {
+                var isChecked = $(this).is(':checked');
+                var form = $(this).closest('form');
+                var taskStatus = form.data('status');
+                var csrftoken = getCSRFToken();
+
+                if ((isChecked && taskStatus !== 'completed') || (!isChecked && taskStatus === 'completed')) {
+                    $.ajax({
+                        url: form.attr('action'), // URL for form submission
+                        type: 'POST',
+                        data: form.serialize(), // Serialize form data
+                        dataType: 'json',
+                        beforeSend: function (xhr, settings) {
+                            xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include CSRF token
+                        },
+                        success: function (response) {
+                            if (response.status === 'success') {
+                                // Optionally, refresh the task list or show a success message
+                                location.reload();
+                            } else {
+                                // Handle error response
+                                alert('Error: ' + response.message);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            // Handle network errors
+                            alert('Network error: ' + textStatus);
+                        }
+                    });
+                } else {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+
+
+
 </li>
+{% endwith %}

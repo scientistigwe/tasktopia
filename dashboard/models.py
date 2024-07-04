@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 class Category(models.Model):
     """
@@ -16,10 +17,18 @@ class Category(models.Model):
     def __str__(self):
         return self.category_name
 
+from django.db import models
+from django.utils import timezone
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.conf import settings
+
 class Task(models.Model):
     """
     Represents a task with various attributes such as priority, status, and progress.
     """
+    is_manually_completed = models.BooleanField(default=False)
+
     class Priority(models.TextChoices):
         HIGH = 'High', 'High'
         MEDIUM = 'Medium', 'Medium'
@@ -41,28 +50,41 @@ class Task(models.Model):
     completion_date = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category_tasks')
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='category_tasks')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_tasks')
 
     def update_status(self):
         """
-        Automatically updates the status based on progress, start date, and due date.
+        Automatically updates the status based on progress, start date, and due date,
+        but skips the update if the task is manually marked as completed or already completed.
         """
         now = timezone.now()
-        if now > self.due_date:
+
+        # Skip automatic update if the task is manually marked as completed or already completed
+        if self.is_manually_completed or self.status == self.Status.COMPLETED:
+            return
+
+        # Logic to determine the task's status
+        if now > self.due_date and self.status != self.Status.COMPLETED:
             self.status = self.Status.OVERDUE
         elif self.start_date <= now <= self.due_date:
             self.status = self.Status.IN_PROGRESS
         elif now < self.start_date:
             self.status = self.Status.PENDING
 
-    def mark_as_completed(self):
+        # Save the model instance to persist the changes
+        self.save()
+
+    @classmethod
+    def mark_as_completed(cls, task_id):
         """
         Marks the task as completed and sets the completion date.
         """
-        self.status = self.Status.COMPLETED
-        self.completion_date = timezone.now()
-        self.save()
+        task = cls.objects.get(pk=task_id)
+        task.is_manually_completed = True
+        task.status = cls.Status.COMPLETED
+        task.completion_date = timezone.now()
+        task.save()
 
     def clean(self):
         super().clean()
@@ -74,12 +96,13 @@ class Task(models.Model):
         Overrides the default save method to update the status before saving.
         """
         self.full_clean()
+        super().save(*args, **kwargs)  # Save first to avoid recursion
         self.update_status()
-        super().save(*args, **kwargs)
-    
+        super().save(*args, **kwargs)  # Save again to persist status updates
+
     def __str__(self):
         return f"Title: {self.title}, Priority: {self.priority}, Status: {self.status}"
-
+    
 class Notification(models.Model):
     """
     Represents a notification related to a task for a user.
