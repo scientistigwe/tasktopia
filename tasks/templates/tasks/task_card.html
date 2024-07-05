@@ -3,44 +3,60 @@
 
 {% with status_class=task.status|lower %}
 <li class="card mb-1">
+    <!-- Task detail -->
     <span class="task-detail-icon d-flex align-self-end position-absolute">
         <a href="{% url 'task_details' task.pk %}">
             <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20" height="20">
         </a>
     </span>
+    <!-- Title -->
     <span
         class="col-12 card-title {% if status_class == 'overdue' %}task-overdue{% elif status_class == 'in progress' %}task-in-progress{% elif status_class == 'completed' %}task-completed{% else %}task-pending{% endif %}">
         {{ task.title }}
     </span>
-    <span class="col-12 card-text">{{ task.description }}</span>
-    <span class="row">
-        {% if status_class == 'in progress' %}
-        <span class="col-4">Start: {{ task.start_date|date:"M d, Y" }}</span>
-        {% endif %}
-        <span class="col-4">Due: {{ task.due_date|date:"M d, Y" }}</span>
+    <!-- Description -->
+    <span class="col-md-12 mb-1 card-text"><i>{{ task.description }}</i></span>
+    <!-- Start and Due date -->
+    <div class="col-md-12 d-flex justify-content-between">
+        <span class="col-6">Start: {{ task.start_date|date:"M d, Y" }}</span>
+        <span class="col-6">Due: {{ task.due_date|date:"M d, Y" }}</span>
+    </div>
+    <!-- Priority and Category -->
+    <div class="row-md-12 mb-1 d-flex justify-content-between">
         <span
-            class="col-4 {% if status_class == 'overdue' %}task-overdue{% elif status_class == 'in progress' %}task-in-progress{% elif status_class == 'completed' %}task-completed{% else %}task-pending{% endif %}">
-            {{ task.get_priority_display }}
+            class="col-MD-6 {% if status_class == 'overdue' %}task-overdue{% elif status_class == 'in progress' %}task-in-progress{% elif status_class == 'completed' %}task-completed{% else %}task-pending{% endif %}">
+            Priority: {{ task.get_priority_display }}
         </span>
-        <span class="col-4">Category: {{ task.category }}</span>
-    </span>
-    {% if status_class == 'completed' %}
-    <span class="col-4">Completed: {{ task.completion_date|date:"M d, Y" }}</span>
-    {% elif status_class == 'overdue' %}
-    <span class="col-12 task-overdue">Overdue</span>
-    {% endif %}
-
-    <form id="completeTaskForm{{ task.id }}" action="{% url 'mark_completed' task.pk %}" method="post"
-        class="form-inline" data-status="{{ task.status }}">
-        {% csrf_token %}
-        <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="cSwitch{{ task.id }}" name="completed"
-                data-status="{{ task.status }}">
-            <label class="form-check-label" for="cSwitch{{ task.id }}">Mark as Completed</label>
-        </div>
-    </form>
+        <span class="col-md-6">Category: {{ task.category }}</span>
+    </div>
+    <!-- Status and Completion Switch -->
+    <div class="col-md-12 mb-1 d-flex justify-content-between">
+        <span class="col-md-6">
+            {% if status_class == 'in progress' %}
+            <span class="col-md-12 task-in-progress">In progress</span>
+            {% elif status_class == 'completed' %}
+            <span class="col-md-12 task-completed">Completed: {{ task.completion_date|date:"M d, Y" }}</span>
+            {% elif status_class == 'pending' %}
+            <span class="col-md-12 task-pending">Pending</span>
+            {% elif status_class == 'overdue' %}
+            <span class="col-md-12 task-overdue">Overdue</span>
+            {% endif %}
+        </span>
+        <span class="col-md-6">
+            <form id="completeTaskForm{{ task.id }}" action="{% url 'mark_completed' task.pk %}" method="post"
+                class="form-inline" data-status="{{ task.status }}">
+                {% csrf_token %}
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="cSwitch{{ task.id }}" name="completed"
+                        data-status="{{ task.status }}">
+                    <label class="form-check-label" for="cSwitch{{ task.id }}">Mark as Completed</label>
+                </div>
+            </form>
+        </span>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         $(document).ready(function () {
             // Function to get the CSRF token from the meta tag

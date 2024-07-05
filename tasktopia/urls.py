@@ -12,7 +12,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    #path('reports/', include('reports.urls')),
     path('tasks/', include('tasks.urls')),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('dashboard/', include('dashboard.urls')),

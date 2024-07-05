@@ -1,13 +1,14 @@
 from rest_framework import generics, permissions
 from django.db.models import Count
 from datetime import datetime, timedelta
-from .models import Task, Category, Report, Notification, Weather, Forecast, EventLog
-from .serializers import UserSerializer, TaskSerializer, CategorySerializer, ReportSerializer, NotificationSerializer, WeatherSerializer, ForecastSerializer, EventLogSerializer
+from .models import Task, Category
+from .serializers import UserSerializer, TaskSerializer, CategorySerializer
 from django.http import HttpRequest
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # View to render dashboard.html
 class DashboardView(TemplateView):
@@ -66,112 +67,8 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
             return Task.objects.all()
         return Task.objects.filter(user=user)
 
-# Report Views
-class ReportListView(generics.ListCreateAPIView):
-    serializer_class = ReportSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return Report.objects.all()
-        return Report.objects.filter(user=user)
-
-class ReportDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = ReportSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return Report.objects.all()
-        return Report.objects.filter(user=user)
-
-# Notification Views
-class NotificationListView(generics.ListCreateAPIView):
-    serializer_class = NotificationSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return Notification.objects.all()
-        return Notification.objects.filter(user=user)
-
-class NotificationDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = NotificationSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return Notification.objects.all()
-        return Notification.objects.filter(user=user)
-
-# Weather Views
-class WeatherListView(generics.ListCreateAPIView):
-    serializer_class = WeatherSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return Weather.objects.all()
-        return Weather.objects.filter(user=user)
-
-class WeatherDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = WeatherSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return Weather.objects.all()
-        return Weather.objects.filter(user=user)
-
-# Forecast Views
-class ForecastListView(generics.ListCreateAPIView):
-    serializer_class = ForecastSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return Forecast.objects.all()
-        return Forecast.objects.filter(user=user)
-
-class ForecastDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = ForecastSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return Forecast.objects.all()
-        return Forecast.objects.filter(user=user)
-
-# EventLog Views
-class EventLogListView(generics.ListCreateAPIView):
-    serializer_class = EventLogSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return EventLog.objects.all()
-        return EventLog.objects.filter(user=user)
-
-class EventLogDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = EventLogSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return EventLog.objects.all()
-        return EventLog.objects.filter(user=user)
-
 # Custom Views for Analysis
+@login_required
 def task_completion_rate(request: HttpRequest) -> JsonResponse:
     """
     Calculate task completion rate for the last 30 days.
@@ -193,6 +90,7 @@ def task_completion_rate(request: HttpRequest) -> JsonResponse:
 
     return JsonResponse(data)
 
+@login_required
 def overdue_tasks(request: HttpRequest) -> JsonResponse:
     """
     Retrieve all overdue tasks.
@@ -201,6 +99,7 @@ def overdue_tasks(request: HttpRequest) -> JsonResponse:
     serialized_data = TaskSerializer(overdue_tasks, many=True).data
     return JsonResponse(serialized_data, safe=False)  # Set safe=False for non-dict objects
 
+@login_required
 def task_priority_distribution(request: HttpRequest) -> JsonResponse:
     """
     Calculate task count distribution by priority.
@@ -214,6 +113,7 @@ def task_priority_distribution(request: HttpRequest) -> JsonResponse:
 
     return JsonResponse(data, safe=False)  # Set safe=False for non-dict objects
 
+@login_required
 def tasks_created_vs_completed(request: HttpRequest) -> JsonResponse:
     """
     Calculate tasks created vs. completed count for the last 30 days.
@@ -233,6 +133,7 @@ def tasks_created_vs_completed(request: HttpRequest) -> JsonResponse:
 
     return JsonResponse(data)
 
+@login_required
 def productivity_trends(request: HttpRequest) -> JsonResponse:
     """
      Calculate productivity trends based on tasks created over time.
@@ -246,6 +147,7 @@ def productivity_trends(request: HttpRequest) -> JsonResponse:
     productivity_trends = tasks.values('created_at__date').annotate(count=Count('task_id')).order_by('created_at__date')
     return JsonResponse(list(productivity_trends), safe=False)
 
+@login_required
 def category_wise_task_completion(request):
     """
     Calculate completion rate of tasks by category.

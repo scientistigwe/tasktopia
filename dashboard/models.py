@@ -3,25 +3,6 @@ from django.utils import timezone
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from django.conf import settings
-
-class Category(models.Model):
-    """
-    Represents a category for tasks.
-    """
-    category_id = models.AutoField(primary_key=True)
-    category_name = models.CharField(max_length=225)
-    created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_category')
-
-    def __str__(self):
-        return self.category_name
-
-from django.db import models
-from django.utils import timezone
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
-from django.conf import settings
 
 class Task(models.Model):
     """
@@ -53,7 +34,7 @@ class Task(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='category_tasks')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_tasks')
 
-    def update_status(self):
+    def update_status(self, save=False):
         """
         Automatically updates the status based on progress, start date, and due date,
         but skips the update if the task is manually marked as completed or already completed.
@@ -73,7 +54,8 @@ class Task(models.Model):
             self.status = self.Status.PENDING
 
         # Save the model instance to persist the changes
-        self.save()
+        if save:
+            self.save(update_fields=['status'])
 
     @classmethod
     def mark_as_completed(cls, task_id):
@@ -96,78 +78,21 @@ class Task(models.Model):
         Overrides the default save method to update the status before saving.
         """
         self.full_clean()
-        super().save(*args, **kwargs)  # Save first to avoid recursion
         self.update_status()
-        super().save(*args, **kwargs)  # Save again to persist status updates
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Title: {self.title}, Priority: {self.priority}, Status: {self.status}"
-    
-class Notification(models.Model):
+
+class Category(models.Model):
     """
-    Represents a notification related to a task for a user.
+    Represents a category for tasks.
     """
-    notification_id = models.AutoField(primary_key=True)
-    message = models.TextField()
-    sent_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_notifications')
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_notifications')
+    category_id = models.AutoField(primary_key=True)
+    category_name = models.CharField(max_length=225)
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_category')
 
     def __str__(self):
-        return f"Message: {self.message}"
+        return self.category_name
 
-class Report(models.Model):
-    """
-    Represents a report generated for a user.
-    """
-    report_id = models.AutoField(primary_key=True)
-    generated_at = models.DateTimeField(auto_now_add=True)
-    content = models.TextField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_reports')
-
-    def __str__(self):
-        return f"Generated at: {self.generated_at}"
-
-class Weather(models.Model):
-    """
-    Represents weather information for a specific location and date.
-    """
-    weather_id = models.AutoField(primary_key=True)
-    current_date = models.DateTimeField(auto_now_add=True)
-    forecast_date = models.DateTimeField()
-    condition = models.CharField(max_length=50)
-    temperature = models.IntegerField()
-    current_location = models.CharField(max_length=50)
-    event_location = models.CharField(max_length=50)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_weather')
-
-    def __str__(self):
-        return f"Condition: {self.condition}, Current Location: {self.current_location}, Event Location: {self.event_location}"
-
-class Forecast(models.Model):
-    """
-    Represents a weather forecast for a specific day and location.
-    """
-    forecast_id = models.AutoField(primary_key=True)
-    forecast_day = models.DateField()
-    forecast_condition = models.CharField(max_length=50)
-    forecast_temperature = models.IntegerField()
-    forecast_location = models.CharField(max_length=50)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_forecast')
-    weather = models.OneToOneField(Weather, on_delete=models.CASCADE, related_name='forecast')
-
-    def __str__(self):
-        return f"Forecast Condition: {self.forecast_condition}, Forecast Location: {self.forecast_location}"
-
-class EventLog(models.Model):
-    """
-    Represents a log of events related to a task for a user.
-    """
-    eventlog_id = models.AutoField(primary_key=True)
-    event = models.CharField(max_length=225)
-    event_time = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_eventlog')
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_event_logs')
-
-    def __str__(self):
-        return f"Event: {self.event}"

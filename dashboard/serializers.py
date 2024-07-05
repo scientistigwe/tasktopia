@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Task, Category, Report, Notification, Weather, Forecast, EventLog
+from .models import Task, Category
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,29 +15,4 @@ class CategorySerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = '__all__'
-
-class ReportSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Report
-        fields = '__all__'
-
-class NotificationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Notification
-        fields = '__all__'
-
-class WeatherSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Weather
-        fields = '__all__'
-
-class ForecastSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Forecast
-        fields = '__all__'
-
-class EventLogSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = EventLog
         fields = '__all__'

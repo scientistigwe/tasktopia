@@ -35,29 +35,21 @@
                 {{ form.description.errors }}
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label for="id_priority" class="form-label">Priority</label>
             {{ form.priority }}
             <div class="invalid-feedback">
                 {{ form.priority.errors }}
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label for="id_category" class="form-label">Category</label>
             {{ form.category }}
             <div class="invalid-feedback">
                 {{ form.category.errors }}
             </div>
         </div>
-        <div class="col-md-4">
-            <label for="id_progress" class="form-label">Progress</label>
-            <input type="number" class="form-control" id="id_progress" name="progress" min="0" max="100"
-                value="{{ object.progress }}">
-            <div class="invalid-feedback">
-                Please enter a valid progress value (0-100).
-            </div>
-        </div>
-        <div class="col-12 mt-4">
+        <div class="col-12 mt-4 cta">
             <button class="btn btn-outline-success" type="submit">Save</button>
             <a class="btn btn-outline-info" href="{% url 'task_details' object.pk %}">Cancel</a>
         </div>

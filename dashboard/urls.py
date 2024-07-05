@@ -6,16 +6,6 @@ from .views import (
     TaskDetailView,
     CategoryListView,
     CategoryDetailView,
-    ReportListView,
-    ReportDetailView,
-    NotificationListView,
-    NotificationDetailView,
-    WeatherListView,
-    WeatherDetailView,
-    ForecastListView,
-    ForecastDetailView,
-    EventLogListView,
-    EventLogDetailView,
     DashboardView,
     task_completion_rate,
     overdue_tasks,
@@ -40,26 +30,6 @@ urlpatterns = [
     # Category URLs
     path('categories/', CategoryListView.as_view(), name='category-list'),
     path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category-detail'),
-
-    # Report URLs
-    path('reports/', ReportListView.as_view(), name='report_list'),
-    path('reports/<int:pk>/', ReportDetailView.as_view(), name='report-detail'),
-
-    # Notification URLs
-    path('notifications/', NotificationListView.as_view(), name='notification-list'),
-    path('notifications/<int:pk>/', NotificationDetailView.as_view(), name='notification-detail'),
-
-    # Weather URLs
-    path('weathers/', WeatherListView.as_view(), name='weather-list'),
-    path('weathers/<int:pk>/', WeatherDetailView.as_view(), name='weather-detail'),
-
-    # Forecast URLs
-    path('forecasts/', ForecastListView.as_view(), name='forecast-list'),
-    path('forecasts/<int:pk>/', ForecastDetailView.as_view(), name='forecast-detail'),
-
-    # EventLog URLs
-    path('event-logs/', EventLogListView.as_view(), name='event-log-list'),
-    path('event-logs/<int:pk>/', EventLogDetailView.as_view(), name='event-log-detail'),
 
     # Dashboard URLs
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
