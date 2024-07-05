@@ -30,6 +30,7 @@ a {
     color: #0056b3;
 }
 
+
 /************************/
 /* Nav & Brand section */
 /***********************/
@@ -173,6 +174,20 @@ margin: auto;
     text-align: center;
     font-size: 2em;
     margin-bottom: 5px;
+}
+
+.task-pending {
+    color: purple;
+}
+
+.task-overdue {
+    color: red;
+}
+
+.custom-progress-bar {
+    transition: width 0.6s ease;
+    background-color: #007bff;
+    height: 20px;
 }
 
 /************************/
