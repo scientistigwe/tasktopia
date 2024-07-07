@@ -1,8 +1,10 @@
-// Utility functions
+// Utility function to fetch data from the server
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
-    if (!response.ok) throw new Error("Network response was not ok");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
     return await response.json();
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -10,7 +12,7 @@ const fetchData = async (url) => {
   }
 };
 
-// Chart update functions
+// Function to update a chart based on provided data
 const updateChart = (elementId, chartType, data, options) => {
   const element = document.getElementById(elementId);
   if (element) {
@@ -21,6 +23,7 @@ const updateChart = (elementId, chartType, data, options) => {
   }
 };
 
+// Function to update the Task Completion Rate Chart
 const updateTaskCompletionRateChart = async () => {
   const data = await fetchData("/dashboard/task-completion-rate/");
   if (!data) return;
@@ -48,15 +51,13 @@ const updateTaskCompletionRateChart = async () => {
     {
       responsive: true,
       plugins: {
-        title: {
-          display: true,
-          text: "Task Completion Rate",
-        },
+        title: { display: true, text: "Task Completion Rate" },
       },
     }
   );
 };
 
+// Function to update the Task Priority Distribution Chart
 const updateTaskPriorityDistributionChart = async () => {
   const data = await fetchData("/dashboard/task-priority-distribution/");
   if (!data) return;
@@ -83,18 +84,11 @@ const updateTaskPriorityDistributionChart = async () => {
     {
       responsive: true,
       plugins: {
-        legend: {
-          position: "top",
-        },
-        title: {
-          display: true,
-          text: "Task Priority Distribution",
-        },
+        legend: { position: "top" },
+        title: { display: true, text: "Task Priority Distribution" },
         tooltip: {
           callbacks: {
-            label: function (tooltipItem) {
-              return `${tooltipItem.label}: ${tooltipItem.raw}`;
-            },
+            label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
           },
         },
       },
@@ -102,6 +96,7 @@ const updateTaskPriorityDistributionChart = async () => {
   );
 };
 
+// Function to update the Productivity Trends Chart
 const updateProductivityTrendsChart = async () => {
   const data = await fetchData("/dashboard/productivity-trends/");
   if (!data) return;
@@ -124,18 +119,11 @@ const updateProductivityTrendsChart = async () => {
     {
       responsive: true,
       plugins: {
-        legend: {
-          position: "top",
-        },
-        title: {
-          display: true,
-          text: "Productivity Trends Over Time",
-        },
+        legend: { position: "top" },
+        title: { display: true, text: "Productivity Trends Over Time" },
         tooltip: {
           callbacks: {
-            label: function (tooltipItem) {
-              return `Count: ${tooltipItem.raw}`;
-            },
+            label: (tooltipItem) => `Count: ${tooltipItem.raw}`,
           },
         },
       },
@@ -143,7 +131,7 @@ const updateProductivityTrendsChart = async () => {
   );
 };
 
-// Table update functions
+// Function to update the Category-wise Task Completion Table
 const updateCategoryTaskCompletionTable = async () => {
   const data = await fetchData("/dashboard/category-wise-task-completion/");
   if (!data) return;
@@ -153,13 +141,13 @@ const updateCategoryTaskCompletionTable = async () => {
     tableBody.innerHTML = data
       .map(
         (item) => `
-    <tr>
-      <td>${item.category}</td>
-      <td>${item.completed_tasks}</td>
-      <td>${item.total_tasks}</td>
-      <td>${item.completion_rate.toFixed(1)}</td>
-    </tr>
-  `
+          <tr>
+            <td>${item.category}</td>
+            <td>${item.completed_tasks}</td>
+            <td>${item.total_tasks}</td>
+            <td>${item.completion_rate.toFixed(1)}</td>
+          </tr>
+        `
       )
       .join("");
   } else {
@@ -167,10 +155,11 @@ const updateCategoryTaskCompletionTable = async () => {
   }
 };
 
-// KPI update functions
+// Function to update a KPI card
 const updateKPICard = async (url, elementId, formatFunc) => {
   const data = await fetchData(url);
   if (!data) return;
+
   const element = document.getElementById(elementId);
   if (element) {
     element.textContent = formatFunc(data);
@@ -179,30 +168,28 @@ const updateKPICard = async (url, elementId, formatFunc) => {
   }
 };
 
+// Function to update all KPI cards
 const updateKPIs = async () => {
-  await updateKPICard(
-    "/dashboard/total-tasks/",
-    "totalTasksValue",
-    (data) => data.total_tasks
-  );
-  await updateKPICard(
-    "/dashboard/percent-overdue/",
-    "percentOverdueValue",
-    (data) => data.percent_overdue.toFixed(1) + "%"
-  );
-  await updateKPICard(
-    "/dashboard/percent-completed/",
-    "percentCompletedValue",
-    (data) => data.percent_completed.toFixed(1) + "%"
-  );
+  await Promise.all([
+    updateKPICard(
+      "/dashboard/total-tasks/",
+      "totalTasksValue",
+      (data) => data.total_tasks
+    ),
+    updateKPICard(
+      "/dashboard/percent-overdue/",
+      "percentOverdueValue",
+      (data) => data.percent_overdue.toFixed(1) + "%"
+    ),
+    updateKPICard(
+      "/dashboard/percent-completed/",
+      "percentCompletedValue",
+      (data) => data.percent_completed.toFixed(1) + "%"
+    ),
+  ]);
 };
 
-// Event listeners
-document.addEventListener("DOMContentLoaded", () => {
-  refreshDashboard();
-});
-
-// Main refresh function
+// Main function to refresh the dashboard
 const refreshDashboard = () => {
   updateTaskCompletionRateChart();
   updateTaskPriorityDistributionChart();
@@ -210,3 +197,16 @@ const refreshDashboard = () => {
   updateCategoryTaskCompletionTable();
   updateKPIs();
 };
+
+// Event listener for DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
+  // Check if this is the analytics and insights page
+  if (document.getElementById("analyticsInsightsMarker")) {
+    console.log(
+      "Analytics and Insights page detected, refreshing dashboard..."
+    );
+    refreshDashboard();
+  } else {
+    console.log("Not on Analytics and Insights page");
+  }
+});

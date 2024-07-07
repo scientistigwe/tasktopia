@@ -1,15 +1,15 @@
 {% load static %}
 <header>
     <div class="header-container">
-        <div class="collapse" id="navbarHeader">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 py-4 ">
-                        <h4 style="color: aqua;">About</h4>
-                        <h6 class="" style="font-size: 1.2em; color: beige;">
-                            <strong>TaskTopia: A place to build your daily dreams, one task at a time.</strong>
-                            <p>Overview</p>
-                            <p>TaskTopia is a context-aware, intelligent to-do list designed to help individuals
+        <div class="header">
+            <div class="collapse" id="navbarHeader">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 py-4 about">
+                            <strong class="tagline"><span>TaskTopia:</span> A place to build your daily
+                                dreams, one task at a time.</strong>
+                            <p class="overview">TaskTopia is a context-aware, intelligent to-do list designed to help
+                                individuals
                                 and teams organize, track, and complete tasks efficiently. It offers a range of features
                                 including task prioritization, category management, notifications, reports, weather
                                 forecasting,
@@ -28,8 +28,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="about-tasktopia-modal"
-                                                style="color: black !important;">
+                                            <h5 class="modal-title" id="about-tasktopia-modal">
                                                 TaskTopia: A place to build your daily dreams, one task at a time.</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -146,28 +145,29 @@
                                     </div>
                                 </div>
                             </div>
-                        </h6>
+                            </h6>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="navbar navbar-dark shadow-sm">
-            <div class="container-fluid">
-                <a href="" class="navbar-brand d-flex align-items-center" id="tasktopia"><img
-                        src="{% static 'registration/images/tasktopia-icon.png' %}" alt="Main icon" width="40"
-                        height="40">
-                    <strong>Tasktopia</strong>
-                </a>
-                <div
-                    class="d-flex justify-content-between flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h4 id="welcome-message">Welcome, {{ user.first_name }} <img src="{% static 'tasks/img/clap.png' %}"
-                            width="30" height="30" alt="welcome clap">
-                    </h4>
+            <div class="navbar navbar-dark shadow-sm">
+                <div class="container-fluid">
+                    <a href="" class="navbar-brand d-flex align-items-center" id="tasktopia"><img
+                            src="{% static 'registration/images/tasktopia-icon.png' %}" alt="Main icon" width="40"
+                            height="40">
+                        <strong>Tasktopia</strong>
+                    </a>
+                    <div
+                        class="d-flex justify-content-between flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h4 id="welcome-message">Welcome, {{ user.first_name }} <img
+                                src="{% static 'tasks/img/clap.png' %}" width="30" height="30" alt="welcome clap">
+                        </h4>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                        aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                 </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
-                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
             </div>
         </div>
     </div>

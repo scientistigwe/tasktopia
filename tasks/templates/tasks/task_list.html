@@ -3,8 +3,24 @@
 {% block title %}Tasks | Tasktopia{% endblock %}
 
 {% block content %}
+
 <div class="container-fluid">
     {% load static %}
+
+    <!-- Alert message handler -->
+    {% if success_message %}
+    <div class="alert alert-success dismissible-message">
+        {{ first_name}} has {{ success_message }}
+    </div>
+    {% endif %}
+
+    <!-- Alert message handler for task creation success -->
+    {% if request.session.task_success_message %}
+    <div class="alert alert-success dismissible-message">
+        {{ request.session.task_success_message }}
+    </div>
+    {% endif %}
+
     <div class="new-task">
         <span class="col-md-5">
             <a href="{% url 'create_task' %}" id="new-task-text">

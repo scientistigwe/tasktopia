@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from django.db.models import Count
 from datetime import datetime, timedelta
-from .models import Task, Category
+from tasks.models import Task, Category
 from .serializers import UserSerializer, TaskSerializer, CategorySerializer
 from django.http import HttpRequest
 from django.contrib.auth.models import User

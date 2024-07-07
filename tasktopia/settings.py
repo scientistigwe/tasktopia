@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 import django_heroku
 import dj_database_url
-import env
+from django.conf import settings
+if os.path:
+    import env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,11 +31,13 @@ SECRET_KEY = 'django-insecure-mqnrowkrk6%ayjkbr_q0gf(%yx_vx4-!(se@9y1besan2-jgsf
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    '*',
     '127.0.0.1',
     '.herokuapp.com'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
+    "https://*",
     "https://*.herokuapp.com"
 ]
 
@@ -97,8 +101,8 @@ WSGI_APPLICATION = 'tasktopia.wsgi.application'
 # }
 
 DATABASES = {
-'default':
-dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default':
+    dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
 
@@ -157,3 +161,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+

@@ -1,0 +1,115 @@
+/* TASK LIST STYLE */
+.to_do {
+background-color: transparent;
+
+}
+
+.task-list {
+    width: 80vw;
+    position: relative;
+    margin: auto;
+}
+
+.new-task {
+    position: absolute;
+    right: 0;
+}
+
+#new-task-text{
+    color:#040303;
+    font-size: 1.5em;
+    margin-top: -10px;
+    margin-right: 5px;
+}
+    
+.task-list ul{
+    list-style: none;
+}
+
+.task-list li{
+    margin-left: 0;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+.task-list a{
+    text-decoration: none;
+}
+
+.task-list h4{
+    text-align: center;
+}
+
+.task-details-icon{
+    position: absolute;
+    right: 2px;
+    border-radius: 50%;
+    border-style: groove;
+}
+
+.authentication {
+    position: absolute;
+    right: 0;
+}
+
+#my-task h4 {
+    color: antiquewhite;
+}
+
+
+/* DELETE TASK STYLE */
+
+/* CREATE TASK STYLE */
+.create-task{
+    margin: 3vw 10vw;
+}
+
+/* EDIT TASK STYLE */
+.edit-task{
+    margin: 3vw 10vw;
+}
+
+/* UPDATE TASK STYLE */
+.update-task{
+    margin: 3vw 10vw;
+}
+
+
+
+.kpi-cards-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.kpi-card {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    margin: 0 10px;
+}
+
+.kpi-card:hover {
+    transform: scale(1.05);
+}
+
+.kpi-card-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.kpi-value {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+.reduce-size {
+    max-width: 450px;
+    max-height: 300px;
+    margin: auto;
+}

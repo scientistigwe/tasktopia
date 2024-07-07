@@ -13,7 +13,7 @@
     <title>{% block title %}Home | Tasktopia{% endblock %}</title>
 
     <!-- Fonts -->
-    <link rel=" preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
@@ -24,9 +24,12 @@
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'registration/css/account-styles.css' %}">
+    <link rel="stylesheet" href="{% static 'registration/css/account.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/dashboard-style.css' %}">
+    <link rel="stylesheet" href="{% static 'tasks/css/task-style.css' %}">
 
     <style>
+        /* Background container styling */
         .background-container {
             overflow-x: hidden;
             position: fixed;
@@ -41,6 +44,7 @@
             z-index: -99;
         }
 
+        /* Overlay styling for background container */
         .background-container::before {
             content: "";
             position: fixed;
@@ -49,10 +53,11 @@
             width: 100vw;
             height: 100vh;
             background-color: #FAF3E0;
-            opacity: 0.7;
+            opacity: 0.8;
             z-index: -98;
         }
 
+        /* Card styling */
         .card {
             background-color: #f4f4f4;
             padding: 1.5rem;
@@ -60,6 +65,7 @@
             opacity: 0.85;
         }
 
+        /* Task detail icon styling */
         .task-detail-icon {
             border-radius: 50% !important;
             border: groove !important;
@@ -73,18 +79,22 @@
 <body>
     <div class="background-container"></div>
     <div class="content-wrapper">
+        <!-- Include header partial template -->
         {% include 'partials/header.html' %}
 
         <main class="container-fluid main-container">
             <div class="row">
+                <!-- Include sidebar partial template -->
                 {% include 'partials/sidebar.html' %}
                 <div class="px-md-4">
+                    <!-- Content block where specific page content will be injected -->
                     {% block content %}
                     {% endblock %}
                 </div>
             </div>
         </main>
     </div>
+    <!-- Include footer partial template -->
     {% include 'partials/footer.html' %}
 
     <!-- Bootstrap, Popper and Feather Icons JS -->
