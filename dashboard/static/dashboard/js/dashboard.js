@@ -138,6 +138,7 @@ const updateCategoryTaskCompletionTable = async () => {
   );
   console.log(data);
   if (!data) return;
+  console.log(data);
 
   const aggregatedData = {};
 
