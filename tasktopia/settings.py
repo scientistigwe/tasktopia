@@ -19,7 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-mqnrowkrk6%ayjkbr_q0gf(%yx_vx4-!(se@9y1besan2-jgsf')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+#DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'tasktopia.wsgi.application'
 # Database configuration
 DATABASES = {
 'default':
-dj_database_url.parse(os.environ.get("DATABASE_URL"))
+dj_database_url.parse(str(os.environ.get("DATABASE_URL")))
 }
 
 # Password validation

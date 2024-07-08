@@ -133,22 +133,50 @@ const updateProductivityTrendsChart = async () => {
 
 // Function to update the Category-wise Task Completion Table
 const updateCategoryTaskCompletionTable = async () => {
-  const data = await fetchData("/dashboard/category-wise-task-completion/");
+  const data = await fetchData(
+    "/dashboard/category-wise-task-completion-summary/"
+  );
+  console.log(data);
   if (!data) return;
+
+  const aggregatedData = {};
+
+  // Aggregate data by category
+  data.forEach((item) => {
+    const category = item.category_name; // Use category_name as per Django response
+    if (!aggregatedData[category]) {
+      aggregatedData[category] = {
+        category: category,
+        completed_tasks: item.completed_tasks,
+        total_tasks: item.total_tasks,
+        completion_rate: item.completion_rate.toFixed(1),
+      };
+    } else {
+      // Sum up values for duplicate categories
+      aggregatedData[category].completed_tasks += item.completed_tasks;
+      aggregatedData[category].total_tasks += item.total_tasks;
+      // Recalculate completion rate based on summed values
+      aggregatedData[category].completion_rate =
+        (aggregatedData[category].completed_tasks /
+          aggregatedData[category].total_tasks) *
+        100;
+    }
+  });
 
   const tableBody = document.getElementById("categoryTaskCompletionTableBody");
   if (tableBody) {
-    tableBody.innerHTML = data
-      .map(
-        (item) => `
+    tableBody.innerHTML = Object.keys(aggregatedData)
+      .map((category) => {
+        const item = aggregatedData[category];
+        return `
           <tr>
-            <td>${item.category}</td>
+            <td>${category}</td>
             <td>${item.completed_tasks}</td>
             <td>${item.total_tasks}</td>
             <td>${item.completion_rate.toFixed(1)}</td>
           </tr>
-        `
-      )
+        `;
+      })
       .join("");
   } else {
     console.error(`Element with ID categoryTaskCompletionTableBody not found.`);
