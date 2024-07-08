@@ -2,23 +2,22 @@
 <div class="container-fluid">
     <nav id="sidebarMenu" class="col-md-12 col-lg-12 d-md-block sidebar">
         <div class="position-sticky pt-3">
-            <ul class="nav navigation-item">
+            <ul class="nav flex-column navigation-item">
                 {% csrf_token %}
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'task_list' %}">Tasks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">Analytics
-                        & Insights</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">Analytics & Insights</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active disabled" aria-current="page" href="#">Reports</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">Profile</a>
                 </li>
                 {% else %}
@@ -30,5 +29,7 @@
                 </li>
                 {% endif %}
             </ul>
+        </div>
     </nav>
-</div> <!-- End: Sidebar -->
+</div>
+<!-- End: Sidebar -->

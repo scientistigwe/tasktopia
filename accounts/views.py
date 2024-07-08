@@ -76,11 +76,6 @@ class IndexView(TemplateView):
     def get(self, request):
         return render(request, self.template_name)
 
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.contrib.auth import authenticate, login
-from django.views import View
-
 class LoginView(View):
     """
     Handle user login.
@@ -119,17 +114,18 @@ class LoginView(View):
         else:
             request.session['error_message'] = 'Invalid username or password.'
             return redirect(reverse('index'))
-
-           
+      
 class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
-        logout(request)
-        messages.success(request, 'Successfully logged out.')
+        if request.user is not None:
+            first_name = request.user.first_name
+            logout(request)
+            messages.add_message(request, messages.SUCCESS, f'{first_name}, successfully logged out.', extra_tags='logout')
+        else:
+            # Optionally handle the case where user is None (though it should not normally happen)
+            messages.error(request, 'Error: User not logged in.')
+        
         return HttpResponseRedirect('/')
-
-    def clear_message(request):
-        request.session['success_message'] = ''
-        return JsonResponse({'status': 'message-cleared'})
 
 @method_decorator(login_required, name='dispatch')
 class TaskListView(ListView):

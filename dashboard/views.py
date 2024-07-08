@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Case, When, FloatField, Sum
+from django.db.models import Count, Case, When, IntegerField, Sum, FloatField, Value
 from django.http import JsonResponse
 
 # View to render dashboard.html
@@ -154,27 +154,41 @@ def category_wise_task_completion(request):
     """
     Calculate aggregated completion rate of tasks by category.
     """
-    thirty_days_ago = datetime.now() - timedelta(days=30)
-
     if request.user.is_superuser:
         # Superuser can view tasks for all users
-        categories = Category.objects.annotate(
-            total_tasks=Count('task'),
-            completed_tasks=Count('task', filter=F('task__status')=='Completed'),
-            completion_rate=Sum(F('task__status')=='Completed', output_field=FloatField()) * 100 / Count('task')
-        ).values('category_name', 'total_tasks', 'completed_tasks', 'completion_rate')
-
+        categories_queryset = Category.objects.annotate(
+            total_tasks=Count('tasks'),
+            completed_tasks=Sum(Case(
+                When(tasks__status='Completed', then=1),
+                default=0,
+                output_field=IntegerField()
+            )),
+        ).values('category_type', 'category_name', 'total_tasks', 'completed_tasks')
     else:
         # Regular user (staff) can only view their own tasks
-        categories = Category.objects.filter(user=request.user).annotate(
-            total_tasks=Count('task'),
-            completed_tasks=Count('task', filter=F('task__status')=='Completed'),
-            completion_rate=Sum(F('task__status')=='Completed', output_field=FloatField()) * 100 / Count('task')
-        ).values('category_name', 'total_tasks', 'completed_tasks', 'completion_rate')
+        categories_queryset = Category.objects.filter(user=request.user).annotate(
+            total_tasks=Count('tasks'),
+            completed_tasks=Sum(Case(
+                When(tasks__status='Completed', then=1),
+                default=0,
+                output_field=IntegerField()
+            )),
+        ).values('category_type', 'category_name', 'total_tasks', 'completed_tasks')
 
-    category_completion = list(categories)
+    # Convert queryset to list for manipulation
+    categories_list = list(categories_queryset)
 
-    return JsonResponse(category_completion, safe=False)
+    # Calculate completion rate for each category
+    for category in categories_list:
+        total_tasks = category['total_tasks']
+        completed_tasks = category['completed_tasks']
+        if total_tasks > 0:
+            category['completion_rate'] = (completed_tasks / total_tasks) * 100.0
+        else:
+            category['completion_rate'] = 0.0
+
+    return JsonResponse(categories_list, safe=False)
+
 class TotalTasksView(LoginRequiredMixin, View):
     
     def get_queryset(self):

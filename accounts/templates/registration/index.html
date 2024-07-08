@@ -6,9 +6,11 @@
 <div class="container mt-5">
     {% if messages %}
     {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}" role="alert">
+    {% if 'logout' in message.tags %}
+    <div class="alert alert-success dim alert-message" role="alert">
         {{ message }}
     </div>
+    {% endif %}
     {% endfor %}
     {% endif %}
 </div>
@@ -27,4 +29,6 @@
         </section>
     </div>
 </div>
+
+
 {% endblock %}

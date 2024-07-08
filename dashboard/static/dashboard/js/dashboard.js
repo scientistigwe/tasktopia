@@ -131,56 +131,64 @@ const updateProductivityTrendsChart = async () => {
   );
 };
 
-// Function to update the Category-wise Task Completion Table
 const updateCategoryTaskCompletionTable = async () => {
-  const data = await fetchData(
-    "/dashboard/category-wise-task-completion-summary/"
-  );
-  console.log(data);
-  if (!data) return;
-  console.log(data);
+  try {
+    const data = await fetchData("/dashboard/category-wise-task-completion/");
+    console.log(data);
+    if (!data) return;
 
-  const aggregatedData = {};
+    const aggregatedData = {};
 
-  // Aggregate data by category
-  data.forEach((item) => {
-    const category = item.category_name; // Use category_name as per Django response
-    if (!aggregatedData[category]) {
-      aggregatedData[category] = {
-        category: category,
-        completed_tasks: item.completed_tasks,
-        total_tasks: item.total_tasks,
-        completion_rate: item.completion_rate.toFixed(1),
-      };
+    // Aggregate data by category
+    data.forEach((item) => {
+      let category = item.category_type;
+      if (category === "other" && item.category_name) {
+        category = `${category}: ${item.category_name}`;
+      }
+
+      if (!aggregatedData[category]) {
+        aggregatedData[category] = {
+          category: category,
+          completed_tasks: item.completed_tasks,
+          total_tasks: item.total_tasks,
+          completion_rate: 0.0, // Initialize completion_rate
+        };
+      } else {
+        // Sum up values for duplicate categories
+        aggregatedData[category].completed_tasks += item.completed_tasks;
+        aggregatedData[category].total_tasks += item.total_tasks;
+      }
+    });
+
+    // Calculate completion rate and format the table rows
+    const tableBody = document.getElementById(
+      "categoryTaskCompletionTableBody"
+    );
+    if (tableBody) {
+      tableBody.innerHTML = Object.keys(aggregatedData)
+        .map((category) => {
+          const item = aggregatedData[category];
+          const completionRate =
+            (item.completed_tasks / item.total_tasks) * 100;
+          return `
+            <tr>
+              <td>${category}</td>
+              <td>${item.completed_tasks}</td>
+              <td>${item.total_tasks}</td>
+              <td>${
+                isNaN(completionRate) ? "0.0" : completionRate.toFixed(1)
+              }</td>
+            </tr>
+          `;
+        })
+        .join("");
     } else {
-      // Sum up values for duplicate categories
-      aggregatedData[category].completed_tasks += item.completed_tasks;
-      aggregatedData[category].total_tasks += item.total_tasks;
-      // Recalculate completion rate based on summed values
-      aggregatedData[category].completion_rate =
-        (aggregatedData[category].completed_tasks /
-          aggregatedData[category].total_tasks) *
-        100;
+      console.error(
+        `Element with ID categoryTaskCompletionTableBody not found.`
+      );
     }
-  });
-
-  const tableBody = document.getElementById("categoryTaskCompletionTableBody");
-  if (tableBody) {
-    tableBody.innerHTML = Object.keys(aggregatedData)
-      .map((category) => {
-        const item = aggregatedData[category];
-        return `
-          <tr>
-            <td>${category}</td>
-            <td>${item.completed_tasks}</td>
-            <td>${item.total_tasks}</td>
-            <td>${item.completion_rate.toFixed(1)}</td>
-          </tr>
-        `;
-      })
-      .join("");
-  } else {
-    console.error(`Element with ID categoryTaskCompletionTableBody not found.`);
+  } catch (error) {
+    console.error("Error fetching or processing data:", error);
   }
 };
 

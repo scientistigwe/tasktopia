@@ -19,13 +19,12 @@ body {
     flex: 1;
 }
 .cta{
-    background-color: #007BFF;
     position: relative;
     margin: auto;
-        text-align: center;
+    text-align: center;
 }
 button:hover {
-    background-color: #0056b3;
+    background-color: #5f1051;
 }
 a {
     text-decoration: none;
@@ -69,6 +68,38 @@ a {
     color: #007bff;
     text-decoration: None;
 }
+
+.sidebar {
+    background-color: #f8f9fa;
+    padding-top: 1rem;
+}
+
+.nav-link {
+    color: #007bff;
+    padding: 0.5rem 1rem;
+}
+
+.nav-link.active {
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.nav-item {
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .nav-link {
+        padding: 0.5rem;
+        text-align: center;
+    }
+}
+
 /* Header */
 .header-container {
     background-color: #006666 !important;
@@ -109,6 +140,29 @@ a {
 .about .overview{
     color: #ddf4f4df;
 }
+
+
+.header-container {
+    width: 100%;
+}
+
+.about {
+    text-align: center;
+}
+
+.modal-body p {
+    margin: 10px 0;
+}
+
+#tasktopia {
+    font-size: 1.5rem;
+}
+
+#welcome-message {
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
 /************************/
 /* Main section */
 /***********************/
@@ -186,6 +240,21 @@ main {
     font-size: 3.5rem;
     }
 }
+.container-fluid.login {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+@media (max-width: 768px) {
+    .container-fluid.login {
+        padding: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
 
 /************************/
 /* FOOTER SECTION */
@@ -210,4 +279,54 @@ footer-wrapper{
 .footer-container a {
     text-decoration: none;
     color: white;
+}
+
+.footer-container {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 2rem 0;
+}
+
+.footer-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-links a {
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .footer-links a {
+        margin-bottom: 1rem;
+    }
+
+    .float-right {
+        float: none !important;
+    }
+
+    .footer-wrapper {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* Media section */
+@media (max-width: 768px) {
+    .tagline {
+        font-size: 1.2rem;
+    }
+
+    .overview {
+        font-size: 1rem;
+    }
+
+    .navbar-brand strong {
+        font-size: 1.2rem;
+    }
+
+    #welcome-message {
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+    }
 }
