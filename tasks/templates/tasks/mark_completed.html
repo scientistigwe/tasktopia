@@ -1,27 +1,11 @@
 {% load static %}
-<!-- mark_completed.html -->
+
 <form id="completeTaskForm" action="{% url 'mark_completed' task.pk %}" method="post" class="form-inline"
     data-status="{{ task.status }}">
     {% csrf_token %}
     <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="cSwitch{{ task.id }}" name="completed">
+        <input class="form-check-input" type="checkbox" id="cSwitch{{ task.id }}" name="completed" {% if
+            task.status=='Completed' %} checked {% endif %}>
         <label class="form-check-label" for="cSwitch{{ task.id }}">Mark as Completed</label>
     </div>
 </form>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#completeTaskForm').on('change', '#cSwitch{{ task.id }}', function () {
-            var isChecked = $(this).is(':checked');
-            var taskStatus = $('#completeTaskForm').data('status'); // Access the data-status attribute
-            if (isChecked && taskStatus !== 'Completed') {
-                // Submit the form if the checkbox is checked and the task is not already completed
-                $('#completeTaskForm').submit();
-            } else {
-                // Prevent form submission if the checkbox is unchecked or the task is already completed
-                event.preventDefault();
-            }
-        });
-    });
-</script>

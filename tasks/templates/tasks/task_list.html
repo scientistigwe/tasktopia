@@ -21,22 +21,32 @@
     </div>
     {% endif %}
 
-    <div class="new-task">
-        <span class="col-md-5">
-            <a href="{% url 'create_task' %}" id="new-task-text">
-                Add Task <img src="{% static 'tasks/img/add-task.png' %}" width="15" height="15" alt="Add task">
-            </a>
-        </span>
+    <div class="container mt-5">
+        {% if messages %}
+        {% for message in messages %}
+        {% if 'profile' in message.tags %}
+        <div class="alert alert-success dim alert-message" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
     </div>
 
-    <div class="row task-list">
+    <div class="new-task">
+        <a href="{% url 'create_task' %}" class="btn btn-primary">
+            Add Task <img src="{% static 'tasks/img/add-task.png' %}" width="15" height="15" alt="Add task">
+        </a>
+    </div>
+
+    <div class="row mt-3">
         <!-- To do card -->
-        <div class="col-md-4">
-            <div class="row">
-                <span class="col-md-7 d-flex justify-content-start">
-                    <h6>To do</h6>
-                </span>
-                <ul>
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">To Do</h5>
+                </div>
+                <ul class="list-group list-group-flush">
                     {% for task in tasks %}
                     {% if task.status == 'Pending' or task.status == 'Overdue' %}
                     {% include 'tasks/task_card.html' %}
@@ -47,12 +57,12 @@
         </div> <!-- End of To do card -->
 
         <!-- In Progress card -->
-        <div class="col-md-4">
-            <div class="row">
-                <span class="col-md-7 d-flex justify-content-start">
-                    <h6>In Progress</h6>
-                </span>
-                <ul>
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">In Progress</h5>
+                </div>
+                <ul class="list-group list-group-flush">
                     {% for task in tasks %}
                     {% if task.status == 'In Progress' %}
                     {% include 'tasks/task_card.html' %}
@@ -60,15 +70,15 @@
                     {% endfor %}
                 </ul>
             </div>
-        </div> <!-- End of In progress card -->
+        </div> <!-- End of In Progress card -->
 
         <!-- Done card -->
-        <div class="col-md-4">
-            <div class="row">
-                <span class="col-md-7 d-flex justify-content-start">
-                    <h6>Done</h6>
-                </span>
-                <ul>
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Done</h5>
+                </div>
+                <ul class="list-group list-group-flush">
                     {% for task in tasks %}
                     {% if task.status == 'Completed' %}
                     {% include 'tasks/task_card.html' %}
@@ -77,6 +87,7 @@
                 </ul>
             </div>
         </div> <!-- End of Done card -->
-    </div>
-</div>
+    </div> <!-- End of row -->
+</div> <!-- End of container-fluid -->
+
 {% endblock %}

@@ -1,115 +1,194 @@
 {% load static %}
 {% load i18n %}
 
+{% comment %}
+task_card.html should display each task in a Bootstrap card format.
+It displays the task title, truncated description, dates, priority, status,
+and a checkbox to mark the task as completed.
+{% endcomment %}
+
 {% with status_class=task.status|lower %}
-<li class="card mb-1">
-    <!-- Task detail -->
-    <span class="task-detail-icon d-flex align-self-end position-absolute">
-        <a href="{% url 'task_details' task.pk %}">
-            <img src="{% static 'tasks/img/task-detail.png' %}" alt="task details icon" width="20" height="20">
-        </a>
-    </span>
-    <!-- Title -->
-    <span
-        class="col-12 card-title {% if status_class == 'overdue' %}task-overdue{% elif status_class == 'in progress' %}task-in-progress{% elif status_class == 'completed' %}task-completed{% else %}task-pending{% endif %}">
-        {{ task.title }}
-    </span>
-    <!-- Description -->
-    <span class="col-md-12 mb-1 card-text"><i>{{ task.description }}</i></span>
-    <!-- Start and Due date -->
-    <div class="col-md-12 d-flex justify-content-between">
-        <span class="col-6">Start: {{ task.start_date|date:"M d, Y" }}</span>
-        <span class="col-6">Due: {{ task.due_date|date:"M d, Y" }}</span>
-    </div>
-    <!-- Priority and Category -->
-    <div class="row-md-12 mb-1 d-flex justify-content-between">
-        <span
-            class="col-MD-6 {% if status_class == 'overdue' %}task-overdue{% elif status_class == 'in progress' %}task-in-progress{% elif status_class == 'completed' %}task-completed{% else %}task-pending{% endif %}">
-            Priority: {{ task.get_priority_display }}
-        </span>
-        <span class="col-md-6">Category: {{ task.category }}</span>
-    </div>
-    <!-- Status and Completion Switch -->
-    <div class="col-md-12 mb-1 d-flex justify-content-between">
-        <span class="col-md-6">
-            {% if status_class == 'in progress' %}
-            <span class="col-md-12 task-in-progress">In progress</span>
-            {% elif status_class == 'completed' %}
-            <span class="col-md-12 task-completed">Completed: {{ task.completion_date|date:"M d, Y" }}</span>
-            {% elif status_class == 'pending' %}
-            <span class="col-md-12 task-pending">Pending</span>
-            {% elif status_class == 'overdue' %}
-            <span class="col-md-12 task-overdue">Overdue</span>
-            {% endif %}
-        </span>
-        <span class="col-md-6">
-            <form id="completeTaskForm{{ task.id }}" action="{% url 'mark_completed' task.pk %}" method="post"
-                class="form-inline" data-status="{{ task.status }}">
-                {% csrf_token %}
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="cSwitch{{ task.id }}" name="completed"
-                        data-status="{{ task.status }}">
-                    <label class="form-check-label" for="cSwitch{{ task.id }}">Mark as Completed</label>
-                </div>
-            </form>
-        </span>
-    </div>
+<li class="card mb-3">
+    <div class="card-body">
+        <!-- Task detail -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5
+                class="card-title {% if status_class == 'overdue' %}text-danger{% elif status_class == 'in progress' %}text-primary{% elif status_class == 'completed' %}text-success{% else %}text-dark{% endif %} mb-0">
+                {{ task.title }}
+            </h5>
+            <span class="task-detail-icon">
+                <a href="{% url 'task_details' task.pk %}">
+                    <img src="{% static 'tasks/img/task-detail.png' %}" alt="Task details" width="20" height="20">
+                </a>
+            </span>
+        </div>
+        <!-- Description -->
+        <p class="card-text mb-1 text-muted">
+            {{ task.description|truncatechars:30 }}
+        </p>
+        <!-- Start and Due date -->
+        <div class="row mb-2">
+            <div class="col-6">
+                <small class="text-muted">Start: {{ task.start_date|date:"M d, Y" }}</small>
+            </div>
+            <div class="col-6">
+                <small class="text-muted">Due: {{ task.due_date|date:"M d, Y" }}</small>
+            </div>
+        </div>
+        <!-- Priority and Category -->
+        <div class="row mb-2">
+            <div class="col-6">
+                <span class="badge bg-secondary">{{ task.get_priority_display }}</span>
+            </div>
+            <div class="col-6">
+                <small class="text-muted">Category: {{ task.category }}</small>
+            </div>
+        </div>
+        <!-- Status and Completion Switch -->
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                {% if status_class == 'in progress' %}
+                <small class="text-primary">In progress</small>
+                {% elif status_class == 'completed' %}
+                <small class="text-success">Completed: {{ task.completion_date|date:"M d, Y" }}</small>
+                {% elif status_class == 'pending' %}
+                <small class="text-muted">Pending</small>
+                {% elif status_class == 'overdue' %}
+                <small class="text-danger">Overdue</small>
+                {% endif %}
+            </div>
+            <span class="col-md-6">
+                <form id="completeTaskForm{{ task.id }}" action="{% url 'mark_completed' task.pk %}" method="post"
+                    class="form-inline" data-status="{{ task.status }}" data-start-date="{{ task.start_date }}"
+                    data-due-date="{{ task.due_date }}">
+                    {% csrf_token %}
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="cSwitch{{ task.id }}" name="completed"
+                            data-status="{{ task.status }}" data-start-date="{{ task.start_date }}"
+                            data-due-date="{{ task.due_date }}">
+                        {% if task.status == 'completed' %}checked{% endif %}
+                        <label class="form-check-label" for="cSwitch{{ task.id }}">Mark as Completed</label>
+                    </div>
+                </form>
+            </span>
+        </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            // Function to get the CSRF token from the meta tag
-            function getCSRFToken() {
-                return $('meta[name="csrf-token"]').attr('content');
-            }
-
-            // Initialize checkbox state based on data-status attribute
-            $('.form-check-input').each(function () {
-                var status = $(this).data('status');
-                if (status.toLowerCase() === 'completed') {
-                    $(this).prop('checked', true);
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // TASK COMPLETION TOGGLE
+                function getCSRFToken() {
+                    return document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 }
-            });
 
-            // Handle checkbox change event
-            $('.form-check-input').on('change', function (event) {
-                var isChecked = $(this).is(':checked');
-                var form = $(this).closest('form');
-                var taskStatus = form.data('status');
-                var csrftoken = getCSRFToken();
+                function initializeCheckbox() {
+                    const checkboxes = document.querySelectorAll(".form-check-input");
+                    checkboxes.forEach(function (checkbox) {
+                        const status = checkbox.dataset.status;
+                        checkbox.checked = status.toLowerCase() === "completed";
+                    });
+                }
 
-                if ((isChecked && taskStatus !== 'completed') || (!isChecked && taskStatus === 'completed')) {
-                    $.ajax({
-                        url: form.attr('action'), // URL for form submission
-                        type: 'POST',
-                        data: form.serialize(), // Serialize form data
-                        dataType: 'json',
-                        beforeSend: function (xhr, settings) {
-                            xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include CSRF token
-                        },
-                        success: function (response) {
-                            if (response.status === 'success') {
-                                // Optionally, refresh the task list or show a success message
-                                location.reload();
-                            } else {
-                                // Handle error response
-                                alert('Error: ' + response.message);
-                            }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            // Handle network errors
-                            alert('Network error: ' + textStatus);
+                function getCurrentDate() {
+                    return new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+                }
+
+                function determineStatus(startDate, dueDate) {
+                    const currentDate = getCurrentDate();
+                    if (currentDate > dueDate) {
+                        return "overdue";
+                    } else if (currentDate >= startDate && currentDate <= dueDate) {
+                        return "in progress";
+                    } else {
+                        return "pending";
+                    }
+                }
+
+                function handleCheckboxChange(event) {
+                    const checkbox = event.target;
+                    const isChecked = checkbox.checked;
+                    const form = checkbox.closest("form");
+                    const taskID = form.action.split('/').slice(-2, -1)[0];  // Correctly extract task ID from the form action URL
+                    const csrftoken = getCSRFToken();
+                    const startDate = form.dataset.startDate;
+                    const dueDate = form.dataset.dueDate;
+                    const currentDate = getCurrentDate();
+                    const taskStatus = form.dataset.status;  // Retrieve the task status from the form data attribute
+
+                    if (isChecked && dueDate > currentDate) {
+                        showAlert("You are trying to complete a task with a due date still in the future.");
+                        event.preventDefault();
+                        return;
+                    }
+
+                    if ((isChecked && taskStatus !== "completed") || (!isChecked && taskStatus === "completed")) {
+                        $.ajax({
+                            url: form.action,
+                            type: "POST",
+                            data: $(form).serialize(),
+                            dataType: "json",
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                            },
+                            success: function (response) {
+                                if (response.status === "success") {
+                                    location.reload();
+                                }
+                            },
+
+                        });
+                    } else if (!isChecked) {
+                        const newStatus = determineStatus(startDate, dueDate);
+                        form.dataset.status = newStatus;
+
+                        $.ajax({
+                            url: `/tasks/update_status/${taskID}/`,  // Correctly formatted URL for the update_status endpoint
+                            type: "POST",
+                            data: {
+                                csrfmiddlewaretoken: csrftoken,
+                                status: newStatus,
+                            },
+                            dataType: "json",
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                            },
+                            success: function (response) {
+                                if (response.status === "success") {
+                                    location.reload();
+                                }
+                            },
+
+                        });
+                    }
+                }
+
+                initializeCheckbox();
+                document.querySelectorAll(".form-check-input").forEach(function (checkbox) {
+                    checkbox.addEventListener("change", handleCheckboxChange);
+                });
+
+                // Ensure the form is responsive
+                const forms = document.querySelectorAll("form.form-inline");
+                forms.forEach(function (form) {
+                    if (window.innerWidth <= 768) {
+                        form.classList.remove("form-inline");
+                        form.classList.add("col-md-12");
+                    }
+                });
+
+                window.addEventListener("resize", function () {
+                    forms.forEach(function (form) {
+                        if (window.innerWidth <= 768) {
+                            form.classList.remove("form-inline");
+                            form.classList.add("col-md-12");
+                        } else {
+                            form.classList.remove("col-md-12");
+                            form.classList.add("form-inline");
                         }
                     });
-                } else {
-                    event.preventDefault();
-                }
+                });
             });
-        });
-    </script>
-
-
-
+        </script>
 </li>
 {% endwith %}

@@ -21,7 +21,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     form_class = UserChangeForm
     template_name = 'registration/profile_edit.html'
-    success_url = reverse_lazy('profile')
+    success_url = reverse_lazy('task_list')
     success_message = "Profile successfully updated."
 
     def get_object(self, queryset=None):
@@ -33,8 +33,14 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         return response
 
     def form_invalid(self, form):
-        return self.render_to_response(self.get_context_data(form=form, error_message="There was an error updating your profile. Please correct the errors below."))
+        return self.render_to_response(self.get_context_data(form=form))
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return redirect('task_list')
+        
 class DeleteAccountView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         user = request.user

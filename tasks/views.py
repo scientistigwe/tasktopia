@@ -139,3 +139,15 @@ def mark_completed(request, pk):
             return JsonResponse({'status': 'error', 'message': str(e)})
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+
+def update_status(request, pk):
+    if request.method == 'POST':
+        task = get_object_or_404(Task, pk=pk)
+        new_status = request.POST.get('status')
+        if new_status:
+            task.status = new_status
+            task.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'fail', 'message': 'Invalid status'})
+    return JsonResponse({'status': 'fail', 'message': 'Invalid request'})
