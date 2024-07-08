@@ -11,6 +11,13 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+# Set the Django settings module for the application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tasktopia.settings')
 
-application = get_wsgi_application()
+# Create the WSGI application callable
+try:
+    application = get_wsgi_application()
+except Exception as e:
+    # Log or print any exceptions that occur during application creation
+    print("Exception occurred while getting WSGI application:", e)
+    raise
