@@ -23,9 +23,31 @@ body {
     margin: auto;
     text-align: center;
 }
-button:hover {
-    background-color: #5f1051;
+
+button {
+    background-color: #400a52 !important;
+    color:#F0F0F0 !important;
+    border: none !important;
+    text-align: center !important;
+    max-width: fit-content !important;
 }
+
+button:hover {
+    background-color: #21062a !important;
+}
+
+.btn {
+    background-color: #400a52 !important;
+    color:#F0F0F0 !important;
+    border: none !important;
+    text-align: center !important;
+    max-width: fit-content !important;
+}
+
+.btn:hover {
+    background-color: #21062a !important;
+}
+
 a {
     text-decoration: none;
     color: #0056b3;
@@ -48,46 +70,30 @@ a {
 }
 
 /* Side Bar */
-.navigation-item a:hover {
-    color: #002244;
-}
 .sidebar {
     position: relative;
-    left: 0;
+    left: 10px;
     z-index: 100;
     width: fit-content;
     font-size: 1.1em;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
-.sidebar .nav-link {
-    font-weight: 500;
-    color: #333;
+
+.sidebar ul {
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+.sidebar .nav-link.active {
+    color: #400a52;
+    font-weight: bold;
+    text-decoration: None;
 }
 
 .sidebar .nav-link:hover {
     color: #7c93ab;
-    font-size: 1.2em;
+    font-size: 1.05em;
 }
-
-.sidebar .nav-link.active {
-    color: #c8ccd1;
-    text-decoration: None;
-}
-
-.nav-link {
-    color: #007bff;
-    padding: 0.5rem 1rem;
-}
-
-.nav-link.active {
-    font-weight: bold;
-    color: #0056b3;
-}
-
-.nav-item {
-    margin-bottom: 0.5rem;
-}
-
 
 /* Header */
 .header-container {
@@ -174,10 +180,11 @@ main {
 }
 
 .lead {
-    font-size: 3em;
+    font-size: 1.5em;
     font-style: italic;
     font-weight: 400;
     color: #666666 !important;
+    margin-bottom: 40px;
 }
 
 /* Signup Styling */
@@ -331,8 +338,8 @@ footer-wrapper{
         width: 100%;
     }
     .sidebar {
-        padding-left: 2px;
-        padding-right: 2px;
+        padding-left: 0;
+        padding-right: 0;
     }
     
     .nav-link {

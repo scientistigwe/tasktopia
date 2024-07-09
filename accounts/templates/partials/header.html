@@ -153,16 +153,18 @@
             <div class="navbar navbar-dark shadow-sm">
                 <div class="container-fluid">
                     <a href="" class="navbar-brand d-flex align-items-center" id="tasktopia"><img
-                            src="{% static 'registration/images/tasktopia-icon.png' %}" alt="Main icon" width="40"
+                            src="{% static 'registration/images/brand-icon.png' %}" alt="Main icon" width="40"
                             height="40">
                         <strong>Tasktopia</strong>
                     </a>
+                    {% if user.is_authenticated %}
                     <div
                         class="d-flex justify-content-between flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h4 id="welcome-message">Welcome, {{ user.first_name }} <img
                                 src="{% static 'tasks/img/clap.png' %}" width="30" height="30" alt="welcome clap">
                         </h4>
                     </div>
+                    {% endif %}
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
                         aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>

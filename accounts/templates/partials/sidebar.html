@@ -1,20 +1,4 @@
 <!-- Start: Sidebar -->
-{% if breadcrumbs %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-        {% for breadcrumb in breadcrumbs %} {% if forloop.last %}
-        <li class="breadcrumb-item active" aria-current="page">
-            {{ breadcrumb.title }}
-        </li>
-        {% else %}
-        <li class="breadcrumb-item">
-            <a href="{{ breadcrumb.url }}">{{ breadcrumb.title }}</a>
-        </li>
-        {% endif %} {% endfor %}
-    </ol>
-</nav>
-{% endif %}
 <div class="container-fluid">
     <nav id="sidebarMenu" class="col-md-12 col-lg-12 d-md-block sidebar">
         <div class="position-sticky pt-3">
@@ -28,7 +12,7 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">Analytics & Insights</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active disabled" aria-current="page" href="#">Reports</a>
+                    <a class="nav-link disabled" aria-current="page" href="#">Reports</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
@@ -37,6 +21,9 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">Profile</a>
                 </li>
                 {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
                 </li>
