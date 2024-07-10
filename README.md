@@ -144,164 +144,161 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
 - User Registration and Login
 
   - As a user, I want to register and log in securely to access my tasks.
-    Acceptance Criteria:
-    - User can create an account with a unique email and password.
-    - User receives a confirmation email upon registration.
-    - User can log in with their credentials.
-    - User is redirected to their dashboard upon successful login.
+
+  Acceptance Criteria:
+
+  - User can create an account with a unique email and password.
+  - User receives a confirmation email upon registration.
+  - User can log in with their credentials.
+  - User is redirected to their dashboard upon successful login.
   - Error messages are displayed for invalid login attempts.
 
 - Task Creation
+
   - As a user, I want to create tasks with different priorities and due dates.
-    Acceptance Criteria:
-    - User can create a new task with a title, description, priority level (low, medium, high), and due date.
-    - Task is added to the task list upon creation.
-    - User receives a confirmation message upon successful task creation.
-    - Task categorization by status is automated based on due date and current date.
+
+  Acceptance Criteria:
+
+  - User can create a new task with a title, description, priority level (low, medium, high), and due date.
+  - Task is added to the task list upon creation.
+  - User receives a confirmation message upon successful task creation.
+  - Task categorization by status is automated based on due date and current date.
+
 - Task Tracking
+
   - As a user, I want to track the status of my tasks and receive notifications for overdue tasks.
-    Acceptance Criteria:
-    - Tasks are automatically categorized as "In Progress", "Completed", or "Overdue" based on start and due dates.
-    - User can view the status of each task in the task list.
-      User receives notifications for tasks that are overdue.
+
+  Acceptance Criteria:
+
+  - Tasks are automatically categorized as "In Progress", "Completed", or "Overdue" based on start and due dates.
+  - User can view the status of each task in the task list.
+    User receives notifications for tasks that are overdue (future implementation).
   - Tasks are visually distinct based on their status (e.g., color-coded).
-  Analytics and Insights
-  As a user, I want to view analytics on my task completion rates and productivity trends.
-  Acceptance Criteria:
-  User can view a dashboard with charts and graphs showing task completion rates.
-  Productivity trends over time are displayed.
-  User can filter analytics by date range and task priority.
-  Real-time updates on task analytics are provided.
-  Task Editing and Deletion
-  As a user, I want to edit or delete my tasks to keep my task list up-to-date.
-  Acceptance Criteria:
-  User can edit the details of a task (title, description, priority, due date).
-  Changes are saved and reflected in the task list.
-  User can delete a task, and it is removed from the task list.
-  Confirmation messages are shown for successful edits and deletions.
-  User Role Management
-  As an admin, I want to manage user roles and permissions to control access to different features.
-  Acceptance Criteria:
-  Admin can assign roles (e.g., user, manager, admin) to different users.
-  Different roles have specific permissions and access levels.
-  Admin can view a list of all users and their roles.
-  Role changes are reflected immediately.
-  Notifications and Reminders
-  As a user, I want to receive reminders for upcoming tasks and notifications for important updates.
-  Acceptance Criteria:
-  User receives email notifications for tasks due soon.
-  User is notified of any changes to their tasks.
-  Notifications can be customized in the user settings.
-  User Profile Management
-  As a user, I want to manage my profile information to keep my account up-to-date.
-  Acceptance Criteria:
-  User can update their profile information (name, email, password).
-  Changes are saved and reflected in the user profile.
-  User receives confirmation messages for successful updates.
-  User can upload a profile picture.
-  Search and Filter Tasks
-  As a user, I want to search and filter my tasks to quickly find specific tasks.
-  Acceptance Criteria:
-  User can search for tasks by title or description.
-  User can filter tasks by priority, status, and due date.
-  Search results are displayed in real-time.
-  Filter options are easily accessible.
-  Reports Generation
-  As a user, I want to generate reports on my tasks to review my performance and productivity.
-  Acceptance Criteria:
-  User can generate reports showing completed tasks, pending tasks, and overdue tasks.
-  Reports can be filtered by date range, priority, and status.
-  User can download reports in PDF or CSV format.
-  Reports include charts and graphs for visual representation.
-  Help and Support
-  As a user, I want to access help and support to resolve any issues I encounter.
-  Acceptance Criteria:
-  User can access a help section with FAQs and guides.
-  User can contact support via a form or email.
-  Support requests are acknowledged and responded to promptly.
-  Help resources are easy to navigate and understand.
-  <h2 id="technology-stack">Technology Stack</h2>
 
-This subsection outlines the technologies, frameworks, libraries, and tools used in the development of this project. It provides insight into the foundational components that power "**name-of-project**". Add-ons ad plugins are captured in the acknowledgements subsection (N/B: below are dummy samples. Replace with the actual project frameworks and libraries).
+- Analytics and Insights
 
-<h2 id="languages-frameworks-libraries">Languages, Frameworks and Libraries</h2>
+  - As a user, I want to view analytics on my task completion rates and productivity trends.
+
+  Acceptance Criteria:
+
+  - User can view a dashboard with charts and graphs showing task completion rates.
+  - Productivity trends over time are displayed.
+  - User can filter analytics by date range and task priority (future implementation).
+  - Real-time updates on task analytics are provided.
+
+- Task Editing and Deletion
+
+  - As a user, I want to edit or delete my tasks to keep my task list up-to-date.
+
+  Acceptance Criteria:
+
+  - User can edit the details of a task (title, description, priority, start and due dates).
+  - Changes are saved and reflected in the task list.
+  - User can delete a task, and it is removed from the task list.
+  - Confirmation messages are shown for successful edits and deletions.
+
+- User Role Management
+
+  - As an admin, I want to manage user roles and permissions to control access to different features.
+
+  Acceptance Criteria:
+
+  - Admin can assign roles (e.g., user, manager, admin) to different users.
+  - Different roles have specific permissions and access levels.
+  - Admin can view a list of all users and their roles.
+  - Role changes are reflected immediately.
+
+- User Profile Management
+
+  - As a user, I want to manage my profile information to keep my account up-to-date.
+
+  Acceptance Criteria:
+
+  - User can update their profile information (name, email, password).
+  - Changes are saved and reflected in the user profile.
+  - User receives confirmation messages for successful updates.
+
+<h2 id="user-stories">User Stories (future implementation)</h2>
+
+- Notifications and Reminders
+
+  - As a user, I want to receive reminders for upcoming tasks and notifications for important updates.
+
+  Acceptance Criteria:
+
+  - User receives email notifications for tasks due soon.
+  - User is notified of any changes to their tasks.
+  - Notifications can be customized in the user settings.
+
+- Search and Filter Tasks
+
+  - As a user, I want to search and filter my tasks to quickly find specific tasks.
+
+  Acceptance Criteria:
+
+  - User can search for tasks by title or description.
+  - User can filter tasks by priority, status, and due date.
+    Search results are displayed in real-time.
+  - Filter options are easily accessible.
+
+- Reports Generation
+
+  - As a user, I want to generate reports on my tasks to review my performance and productivity.
+
+  Acceptance Criteria:
+
+  - User can generate reports showing completed tasks, pending tasks, and overdue tasks.
+  - Reports can be filtered by date range, priority, and status.
+  - User can download reports in PDF or CSV format.
+  - Reports include charts and graphs for visual representation.
+
+<h2 id="technology-stack">Technology Stack</h2>
+
+Tasktopia is built using a modern technology stack that ensures scalability, security, and a responsive user experience.
+
+<h2 id="languages-frameworks-libraries">Backend</h2>
+Python
+Django 
+Django REST API Framework
+<h2 id="frontend">Frontend</h2>
 
 - <img src="./assets/icons/html5.svg" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> HTML5</a> - Used for designing the structure of the project.
 
 - <img src="./assets/icons/css3-alt.svg" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/CSS"> CSS3</a> - Used for styling the project.
-
+- <img src="./assets/icons/bootstrap.png" width="20px" align="top"><a href="[Bootstrap-url]"> Bootstrap</a> - Used for building responsive and mobile-first websites and web applications.
+- <img src="./assets/icons/jquery.png" width="20px" align="top"><a href="[JQuery-url]"> jQuery</a> - Used for simplifying HTML document traversing, event handling, and animation.
 - <img src="./assets/icons/Google.png" width="20px" align="top"><a href="https://fonts.google.com/"> Google Fonts</a> - Provides all of the fonts for this website.
 
 - <img src="./assets/icons/font_awesome.png" width="20px" align="top"><a href="https://fontawesome.com/"> Font Awesome</a> - Used for the site icons.
 
 - <img src="./assets/icons/javascript.png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/JavaScript"> JavaScript</a> - Used for the hamburger navigation and icons.
 
+<h2 id="database">Database</h2>
+PostgreSQL - pre-deployment test and production phase
+SQLite3 - developement and testing phase
+
+<h2 id="hosting">Hosting</h2>
+Heroku
+<h2 id="version-control-and-agile-implementation">Version Control & Agile Implementation </h2>
 - <img src="./assets/icons/github.png" width="20px" align="top"><a href="https://github.com/IrisSmok"> Github</a> - Used to store the project code.
-
-- <img src="./assets/icons/gitpod.png" width="20px" align="top"><a href="https://www.gitpod.io/"> Gitpod</a> - An IDE Used for coding.
-
+<h2 id="hosting">Wireframe & ER Diagram</h2>
 - <img src="./assets/icons/balsamiq.png" width="20px" align="top"><a href="https://balsamiq.com/"> Balsamiq</a> - Used to create site wireframes.
-
-- <img src="./assets/icons/shutterstock.png" width="20px" align="top"><a href="https://www.shutterstock.com/home"> Shutterstock</a> and <img src="./assets/icons/unsplash.png" width="20px" align="top"><a href="https://unsplash.com/"> Unsplash photo</a> - Used for all images on the website.
-
-- <img src="./assets/icons/google_map.png" width="20px" align="top"><a href="https://google-map-generator.com/"> Google Map Generator</a> - Used to import business location.
-
 - <img src="./assets/icons/responsive-devices.png" width="20px" align="top"><a href="http://ami.responsivedesign.is/"> Am I Responsive</a> - Used to check if the site is responsive on different screen sizes.
-
-- <img src="./assets/icons/IMG2GO.png" width="20px" align="top"><a href="https://www.img2go.com/compress-image#j=f26cc008-23b4-4d4e-9934-96877fa9a7e7"> IMG2GO</a> and <img src="./assets/icons/Tiny_PNG.png" width="20px" align="top"><a href="https://tinypng.com/"> Tiny PNG</a> - Used to help compress the images.
-
+<h2 id="code-quality-testing">Code Quality Testing</h2>
 - <img src="./assets/icons/html_formatter.png" width="20px" align="top"><a href="https://www.freeformatter.com/html-formatter.html"> Free Online HTML Formatter</a> - Used to correct indentation issues and get rid of excess whitespace.
-
-- <img src="./assets/icons/next_js.png" width="20px" align="top"><a href="[Next-url]"> Next.js</a> - Used for server-side rendering and building modern, scalable web applications.
-
-- <img src="./assets/icons/react..png" width="20px" align="top"><a href="[React-url]"> React.js</a> - Used for building user interfaces, especially single-page applications.
-
-- <img src="./assets/icons/Vue_js.png" width="20px" align="top"><a href="[Vue-url]"> Vue.js</a> - Used for building interactive web interfaces and single-page applications.
-
-- <img src="./assets/icons/angular.png" width="20px" align="top"><a href="[Angular-url]"> Angular</a> - Used for building large-scale, high-performance web applications.
-
-- <img src="./assets/icons/svelte.png" width="20px" align="top"><a href="[Svelte-url]"> Svelte</a> - Used for building fast, lightweight web applications with minimal overhead.
-
-- <img src="./assets/icons/laravel.png" width="20px" align="top"><a href="[Laravel-url]"> Laravel</a> - Used for building web applications with elegant syntax and a robust ecosystem.
-
-- <img src="./assets/icons/bootstrap.png" width="20px" align="top"><a href="[Bootstrap-url]"> Bootstrap</a> - Used for building responsive and mobile-first websites and web applications.
-
-- <img src="./assets/icons/jquery.png" width="20px" align="top"><a href="[JQuery-url]"> jQuery</a> - Used for simplifying HTML document traversing, event handling, and animation.
 
 <h2 id="management-and-development">Project Management and Development Approach</h2>
 
-This project was implemented using the Agile Manifesto methodology. Below are the ways this project adhered to the 4 core values and 12 core principles of the aforementioned method:
+Tasktopia was developed using Agile methodology, focusing on continuous collaboration, flexibility, and delivering working software.
 
-<strong>Four Values of the Agile Manifesto:</strong>
+Customer collaboration was prioritized and this ensured that the project remained aligned with user needs, and features were prioritized effectively.
 
-- Vision 1: Customer collaboration over contract negotiation: **[Sample description]** The Team held [**number of meetings**] planning sessions via **Zoom, Google Meet, or Microsoft Teams**, ensuring alignment with customer needs and prioritizing features through user story mapping.
-- **a screenshot or graphic representation of a Zoom meeting with team members.**
+Adaptability was key allowing for iterative feedback and adjustments. This approach ensured that the project could evolve based on changing requirements.
 
-- Vision 2: Responding to change over following a plan: **[Sample description]**: Throughout the project, the team managed (
-  [![GitHub issues](https://img.shields.io/github/issues-closed/github-username/name-of-repository?)](https://github.com/github-username/name-of-repository/issues) + [![GitHub issues](https://img.shields.io/github/issues/github-username/name-of-repository?)](https://github.com/github-username/name-of-repository/issues) ) GitHub issues, adapting to changing requirements and feedback iteratively.
-  **A screenshot of the GitHub project board demonstrates their flexibility.**
-
-- Vision 3: Working software over comprehensive documentation: **[Sample description]** Achieved **[number of story points]** across **[number of sprints]**, emphasizing the focus on delivering functional software increments.
-- **A snapshot of the scrum/kanban board tracks their progress.**
-
-- Vision 4: Individuals and interactions over processes and tools
-  Description: Daily interactions on GitHub led to **[number of commits]**, fostering collaboration and knowledge sharing among team members.
-- **A snapshot of GitHub issue discussions illustrates their collaborative environment.**
-
-<strong>Twelve Principles of the Agile Manifesto</strong>
-
-- Satisfy the customer: Held regular stakeholder meetings to ensure alignment with customer needs.
-- Deliver working software: Prioritized delivering functional increments in each sprint, allowing for early feedback.
-- Welcome changing requirements: Maintained open communication channels and adapted plans iteratively.
-- Collaborate daily: Conducted **(frequency of standup) stand-up** meetings to facilitate collaboration and problem-solving.
-- Face-to-face conversation: Utilized **in-person and/or virtual meetings (select one or all the options)** to enhance clarity and understanding.
-- Motivated individuals: Empowered team members through skill development and recognition.
-- Measure progress through working product: Evaluated progress based on delivered functionality in each sprint.
-- Promote sustainable development: Prioritized sustainability practices to ensure long-term success.
-- Simplicity is essential: Used MoSCoW prioritization and focused on MVP delivery to avoid unnecessary complexity.
-- Continuous attention to technical excellence: Adopted show and tell technique to ensure all team members learn while collaborating.
-- Self-organizing team: Encouraged autonomy and collaboration within the team.
-- Regular reflection on continuous improvement: Conducted regular retrospectives to identify areas for improvement.
+Delivering functional software was emphasized over comprehensive documentation. The project focused on delivering functional increments in each sprint, promoting early feedback and continuous improvement.
+Throughout the project, **[number of commits]** were made and (
+[![GitHub issues](https://img.shields.io/github/issues-closed/github-username/name-of-repository?)](https://github.com/github-username/name-of-repository/issues) + [![GitHub issues](https://img.shields.io/github/issues/github-username/name-of-repository?)](https://github.com/github-username/name-of-repository/issues) ) GitHub issues, adapting to changing requirements and feedback iteratively.
+**A screenshot of the GitHub project board demonstrates their flexibility.**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -311,11 +308,10 @@ This project was implemented using the Agile Manifesto methodology. Below are th
 
 <h1 id="project-setup">SECTION 2: PROJECT SETUP</h1>
 
-In this section, a detailed account of all requirements needed for "**name-of-project**" to be setup and running. It also includes installation instructions and a link to all necessary documentations for these tools.
-
 <h2 id="prerequisites">Prerequisites</h2>
-
-Below are the list of softwares required to setup and start using "**name-of-project**" (N/B: if no installation is required. Then write: "**name-of-project**" does not rely on any external dependencies or services.):
+Python 3.8 or higher
+Node.js and npm
+PostgreSQL:
 
 - npm
   ```sh
