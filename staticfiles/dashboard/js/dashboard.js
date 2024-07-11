@@ -23,40 +23,6 @@ const updateChart = (elementId, chartType, data, options) => {
   }
 };
 
-// Function to update the Task Completion Rate Chart
-const updateTaskCompletionRateChart = async () => {
-  const data = await fetchData("/dashboard/task-completion-rate/");
-  if (!data) return;
-
-  updateChart(
-    "taskCompletionRateChart",
-    "bar",
-    {
-      labels: ["Total Tasks", "Tasks Completed", "Completion Rate"],
-      datasets: [
-        {
-          data: [
-            data.total_tasks,
-            data.completed_tasks,
-            data.completion_rate.toFixed(1),
-          ],
-          backgroundColor: [
-            "rgba(75, 192, 192, 0.6)",
-            "rgba(54, 162, 235, 0.6)",
-            "rgba(255, 206, 86, 0.6)",
-          ],
-        },
-      ],
-    },
-    {
-      responsive: true,
-      plugins: {
-        title: { display: true, text: "Task Completion Rate" },
-      },
-    }
-  );
-};
-
 // Function to update the Task Priority Distribution Chart
 const updateTaskPriorityDistributionChart = async () => {
   const data = await fetchData("/dashboard/task-priority-distribution/");
@@ -228,7 +194,6 @@ const updateKPIs = async () => {
 
 // Main function to refresh the dashboard
 const refreshDashboard = () => {
-  updateTaskCompletionRateChart();
   updateTaskPriorityDistributionChart();
   updateProductivityTrendsChart();
   updateCategoryTaskCompletionTable();

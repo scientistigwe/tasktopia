@@ -706,3 +706,38 @@ Update status immediately when user modifies progress or marks a task as complet
 Notifications:
 
 Alert users when tasks are nearing their due date or becoming overdue
+
+dashboard metrics and insights
+KPI Cards
+Total Tasks
+Overdue Tasks
+Completed Tasks
+Charts
+Task Completion Rate Chart
+
+Purpose: Shows the ratio of completed tasks to total tasks.
+Insight: Provides a quick view of task completion efficiency.
+Task Priority Distribution Chart
+
+Purpose: Displays the distribution of tasks by priority.
+Insight: Helps in understanding how tasks are prioritized.
+Productivity Trends Chart
+
+Purpose: Shows how productivity (tasks created and completed) trends over time.
+Insight: Tracks productivity variations over a period.
+Category-wise Task Completion Table
+
+Purpose: Shows completion rates by category.
+Insight: Helps identify categories with high or low completion rates.
+Overdue Tasks Chart
+
+Purpose: Displays the percentage of overdue tasks.
+Insight: Highlights tasks that are overdue and need attention.
+Task Completion Rate Over Time Chart
+
+Purpose: Shows the task completion rate over time.
+Insight: Monitors how the completion rate is changing.
+Tasks Created vs. Tasks Completed Chart
+
+Purpose: Compares the number of tasks created versus completed.
+Insight: Helps in understanding the balance between task creation and completion.

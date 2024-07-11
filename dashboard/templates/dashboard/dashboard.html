@@ -7,7 +7,7 @@
 
 <div id="analyticsInsightsMarker" style="display:none;"></div>
 
-<div class="container-fluid">
+<div class="container-fluid mt-4">
     <!-- KPI Task container -->
     <div id="kpiCardsContainer" class="kpi-cards-container row d-flex flex-row justify-content-center">
         <div id="totalTasksCard" class="kpi-card card col-12 col-sm-6 col-md-3 m-2">
@@ -31,78 +31,80 @@
     </div>
 
     <!-- Charts Row -->
-    <div class="row mt-4">
-        <!-- Task Completion Rate Chart -->
-        <div class="col-12 col-md-4 mb-4">
-            <div class="card">
-                <canvas id="taskCompletionRateChart" width="400" height="300"></canvas>
-            </div>
+    <!-- Task Completion Rate Over Time Chart -->
+    <div class="col-12">
+        <div class="card">
+            <canvas id="taskCompletionRateOverTime" width="400" height="300"></canvas>
         </div>
+    </div>
 
+    <!-- Task Priority Distribution & Productivity Trends Charts -->
+    <div class="row mt-4">
         <!-- Task Priority Distribution Charts -->
-        <div class="col-12 col-md-4 mb-4">
+        <div class="col-12 col-md-6 mb-4">
             <div class="card">
                 <canvas id="taskPriorityDistributionChart" width="400" height="300"></canvas>
-                <canvas id="highPriorityChart" width="400" height="300"></canvas>
-                <canvas id="mediumPriorityChart" width="400" height="300"></canvas>
-                <canvas id="lowPriorityChart" width="400" height="300"></canvas>
             </div>
         </div>
+
         <!-- Productivity Trends Chart -->
-        <div class="col-12 col-md-4 mb-4">
+        <div class="col-12 col-md-6 mb-4">
             <div class="card">
-                <canvas id="productivityTrendsChart" width="400" height="300"></canvas>
+                <canvas id="productivityTrendsChart" width="400" height="400"></canvas>
             </div>
         </div>
-        <!-- Category-wise Task Completion Table -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="card">
-                    <h2 class="card-header">Category-wise Task Completion</h2>
-                    <div class="card-body">
-                        <table class="table table-responsive">
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Completed Tasks</th>
-                                    <th>Total Tasks</th>
-                                    <th>Completion Rate (%)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="categoryTaskCompletionTableBody">
-                                <!-- Table rows will be dynamically populated by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
+    </div>
+
+    <!-- Category-wise Task Completion Table -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <h2 class="card-header">Category-wise Task Completion</h2>
+                <div class="card-body">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Completed Tasks</th>
+                                <th>Total Tasks</th>
+                                <th>Completion Rate (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoryTaskCompletionTableBody">
+                            <!-- Table rows will be dynamically populated by JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Additional Charts -->
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <div class="col-12 col-md-6 mb-4">
-                <div class="card">
-                    <canvas id="overdueTasks" width="400" height="300"></canvas>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 mb-4">
-                <div class="card">
-                    <canvas id="taskCompletionRateOverTime" width="400" height="300"></canvas>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 mb-4">
-                <div class="card">
-                    <canvas id="taskCompletionRate" width="400" height="300"></canvas>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 mb-4">
-                <div class="card">
-                    <canvas id="tasksCreatedCompleted" width="400" height="300"></canvas>
+
+    <!-- Overdue Tasks -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <h2 class="card-header">Overdue Tasks</h2>
+                <div class="card-body">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>User Name</th>
+                                <th>First Name</th>
+                                <th>Email</th>
+                                <th>Task Title</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="overdueTasksTableBody">
+                            <!-- Table rows will be dynamically populated by JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    {% endblock %}
+{% endblock %}

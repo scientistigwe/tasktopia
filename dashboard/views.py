@@ -68,12 +68,14 @@ def task_completion_rate(request: HttpRequest) -> JsonResponse:
     """
     try:
         thirty_days_ago = timezone.now() - timedelta(days=30)
-        if request.user.is_superuser:
+        user = request.user
+
+        if user.is_superuser:
             total_tasks = Task.objects.count()
             completed_tasks = Task.objects.filter(status='Completed', updated_at__gte=thirty_days_ago).count()
         else:
-            total_tasks = Task.objects.filter(user=request.user).count()
-            completed_tasks = Task.objects.filter(user=request.user, status='Completed', updated_at__gte=thirty_days_ago).count()
+            total_tasks = Task.objects.filter(user=user).count()
+            completed_tasks = Task.objects.filter(user=user, status='Completed', updated_at__gte=thirty_days_ago).count()
 
         completion_rate = (completed_tasks / total_tasks) * 100 if total_tasks > 0 else 0.0
 
@@ -93,12 +95,34 @@ def overdue_tasks(request: HttpRequest) -> JsonResponse:
     Retrieve all overdue tasks.
     """
     try:
-        overdue_tasks = Task.objects.filter(user=request.user, status='Overdue').order_by('due_date')
-        serialized_data = TaskSerializer(overdue_tasks, many=True).data
-        return JsonResponse(serialized_data, safe=False)  # Set safe=False for non-dict objects
+        user = request.user
+
+        # Check if the user is a superuser to fetch all overdue tasks
+        if user.is_superuser:
+            # Fetch all overdue tasks with user_id, title, and status
+            overdue_tasks = Task.objects.filter(status='Overdue').values('user_id', 'title', 'status')
+
+            # Fetch user details for the associated users in overdue tasks
+            user_ids = [task['user_id'] for task in overdue_tasks]
+            user_details = User.objects.filter(id__in=user_ids).values('id', 'username', 'email', 'first_name')
+
+            # Map user details to each task
+            user_details_map = {user['id']: user for user in user_details}
+            for task in overdue_tasks:
+                task['username'] = user_details_map.get(task['user_id'], {}).get('username', '')
+                task['email'] = user_details_map.get(task['user_id'], {}).get('email', '')
+                task['first_name'] = user_details_map.get(task['user_id'], {}).get('first_name', '')
+
+        else:
+            # For regular users, fetch only their own overdue tasks with email, first_name, user_id, title, and status
+            overdue_tasks = Task.objects.filter(user=user, status='Overdue').values('user__email', 'user__first_name', 'user_id', 'title', 'status')
+
+        data = list(overdue_tasks)
+        return JsonResponse(data, safe=False)
+    
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-
+    
 @login_required
 def task_priority_distribution(request: HttpRequest) -> JsonResponse:
     """
@@ -110,7 +134,7 @@ def task_priority_distribution(request: HttpRequest) -> JsonResponse:
         else:
             tasks = Task.objects.filter(user=request.user)
 
-        priority_distribution = tasks.values('priority').annotate(count=Count('id')).order_by('-count')
+        priority_distribution = tasks.values('priority').annotate(count=Count('task_id')).order_by('-count')
         data = list(priority_distribution)
 
         return JsonResponse(data, safe=False)
@@ -155,7 +179,7 @@ def productivity_trends(request: HttpRequest) -> JsonResponse:
 
         productivity_trends = tasks.annotate(
             created_date=TruncDate('created_at')
-        ).values('created_date').annotate(count=Count('id')).order_by('created_date')
+        ).values('created_date').annotate(count=Count('task_id')).order_by('created_date')
 
         return JsonResponse(list(productivity_trends), safe=False)
     except Exception as e:
@@ -241,3 +265,56 @@ class PercentCompletedView(LoginRequiredMixin, View):
             return JsonResponse({'percent_completed': percent_completed})
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def task_completion_rate_over_time(request: HttpRequest) -> JsonResponse:
+    """
+    Calculate task completion rate over time.
+    """
+    try:
+        thirty_days_ago = timezone.now() - timedelta(days=30)
+        if request.user.is_superuser:
+            tasks = Task.objects.filter(updated_at__gte=thirty_days_ago)
+        else:
+            tasks = Task.objects.filter(user=request.user, updated_at__gte=thirty_days_ago)
+
+        completion_rate_data = tasks.annotate(
+            date=TruncDate('updated_at')
+        ).values('date').annotate(
+            total_tasks=Count('task_id'),  # Counting tasks
+            completed_tasks=Sum(  # Sum of completed tasks
+                Case(
+                    When(status='Completed', then=1),
+                    default=0,
+                    output_field=IntegerField()
+                )
+            )
+        ).order_by('date')
+
+        for entry in completion_rate_data:
+            entry['completion_rate'] = (entry['completed_tasks'] / entry['total_tasks']) * 100.0 if entry['total_tasks'] > 0 else 0.0
+
+        return JsonResponse(list(completion_rate_data), safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+       
+@login_required
+def task_priority_distribution(request: HttpRequest) -> JsonResponse:
+    """
+    Calculate task count distribution by priority.
+    """
+    try:
+        if request.user.is_superuser:
+            tasks = Task.objects.all()
+        else:
+            tasks = Task.objects.filter(user=request.user)
+
+        priority_distribution = tasks.values('priority').annotate(
+            count=Count('task_id')
+        ).order_by('-count')
+
+        data = list(priority_distribution)
+
+        return JsonResponse(data, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
