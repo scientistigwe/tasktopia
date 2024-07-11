@@ -57,43 +57,59 @@ const updateTaskCompletionRateChart = async () => {
   );
 };
 
-// Function to update the Task Priority Distribution Chart
-const updateTaskPriorityDistributionChart = async () => {
+// Function to update the Task Priority Bubble Charts
+const updateTaskPriorityBubbleCharts = async () => {
   const data = await fetchData("/dashboard/task-priority-distribution/");
   if (!data) return;
 
-  updateChart(
-    "taskPriorityDistributionChart",
-    "pie",
-    {
-      labels: data.map((item) => item.priority),
-      datasets: [
+  const priorityData = ["High", "Medium", "Low"].map((priority) => {
+    const priorityItem = data.find((item) => item.priority === priority);
+    return {
+      data: priorityItem,
+      elementId: `${priority.toLowerCase()}PriorityChart`,
+      backgroundColor: `rgba(${
+        priority === "High"
+          ? "255, 99, 132"
+          : priority === "Medium"
+          ? "255, 206, 86"
+          : "75, 192, 192"
+      }, 0.2)`,
+      borderColor: `rgba(${
+        priority === "High"
+          ? "255, 99, 132"
+          : priority === "Medium"
+          ? "255, 206, 86"
+          : "75, 192, 192"
+      }, 1)`,
+    };
+  });
+
+  priorityData.forEach(({ data, elementId, backgroundColor, borderColor }) => {
+    if (data) {
+      updateChart(
+        elementId,
+        "bubble",
         {
-          label: "Task Priority",
-          data: data.map((item) => item.count),
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4BC0C0",
-            "#9966FF",
+          datasets: [
+            {
+              label: `${data.priority} Priority`,
+              data: [{ x: 1, y: data.count, r: 20 }],
+              backgroundColor,
+              borderColor,
+              borderWidth: 1,
+            },
           ],
         },
-      ],
-    },
-    {
-      responsive: true,
-      plugins: {
-        legend: { position: "top" },
-        title: { display: true, text: "Task Priority Distribution" },
-        tooltip: {
-          callbacks: {
-            label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
+        {
+          scales: {
+            x: { display: false },
+            y: { beginAtZero: true, max: 100 },
           },
-        },
-      },
+          plugins: { legend: { display: false } },
+        }
+      );
     }
-  );
+  });
 };
 
 // Function to update the Productivity Trends Chart
@@ -226,13 +242,160 @@ const updateKPIs = async () => {
   ]);
 };
 
-// Main function to refresh the dashboard
-const refreshDashboard = () => {
+// Function to update the Overdue Tasks Chart
+const updateOverdueTasksChart = async () => {
+  const data = await fetchData("/dashboard/overdue-tasks/");
+  if (!data) return;
+
+  updateChart(
+    "overdueTasks",
+    "doughnut",
+    {
+      labels: data.map((item) => item.task_name),
+      datasets: [
+        {
+          data: data.map((item) => item.overdue_percent),
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ],
+        },
+      ],
+    },
+    {
+      responsive: true,
+      plugins: {
+        legend: { position: "top" },
+        tooltip: {
+          callbacks: {
+            label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}%`,
+          },
+        },
+      },
+    }
+  );
+};
+
+// Function to update the Task Completion Rate Over Time Chart
+const updateTaskCompletionRateOverTimeChart = async () => {
+  const data = await fetchData("/dashboard/task-completion-rate-over-time/");
+  if (!data) return;
+
+  updateChart(
+    "taskCompletionRateOverTime",
+    "line",
+    {
+      labels: data.map((item) => item.date),
+      datasets: [
+        {
+          label: "Completion Rate",
+          data: data.map((item) => item.completion_rate),
+          borderColor: "#36A2EB",
+          fill: false,
+        },
+      ],
+    },
+    {
+      responsive: true,
+      plugins: {
+        legend: { position: "top" },
+        title: { display: true, text: "Task Completion Rate Over Time" },
+        tooltip: {
+          callbacks: {
+            label: (tooltipItem) => `Rate: ${tooltipItem.raw}%`,
+          },
+        },
+      },
+    }
+  );
+};
+
+// Function to update the Tasks Created vs Completed Chart
+const updateTasksCreatedCompletedChart = async () => {
+  const data = await fetchData("/dashboard/tasks-created-vs-completed/");
+  if (!data) return;
+
+  updateChart(
+    "tasksCreatedCompleted",
+    "doughnut",
+    {
+      labels: ["Tasks created", "Tasks completed"],
+      datasets: [
+        {
+          data: [data.tasks_created, data.tasks_completed],
+          backgroundColor: ["#36A2EB", "#FF6384"],
+        },
+      ],
+    },
+    {
+      responsive: true,
+      plugins: {
+        legend: { position: "top" },
+        tooltip: {
+          callbacks: {
+            label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
+          },
+        },
+      },
+    }
+  );
+};
+
+// Function to update the Task Priority Distribution Chart
+const updateTaskPriorityDistributionChart = async () => {
+  const data = await fetchData("/dashboard/task-priority-distribution/");
+  if (!data) return;
+
+  updateChart(
+    "taskPriorityDistributionChart",
+    "pie",
+    {
+      labels: data.map((item) => item.priority),
+      datasets: [
+        {
+          label: "Task Priority",
+          data: data.map((item) => item.count),
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ],
+        },
+      ],
+    },
+    {
+      responsive: true,
+      plugins: {
+        legend: { position: "top" },
+        title: { display: true, text: "Task Priority Distribution" },
+        tooltip: {
+          callbacks: {
+            label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
+          },
+        },
+      },
+    }
+  );
+};
+
+// Main function to refresh the entire dashboard
+const refreshDashboard = async () => {
+  updateKPIs();
   updateTaskCompletionRateChart();
+  updateCategoryTaskCompletionTable();
+  updateTasksCreatedCompletedChart();
+
+  updateTaskPriorityBubbleCharts();
+  updateProductivityTrendsChart();
+  updateOverdueTasksChart();
+  updateTaskCompletionRateOverTimeChart();
   updateTaskPriorityDistributionChart();
   updateProductivityTrendsChart();
-  updateCategoryTaskCompletionTable();
-  updateKPIs();
 };
 
 // Event listener for DOMContentLoaded

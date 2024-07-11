@@ -1,16 +1,15 @@
 from rest_framework import generics, permissions
-from django.db.models import Count
+from django.db.models import Count, Case, When, IntegerField, Sum, F
 from datetime import datetime, timedelta
+from django.utils import timezone  # Import timezone from django.utils
+from django.db.models.functions import TruncDate  # Import TruncDate from django.db.models.functions
 from tasks.models import Task, Category
 from .serializers import UserSerializer, TaskSerializer, CategorySerializer
-from django.http import HttpRequest
-from django.contrib.auth.models import User
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Case, When, IntegerField, Sum, FloatField, Value
-from django.http import JsonResponse
+from django.contrib.auth.models import User
 
 # View to render dashboard.html
 class DashboardView(TemplateView):
@@ -34,9 +33,7 @@ class CategoryListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Category.objects.all()
-        return Category.objects.filter(user=user)
+        return Category.objects.all() if user.is_superuser else Category.objects.filter(user=user)
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
@@ -44,9 +41,7 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Category.objects.all()
-        return Category.objects.filter(user=user)
+        return Category.objects.all() if user.is_superuser else Category.objects.filter(user=user)
 
 # Task Views
 class TaskListView(generics.ListCreateAPIView):
@@ -55,9 +50,7 @@ class TaskListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Task.objects.all()
-        return Task.objects.filter(user=user)
+        return Task.objects.all() if user.is_superuser else Task.objects.filter(user=user)
 
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
@@ -65,9 +58,7 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Task.objects.all()
-        return Task.objects.filter(user=user)
+        return Task.objects.all() if user.is_superuser else Task.objects.filter(user=user)
 
 # Custom Views for Analysis
 @login_required
@@ -75,169 +66,178 @@ def task_completion_rate(request: HttpRequest) -> JsonResponse:
     """
     Calculate task completion rate for the last 30 days.
     """
-    thirty_days_ago = datetime.now() - timedelta(days=30)
-    total_tasks = Task.objects.filter(user=request.user).count()
-    completed_tasks = Task.objects.filter(user=request.user, status='Completed', updated_at__gte=thirty_days_ago).count()
+    try:
+        thirty_days_ago = timezone.now() - timedelta(days=30)
+        if request.user.is_superuser:
+            total_tasks = Task.objects.count()
+            completed_tasks = Task.objects.filter(status='Completed', updated_at__gte=thirty_days_ago).count()
+        else:
+            total_tasks = Task.objects.filter(user=request.user).count()
+            completed_tasks = Task.objects.filter(user=request.user, status='Completed', updated_at__gte=thirty_days_ago).count()
 
-    if total_tasks > 0:
-        completion_rate = (completed_tasks / total_tasks) * 100
-    else:
-        completion_rate = 0.0
+        completion_rate = (completed_tasks / total_tasks) * 100 if total_tasks > 0 else 0.0
 
-    data = {
-        'total_tasks': total_tasks,
-        'completed_tasks': completed_tasks,
-        'completion_rate': completion_rate,
-    }
+        data = {
+            'total_tasks': total_tasks,
+            'completed_tasks': completed_tasks,
+            'completion_rate': completion_rate,
+        }
 
-    return JsonResponse(data)
+        return JsonResponse(data)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 @login_required
 def overdue_tasks(request: HttpRequest) -> JsonResponse:
     """
     Retrieve all overdue tasks.
     """
-    overdue_tasks = Task.objects.filter(user=request.user, status='Overdue').order_by('due_date')
-    serialized_data = TaskSerializer(overdue_tasks, many=True).data
-    return JsonResponse(serialized_data, safe=False)  # Set safe=False for non-dict objects
+    try:
+        overdue_tasks = Task.objects.filter(user=request.user, status='Overdue').order_by('due_date')
+        serialized_data = TaskSerializer(overdue_tasks, many=True).data
+        return JsonResponse(serialized_data, safe=False)  # Set safe=False for non-dict objects
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 @login_required
 def task_priority_distribution(request: HttpRequest) -> JsonResponse:
     """
     Calculate task count distribution by priority.
     """
-    tasks = Task.objects.filter(user=request.user)
-    if request.user.is_superuser:
-        tasks = Task.objects.all()
-    
-    priority_distribution = tasks.values('priority').annotate(count=Count('task_id')).order_by('-count')
-    data = list(priority_distribution)
+    try:
+        if request.user.is_superuser:
+            tasks = Task.objects.all()
+        else:
+            tasks = Task.objects.filter(user=request.user)
 
-    return JsonResponse(data, safe=False)  # Set safe=False for non-dict objects
+        priority_distribution = tasks.values('priority').annotate(count=Count('id')).order_by('-count')
+        data = list(priority_distribution)
+
+        return JsonResponse(data, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 @login_required
 def tasks_created_vs_completed(request: HttpRequest) -> JsonResponse:
     """
     Calculate tasks created vs. completed count for the last 30 days.
     """
-    thirty_days_ago = datetime.now() - timedelta(days=30)
-    tasks = Task.objects.filter(user=request.user, created_at__gte=thirty_days_ago)
-    if request.user.is_superuser:
-        tasks = Task.objects.filter(created_at__gte=thirty_days_ago)
-    
-    tasks_created = tasks.count()
-    tasks_completed = tasks.filter(status='Completed').count()
+    try:
+        thirty_days_ago = timezone.now() - timedelta(days=30)
+        if request.user.is_superuser:
+            tasks = Task.objects.filter(created_at__gte=thirty_days_ago)
+        else:
+            tasks = Task.objects.filter(user=request.user, created_at__gte=thirty_days_ago)
 
-    data = {
-        'tasks_created': tasks_created,
-        'tasks_completed': tasks_completed,
-    }
+        tasks_created = tasks.count()
+        tasks_completed = tasks.filter(status='Completed').count()
 
-    return JsonResponse(data)
+        data = {
+            'tasks_created': tasks_created,
+            'tasks_completed': tasks_completed,
+        }
+
+        return JsonResponse(data)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 @login_required
 def productivity_trends(request: HttpRequest) -> JsonResponse:
     """
-     Calculate productivity trends based on tasks created over time.
+    Calculate productivity trends based on tasks created over time.
     """
-   
-    thirty_days_ago = datetime.now() - timedelta(days=30)
-    tasks = Task.objects.filter(user=request.user, created_at__gte=thirty_days_ago)
-    if request.user.is_superuser:
-        tasks = Task.objects.filter(created_at__gte=thirty_days_ago)
-    
-    productivity_trends = tasks.values('created_at__date').annotate(count=Count('task_id')).order_by('created_at__date')
-    return JsonResponse(list(productivity_trends), safe=False)
+    try:
+        thirty_days_ago = timezone.now() - timedelta(days=30)
+        if request.user.is_superuser:
+            tasks = Task.objects.filter(created_at__gte=thirty_days_ago)
+        else:
+            tasks = Task.objects.filter(user=request.user, created_at__gte=thirty_days_ago)
+
+        productivity_trends = tasks.annotate(
+            created_date=TruncDate('created_at')
+        ).values('created_date').annotate(count=Count('id')).order_by('created_date')
+
+        return JsonResponse(list(productivity_trends), safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 @login_required
-def category_wise_task_completion(request):
+def category_wise_task_completion(request: HttpRequest) -> JsonResponse:
     """
     Calculate aggregated completion rate of tasks by category.
     """
-    if request.user.is_superuser:
-        # Superuser can view tasks for all users
-        categories_queryset = Category.objects.annotate(
-            total_tasks=Count('tasks'),
-            completed_tasks=Sum(Case(
-                When(tasks__status='Completed', then=1),
-                default=0,
-                output_field=IntegerField()
-            )),
-        ).values('category_type', 'category_name', 'total_tasks', 'completed_tasks')
-    else:
-        # Regular user (staff) can only view their own tasks
-        categories_queryset = Category.objects.filter(user=request.user).annotate(
-            total_tasks=Count('tasks'),
-            completed_tasks=Sum(Case(
-                When(tasks__status='Completed', then=1),
-                default=0,
-                output_field=IntegerField()
-            )),
-        ).values('category_type', 'category_name', 'total_tasks', 'completed_tasks')
-
-    # Convert queryset to list for manipulation
-    categories_list = list(categories_queryset)
-
-    # Calculate completion rate for each category
-    for category in categories_list:
-        total_tasks = category['total_tasks']
-        completed_tasks = category['completed_tasks']
-        if total_tasks > 0:
-            category['completion_rate'] = (completed_tasks / total_tasks) * 100.0
+    try:
+        if request.user.is_superuser:
+            categories_queryset = Category.objects.annotate(
+                total_tasks=Count('tasks'),
+                completed_tasks=Sum(Case(
+                    When(tasks__status='Completed', then=1),
+                    default=0,
+                    output_field=IntegerField()
+                )),
+            ).values('category_type', 'category_name', 'total_tasks', 'completed_tasks')
         else:
-            category['completion_rate'] = 0.0
+            categories_queryset = Category.objects.filter(user=request.user).annotate(
+                total_tasks=Count('tasks'),
+                completed_tasks=Sum(Case(
+                    When(tasks__status='Completed', then=1),
+                    default=0,
+                    output_field=IntegerField()
+                )),
+            ).values('category_type', 'category_name', 'total_tasks', 'completed_tasks')
 
-    return JsonResponse(categories_list, safe=False)
+        categories_list = list(categories_queryset)
 
+        for category in categories_list:
+            total_tasks = category['total_tasks']
+            completed_tasks = category['completed_tasks']
+            category['completion_rate'] = (completed_tasks / total_tasks) * 100.0 if total_tasks > 0 else 0.0
+
+        return JsonResponse(categories_list, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+# KPI Views
 class TotalTasksView(LoginRequiredMixin, View):
-    
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Task.objects.all()
-        return Task.objects.filter(user=user)
-    
+        return Task.objects.all() if user.is_superuser else Task.objects.filter(user=user)
+
     def get(self, request, *args, **kwargs):
-        tasks = self.get_queryset()
-        total_tasks = tasks.count()
-        return JsonResponse({'total_tasks': total_tasks})
+        try:
+            total_tasks = self.get_queryset().count()
+            return JsonResponse({'total_tasks': total_tasks})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
 
 class PercentOverdueView(LoginRequiredMixin, View):
-
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Task.objects.all()
-        return Task.objects.filter(user=user)
+        return Task.objects.all() if user.is_superuser else Task.objects.filter(user=user)
 
     def get(self, request, *args, **kwargs):
-        tasks = self.get_queryset()
-        total_tasks = tasks.count()
-        overdue_tasks = tasks.filter(status='Overdue').count()
+        try:
+            tasks = self.get_queryset()
+            total_tasks = tasks.count()
+            overdue_tasks = tasks.filter(status='Overdue').count()
+            percent_overdue = (overdue_tasks / total_tasks) * 100.0 if total_tasks > 0 else 0.0
 
-        if total_tasks == 0:
-            percent_overdue = 0.0  # Ensure percent_overdue is a float
-        else:
-            percent_overdue = (overdue_tasks / total_tasks) * 100.0  # Ensure division result is float
-
-        return JsonResponse({'percent_overdue': percent_overdue})
+            return JsonResponse({'percent_overdue': percent_overdue})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
 
 class PercentCompletedView(LoginRequiredMixin, View):
-
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Task.objects.all()
-        return Task.objects.filter(user=user)
+        return Task.objects.all() if user.is_superuser else Task.objects.filter(user=user)
 
     def get(self, request, *args, **kwargs):
-        tasks = self.get_queryset()
-        total_tasks = tasks.count()
-        completed_tasks = tasks.filter(status='Completed').count()
+        try:
+            tasks = self.get_queryset()
+            total_tasks = tasks.count()
+            completed_tasks = tasks.filter(status='Completed').count()
+            percent_completed = (completed_tasks / total_tasks) * 100.0 if total_tasks > 0 else 0.0
 
-        if total_tasks == 0:
-            percent_completed = 0.0  # Ensure percent_completed is a float
-        else:
-            percent_completed = (completed_tasks / total_tasks) * 100.0  # Ensure division result is float
-
-        return JsonResponse({'percent_completed': percent_completed})
+            return JsonResponse({'percent_completed': percent_completed})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
