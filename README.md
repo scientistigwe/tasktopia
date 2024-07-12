@@ -287,6 +287,8 @@ Heroku
 <h2 id="code-quality-testing">Code Quality Testing</h2>
 - <img src="./assets/icons/html_formatter.png" width="20px" align="top"><a href="https://www.freeformatter.com/html-formatter.html"> Free Online HTML Formatter</a> - Used to correct indentation issues and get rid of excess whitespace.
 
+- [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+
 <h2 id="management-and-development">Project Management and Development Approach</h2>
 
 Tasktopia was developed using Agile methodology, focusing on continuous collaboration, flexibility, and delivering working software.

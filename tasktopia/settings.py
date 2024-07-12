@@ -19,15 +19,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-mqnrowkrk6%ayjkbr_q0gf(%yx_vx4-!(se@9y1besan2-jgsf')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = os.getenv('DEBUG', 'False') == 'True'
-DEBUG = True
+DEBUG = False
+
 ALLOWED_HOSTS = [
+    '*',
     '127.0.0.1',
     '.herokuapp.com',
+    'ui.dev/amiresponsive'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.herokuapp.com",
+    "https://ui.dev/amiresponsive",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
