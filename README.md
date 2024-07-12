@@ -329,9 +329,15 @@ _Below is an example of how you can instruct your audience on installing and set
    git clone https://github.com/your_username_/Project-Name.git
    ```
 3. Install NPM packages
+
    ```sh
    npm install
    ```
+
+   npm install chartjs-adapter-date-fns
+   (// Import date adapter
+   import 'chartjs-adapter-date-fns';)
+
 4. Enter your API in `config.js`
    ```js
    const API_KEY = "ENTER YOUR API";

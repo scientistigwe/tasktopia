@@ -1,18 +1,20 @@
 const charts = {}; // Object to store chart instances
 
 // Utility function to fetch data from the server
-async function fetchData(url) {
+const fetchData = async (url) => {
   try {
+    console.log(`Fetching data from ${url}`); // Log the URL
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error("Network response was not ok");
     }
-    return await response.json();
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error("Error fetching data:", error);
     return null;
   }
-}
+};
 
 // Function to update a chart based on provided data
 const updateChart = (chartId, chartType, chartData, chartOptions) => {
@@ -73,49 +75,71 @@ const updateKPIs = async () => {
 
 // Function to update Category Task Completion Table
 const updateCategoryTaskCompletionTable = async () => {
-  const data = await fetchData("/dashboard/category-wise-task-completion/");
-  if (!data) return;
+  try {
+    const data = await fetchData("/dashboard/category-wise-task-completion/");
+    if (!data) return;
 
-  const aggregatedData = {};
+    const aggregatedData = {};
 
-  data.forEach((item) => {
-    let category = item.category_type;
-    if (category === "other" && item.category_name) {
-      category = `${category}: ${item.category_name}`;
-    }
+    // Aggregate data by category and user
+    data.forEach((item) => {
+      let user_id = item.user_id;
+      let category = item.category_type;
+      if (category === "other" && item.category_name) {
+        category = `${category}: ${item.category_name}`;
+      }
 
-    if (!aggregatedData[category]) {
-      aggregatedData[category] = {
-        category,
-        completed_tasks: item.completed_tasks,
-        total_tasks: item.total_tasks,
-      };
+      if (!aggregatedData[user_id]) {
+        aggregatedData[user_id] = {};
+      }
+
+      if (!aggregatedData[user_id][category]) {
+        aggregatedData[user_id][category] = {
+          completed_tasks: 0,
+          total_tasks: 0,
+          completion_rate: 0,
+        };
+      }
+
+      aggregatedData[user_id][category].completed_tasks += item.completed_tasks;
+      aggregatedData[user_id][category].total_tasks += item.total_tasks;
+      aggregatedData[user_id][category].completion_rate =
+        aggregatedData[user_id][category].total_tasks > 0
+          ? (aggregatedData[user_id][category].completed_tasks /
+              aggregatedData[user_id][category].total_tasks) *
+            100
+          : 0;
+    });
+
+    const tableBody = document.getElementById(
+      "categoryTaskCompletionTableBody"
+    );
+    if (tableBody) {
+      tableBody.innerHTML = Object.keys(aggregatedData)
+        .map((user_id) => {
+          return Object.keys(aggregatedData[user_id])
+            .map((category) => {
+              const item = aggregatedData[user_id][category];
+              return `
+                <tr>
+                  <td>${user_id}</td>
+                  <td>${category}</td>
+                  <td>${item.completed_tasks}</td>
+                  <td>${item.total_tasks}</td>
+                  <td>${item.completion_rate.toFixed(1)}</td>
+                </tr>
+              `;
+            })
+            .join("");
+        })
+        .join("");
     } else {
-      aggregatedData[category].completed_tasks += item.completed_tasks;
-      aggregatedData[category].total_tasks += item.total_tasks;
+      console.error(
+        "Element with ID categoryTaskCompletionTableBody not found."
+      );
     }
-  });
-
-  const tableBody = document.getElementById("categoryTaskCompletionTableBody");
-  if (tableBody) {
-    tableBody.innerHTML = Object.keys(aggregatedData)
-      .map((category) => {
-        const item = aggregatedData[category];
-        const completionRate = (item.completed_tasks / item.total_tasks) * 100;
-        return `
-          <tr>
-            <td>${category}</td>
-            <td>${item.completed_tasks}</td>
-            <td>${item.total_tasks}</td>
-            <td>${
-              isNaN(completionRate) ? "0.0" : completionRate.toFixed(1)
-            }</td>
-          </tr>
-        `;
-      })
-      .join("");
-  } else {
-    console.error("Element with ID categoryTaskCompletionTableBody not found.");
+  } catch (error) {
+    console.error("Error updating category task completion table:", error);
   }
 };
 
@@ -140,6 +164,7 @@ const updateTasksCreatedCompletedChart = async () => {
       responsive: true,
       plugins: {
         legend: { position: "top" },
+        title: { display: true, text: "Task Completed vs Task Created" },
         tooltip: {
           callbacks: {
             label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
@@ -151,27 +176,23 @@ const updateTasksCreatedCompletedChart = async () => {
 };
 
 // Function to update Overdue Tasks Table
-// Function to fetch and display overdue tasks
 const updateOverdueTasksTable = async () => {
   try {
-    const response = await fetch("/dashboard/overdue-tasks/");
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const overdueTasks = await response.json();
+    const overdueTasks = await fetchData("/dashboard/overdue-tasks/");
+    if (!overdueTasks) return;
 
     const tableBody = document.getElementById("overdueTasksTableBody");
     if (tableBody) {
       tableBody.innerHTML = overdueTasks
         .map(
-          (task) => `
+          (item) => `
           <tr>
-          <td>${item.user_id}</td>
-          <td>${item.username}</td>
-          <td>${item.first_name}</td>
-          <td>${item.email}</td>
-          <td>${item.title}</td>
-          <td>${item.status}</td>
+            <td>${item.user_id}</td>
+            <td>${item.username}</td>
+            <td>${item.first_name}</td>
+            <td>${item.email}</td>
+            <td>${item.title}</td>
+            <td>${item.status}</td>
           </tr>
         `
         )
@@ -186,8 +207,23 @@ const updateOverdueTasksTable = async () => {
 
 // Function to update Task Completion Rate Over Time Chart
 const updateTaskCompletionRateOverTimeChart = async () => {
+  console.log("Calling updateTaskCompletionRateOverTimeChart"); // Log function call
   const data = await fetchData("/dashboard/task-completion-rate-over-time/");
-  if (!data) return;
+  if (!data) {
+    console.log("No data fetched");
+    return;
+  }
+
+  console.log(`TCR: ${JSON.stringify(data)}`);
+
+  // Validate data format
+  if (
+    !Array.isArray(data) ||
+    !data.every((item) => "date" in item && "completion_rate" in item)
+  ) {
+    console.error("Invalid data format");
+    return;
+  }
 
   updateChart(
     "taskCompletionRateOverTime",
@@ -256,58 +292,6 @@ const updateTaskPriorityDistributionChart = async () => {
   );
 };
 
-const updateProductivityTrendsChart = async () => {
-  fetch("/dashboard/productivity-trends/")
-    .then((response) => response.json())
-    .then((data) => {
-      const chartData = {
-        labels: data.map((item) => item.date), // Use 'date' field for labels
-        datasets: [
-          {
-            label: "Tasks Created",
-            data: data.map((item) => item.total_tasks), // Use 'total_tasks' for data
-            borderColor: "rgba(75, 192, 192, 1)",
-            borderWidth: 1,
-            fill: false,
-          },
-          {
-            label: "Tasks Completed",
-            data: data.map((item) => item.completed_tasks), // Use 'completed_tasks' for data
-            borderColor: "rgba(54, 162, 235, 1)",
-            borderWidth: 1,
-            fill: false,
-          },
-          {
-            label: "Completion Rate (%)",
-            data: data.map((item) => item.completion_rate), // Use 'completion_rate' for data
-            borderColor: "rgba(255, 206, 86, 1)",
-            borderWidth: 1,
-            fill: false,
-          },
-        ],
-      };
-
-      const chartOptions = {
-        scales: {
-          x: {
-            type: "time",
-            time: {
-              unit: "day",
-            },
-          },
-          y: {
-            beginAtZero: true,
-          },
-        },
-      };
-
-      updateChart("productivityTrendsChart", "line", chartData, chartOptions);
-    })
-    .catch((error) =>
-      console.error("Error updating productivity trends chart:", error)
-    );
-};
-
 // Main function to refresh the entire dashboard
 const refreshDashboard = async () => {
   await updateKPIs();
@@ -316,7 +300,6 @@ const refreshDashboard = async () => {
   await updateTaskPriorityDistributionChart();
   await updateCategoryTaskCompletionTable();
   await updateOverdueTasksTable();
-  await updateProductivityTrendsChart();
 };
 
 // Event listener for DOMContentLoaded
@@ -325,6 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(
       "Analytics and Insights page detected, refreshing dashboard..."
     );
+
     refreshDashboard();
   } else {
     console.log("Not on Analytics and Insights page");

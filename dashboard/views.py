@@ -62,34 +62,6 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 # Custom Views for Analysis
 @login_required
-def task_completion_rate(request: HttpRequest) -> JsonResponse:
-    """
-    Calculate task completion rate for the last 30 days.
-    """
-    try:
-        thirty_days_ago = timezone.now() - timedelta(days=30)
-        user = request.user
-
-        if user.is_superuser:
-            total_tasks = Task.objects.count()
-            completed_tasks = Task.objects.filter(status='Completed', updated_at__gte=thirty_days_ago).count()
-        else:
-            total_tasks = Task.objects.filter(user=user).count()
-            completed_tasks = Task.objects.filter(user=user, status='Completed', updated_at__gte=thirty_days_ago).count()
-
-        completion_rate = (completed_tasks / total_tasks) * 100 if total_tasks > 0 else 0.0
-
-        data = {
-            'total_tasks': total_tasks,
-            'completed_tasks': completed_tasks,
-            'completion_rate': completion_rate,
-        }
-
-        return JsonResponse(data)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
-
-@login_required
 def overdue_tasks(request: HttpRequest) -> JsonResponse:
     """
     Retrieve all overdue tasks.
@@ -124,24 +96,6 @@ def overdue_tasks(request: HttpRequest) -> JsonResponse:
         return JsonResponse({'error': str(e)}, status=500)
     
 @login_required
-def task_priority_distribution(request: HttpRequest) -> JsonResponse:
-    """
-    Calculate task count distribution by priority.
-    """
-    try:
-        if request.user.is_superuser:
-            tasks = Task.objects.all()
-        else:
-            tasks = Task.objects.filter(user=request.user)
-
-        priority_distribution = tasks.values('priority').annotate(count=Count('task_id')).order_by('-count')
-        data = list(priority_distribution)
-
-        return JsonResponse(data, safe=False)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
-
-@login_required
 def tasks_created_vs_completed(request: HttpRequest) -> JsonResponse:
     """
     Calculate tasks created vs. completed count for the last 30 days.
@@ -166,25 +120,30 @@ def tasks_created_vs_completed(request: HttpRequest) -> JsonResponse:
         return JsonResponse({'error': str(e)}, status=500)
 
 @login_required
-def productivity_trends(request: HttpRequest) -> JsonResponse:
+def task_completion_by_priority_user(request: HttpRequest) -> JsonResponse:
     """
-    Calculate productivity trends based on tasks created over time.
+    Calculate task completion by priority segregated by user.
     """
     try:
-        thirty_days_ago = timezone.now() - timedelta(days=30)
         if request.user.is_superuser:
-            tasks = Task.objects.filter(created_at__gte=thirty_days_ago)
+            tasks = Task.objects.all()
         else:
-            tasks = Task.objects.filter(user=request.user, created_at__gte=thirty_days_ago)
+            tasks = Task.objects.filter(user=request.user)
 
-        productivity_trends = tasks.annotate(
-            created_date=TruncDate('created_at')
-        ).values('created_date').annotate(count=Count('task_id')).order_by('created_date')
+        task_completion_data = tasks.values('priority', 'user_id').annotate(
+            total_tasks=Count('task_id'),
+            completed_tasks=Count(Case(When(status='completed', then=1))),
+            completion_rate=Case(
+                When(total_tasks=0, then=0),
+                default=(Count(Case(When(status='completed', then=1))) * 100) / Count('task_id'),
+                output_field=IntegerField()
+            )
+        )
 
-        return JsonResponse(list(productivity_trends), safe=False)
+        return JsonResponse(list(task_completion_data), safe=False)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-
+    
 @login_required
 def category_wise_task_completion(request: HttpRequest) -> JsonResponse:
     """
@@ -199,7 +158,7 @@ def category_wise_task_completion(request: HttpRequest) -> JsonResponse:
                     default=0,
                     output_field=IntegerField()
                 )),
-            ).values('category_type', 'category_name', 'total_tasks', 'completed_tasks')
+            ).values('category_type', 'category_name', 'total_tasks', 'completed_tasks', 'user_id')
         else:
             categories_queryset = Category.objects.filter(user=request.user).annotate(
                 total_tasks=Count('tasks'),
@@ -208,7 +167,7 @@ def category_wise_task_completion(request: HttpRequest) -> JsonResponse:
                     default=0,
                     output_field=IntegerField()
                 )),
-            ).values('category_type', 'category_name', 'total_tasks', 'completed_tasks')
+            ).values('category_type', 'category_name', 'total_tasks', 'completed_tasks', 'user_id')
 
         categories_list = list(categories_queryset)
 
@@ -281,8 +240,8 @@ def task_completion_rate_over_time(request: HttpRequest) -> JsonResponse:
         completion_rate_data = tasks.annotate(
             date=TruncDate('updated_at')
         ).values('date').annotate(
-            total_tasks=Count('task_id'),  # Counting tasks
-            completed_tasks=Sum(  # Sum of completed tasks
+            total_tasks=Count('task_id'),
+            completed_tasks=Sum(
                 Case(
                     When(status='Completed', then=1),
                     default=0,

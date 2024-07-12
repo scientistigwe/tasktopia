@@ -18,42 +18,46 @@
         </div>
         <div id="percentOverdueCard" class="kpi-card card col-12 col-sm-6 col-md-3 m-2">
             <div class="kpi-card-content">
-                <h3>Overdue</h3>
-                <p id="percentOverdueValue" class="kpi-value">Loading...</p>
+                <h3 style="color: red !important;">Overdue</h3>
+                <p id="percentOverdueValue" class="kpi-value" style="color: red !important;">Loading...</p>
             </div>
         </div>
         <div id="percentCompletedCard" class="kpi-card card col-12 col-sm-6 col-md-3 m-2">
             <div class="kpi-card-content">
-                <h3>Completed</h3>
-                <p id="percentCompletedValue" class="kpi-value">Loading...</p>
+                <h3 style="color: green !important;">Completed</h3>
+                <p id="percentCompletedValue" class="kpi-value" style="color: green !important;">Loading...</p>
             </div>
         </div>
     </div>
 
     <!-- Charts Row -->
-    <!-- Task Completion Rate Over Time Chart -->
-    <div class="col-12">
-        <div class="card">
-            <canvas id="taskCompletionRateOverTime" width="400" height="300"></canvas>
+    <div class="row">
+        <!-- Task Created vs Completed Charts -->
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card">
+                <canvas id="tasksCreatedCompleted" width="400" height="300"></canvas>
+            </div>
         </div>
-    </div>
 
-    <!-- Task Priority Distribution & Productivity Trends Charts -->
-    <div class="row mt-4">
+        <!-- Task Completion Rate Over Time Chart -->
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card">
+                <canvas id="taskCompletionRateOverTime" width="300" height="300"></canvas>
+            </div>
+        </div>
+
+
+
         <!-- Task Priority Distribution Charts -->
-        <div class="col-12 col-md-6 mb-4">
+        <div class="col-12 col-md-4 mb-4">
             <div class="card">
                 <canvas id="taskPriorityDistributionChart" width="400" height="300"></canvas>
             </div>
         </div>
-
-        <!-- Productivity Trends Chart -->
-        <div class="col-12 col-md-6 mb-4">
-            <div class="card">
-                <canvas id="productivityTrendsChart" width="400" height="400"></canvas>
-            </div>
-        </div>
     </div>
+
+
+
 
     <!-- Category-wise Task Completion Table -->
     <div class="row mt-4">
@@ -64,6 +68,7 @@
                     <table class="table table-responsive">
                         <thead>
                             <tr>
+                                <th>User ID</th>
                                 <th>Category</th>
                                 <th>Completed Tasks</th>
                                 <th>Total Tasks</th>
