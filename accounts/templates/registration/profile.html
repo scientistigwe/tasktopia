@@ -6,10 +6,15 @@
 <div class="container-fluid card mt-5 profile">
     <h2 class="mb-5 text-center">User Profile</h2>
 
+    <!-- Display error message if there is one -->
+    {% if error_message %}
+    <div class="alert alert-danger dismissible-message">{{ error_message }}</div>
+    {% endif %}
+
     <!-- Display success message if there is one -->
     {% if success_message %}
-    <div class="alert alert-success" role="alert">
-        {{ success_message }}
+    <div class="alert alert-success dismissible-message">
+        {{ user.first_name }} {{ success_message }}
     </div>
     {% endif %}
 
@@ -121,10 +126,16 @@
                 <li class="list-group-item"><a href="{% url 'logout' %}">Logout</a></li>
                 <!-- Form to Delete Account with confirmation -->
                 <li class="list-group-item">
-                    <form method="post" action="{% url 'delete_account' %}"
-                        onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
-                        {% csrf_token %} <!-- CSRF token for security -->
-                        <button type="submit" class="btn btn-danger">Delete Account</button>
+                    <form method="post" action="{% url 'delete_account' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="delete_password" class="form-label">Enter your password to delete
+                                account:</label>
+                            <input type="password" id="delete_password" name="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">Delete
+                            Account</button>
                     </form>
                 </li>
             </ul>

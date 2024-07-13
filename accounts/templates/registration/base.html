@@ -98,6 +98,22 @@
             <div class="row">
                 <!-- Include sidebar partial template -->
                 {% include 'partials/sidebar.html' %}
+
+                <div class="row">
+                    <div class="col">
+                        <!-- Display messages -->
+                        {% if messages %}
+                        <div class="alert-messages dismissible-message">
+                            {% for message in messages %}
+                            <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+                                role="alert">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
                 <div class="px-md-4">
                     <!-- Content block where specific page content will be injected -->
                     {% block content %}

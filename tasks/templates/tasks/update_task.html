@@ -3,9 +3,6 @@
 {% block title %}Edit Task | Tasktopia{% endblock %}
 
 {% block content %}
-<!-- AN element to target before toggle function is called -->
-<div id="toggleFunction" style="display:none;"></div>
-
 <div class="ms-sm-auto col-lg-12 px-md-4">
     <div class="create-task card p-4">
         <h1 class="mb-3">Edit Task</h1>
@@ -16,7 +13,7 @@
             <ul>
                 {% for field, errors in form.errors.items %}
                 {% for error in errors %}
-                <li>{{ form.field.label_tag }}: {{ error }}</li>
+                <li>{{ field.label_tag }}: {{ error }}</li>
                 {% endfor %}
                 {% endfor %}
             </ul>
@@ -84,7 +81,7 @@
                     {% endif %}
                 </div>
                 <div class="col-md-6">
-                    <label for="id_category_type" class="form-label">Category</label>
+                    <label for="id_category_type" class="form-label">Category Type</label>
                     {{ category_form.category_type }}
                     {% if category_form.category_type.errors %}
                     <div class="invalid-feedback" style="display: block;">
@@ -113,4 +110,5 @@
             </div>
         </form>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}

@@ -8,18 +8,17 @@
 
     <!-- Login form -->
     <form method="post" action="{% url 'login' %}" class="form-input">
-        {% csrf_token %} <!-- CSRF token for security -->
-
-        <!-- Display error message if there is one -->
-        {% if error_message %}
-        <div class="alert alert-danger dismissible-message">{{ error_message }}</div>
-        {% endif %}
+        {% csrf_token %}
 
         <!-- Display success message if there is one -->
-        {% if success_message %}
+        {% if request.session.login_success %}
         <div class="alert alert-success dismissible-message">
-            {{ first_name }} {{ success_message }}
-        </div>
+            {{ request.session.first_name }} {{request.session.login_success }}</div>
+        {% endif %}
+
+        <!-- Display error message if there is one -->
+        {% if request.session.login_error %}
+        <div class="alert alert-danger dismissible-message">{{ request.session.login_error }}</div>
         {% endif %}
 
         <!-- Username input field -->
@@ -33,17 +32,6 @@
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" class="form-control" required>
         </div>
-
-        <!-- Display form errors if there are any -->
-        {% if form.errors %}
-        <div class="alert alert-danger mb-3">
-            {% for field, errors in form.errors.items %}
-            {% for error in errors %}
-            {{ error }}
-            {% endfor %}
-            {% endfor %}
-        </div>
-        {% endif %}
 
         <!-- Submit button -->
         <button class="btn btn-secondary mt-3 w-100" type="submit">Login</button>
@@ -72,4 +60,11 @@
         {% endif %}
     </div>
 </div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}

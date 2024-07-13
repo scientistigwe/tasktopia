@@ -66,17 +66,6 @@
                 <button class="btn btn-secondary" type="submit">Sign Up</button>
             </div>
         </div>
-        {% if success_message %}
-        <div class="alert alert-success dismissible-message">
-            {{ first_name }} {{ success_message }}
-        </div>
-        {% endif %}
-        {% if error_message %}
-        <div class="alert alert-danger dismissible-message">
-            {{ error_message }}
-            <button class="cancel-message">* Cancel</button>
-        </div>
-        {% endif %}
     </form>
 </div>
 {% endblock %}

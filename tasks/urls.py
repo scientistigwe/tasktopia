@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import TaskListView, TaskCreateView, TaskDetailView, TaskUpdateView, TaskDeleteView, mark_completed, update_status#, toggle_task_completion
+from .views import TaskListView, TaskCreateView, TaskDetailView, TaskUpdateView, TaskDeleteView, mark_completed, update_status
 
 urlpatterns = [
     path('', TaskListView.as_view(), name='task_list'),

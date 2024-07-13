@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, View
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View, DetailView
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ValidationError
@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from .models import Task, Category
 from .forms import TaskForm, CategoryForm
+from accounts.utils import add_message
 
 class TaskListView(LoginRequiredMixin, ListView):
     """
@@ -30,9 +31,7 @@ class TaskListView(LoginRequiredMixin, ListView):
         """
         context = super().get_context_data(**kwargs)
         context['user'] = self.request.user
-        # Get the messages from the session and then clear them
         context['success_message'] = self.request.session.pop('success_message', '')
-        context['first_name'] = self.request.session.pop('first_name', '')
         context['error_message'] = self.request.session.pop('error_message', '')
         return context
 
@@ -60,9 +59,16 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
             form.instance.category = category
             form.instance.save()
 
-        # Set task_success_message in the session for display in the template
-        self.request.session['task_success_message'] = 'Task created successfully!'
+        # Set success message in the session for display in the template
+        self.request.session['success_message'] = 'Task created successfully!'
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        """
+        Add error message to session and render form again.
+        """
+        add_message(self.request, 'Error creating task. Please correct the errors.', messages.ERROR)
+        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         """
@@ -72,31 +78,6 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         if 'category_form' not in context:
             context['category_form'] = CategoryForm()
         return context
-    
-class TaskUpdateView(LoginRequiredMixin, UpdateView):
-    """
-    View to update an existing task.
-    """
-    model = Task
-    form_class = TaskForm
-    template_name = 'tasks/update_task.html'
-    success_url = reverse_lazy('task_list')
-
-    def form_valid(self, form):
-        """
-        Process the form and handle validation errors.
-        """
-        form.instance.user = self.request.user
-        try:
-            response = super().form_valid(form)
-            self.object.update_status()
-            self.object.save()
-            messages.success(self.request, 'Task updated successfully!')
-            return response
-        except ValidationError as e:
-            form.add_error(None, e)
-            messages.error(self.request, 'Please correct the errors below.')
-            return self.form_invalid(form)
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
     """
@@ -115,12 +96,41 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('task_list')
 
     def delete(self, request, *args, **kwargs):
-        """
-        Override to add a success message upon deletion.
-        """
-        messages.success(self.request, 'Task deleted successfully!')
+        """        messages.success(self.request, 'Task deleted successfully!')
         return super().delete(request, *args, **kwargs)
 
+        Override to add a success message upon deletion.
+        """
+
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'tasks/update_task.html'
+    success_url = reverse_lazy('task_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['category_form'] = CategoryForm(self.request.POST, instance=self.object.category)
+        else:
+            context['category_form'] = CategoryForm(instance=self.object.category)
+        return context
+
+    def form_valid(self, form):
+        category_form = CategoryForm(self.request.POST, instance=self.object.category)
+        if category_form.is_valid():
+            response = super().form_valid(form)
+            category_form.save()
+            messages.success(self.request, 'Task updated successfully!')
+            return response
+        else:
+            return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Please correct the errors below.')
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)
+        
 @require_POST
 @csrf_exempt
 def mark_completed(request, pk):
@@ -140,14 +150,24 @@ def mark_completed(request, pk):
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 
+@require_POST
+@csrf_exempt
 def update_status(request, pk):
-    if request.method == 'POST':
-        task = get_object_or_404(Task, pk=pk)
+    """
+    Updates the status of a task. If the request is via AJAX, returns a JSON response.
+    """
+    task = get_object_or_404(Task, pk=pk)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         new_status = request.POST.get('status')
         if new_status:
-            task.status = new_status
-            task.save()
-            return JsonResponse({'status': 'success'})
+            try:
+                task.status = new_status
+                task.save()
+                return JsonResponse({'status': 'success'})
+            except Exception as e:
+                return JsonResponse({'status': 'error', 'message': str(e)})
         else:
             return JsonResponse({'status': 'fail', 'message': 'Invalid status'})
-    return JsonResponse({'status': 'fail', 'message': 'Invalid request'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request'})

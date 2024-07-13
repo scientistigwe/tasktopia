@@ -1,7 +1,9 @@
 # forms.py
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
 
 class SignupForm(UserCreationForm):
     username = forms.CharField(
@@ -50,3 +52,8 @@ class SignupForm(UserCreationForm):
         if password1 and password2 and password1 != password2:
             self.add_error('password2', "The two password fields didn't match.")
         return cleaned_data
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = get_user_model()
+        fields = ['username', 'email', 'first_name', 'last_name']

@@ -1,6 +1,7 @@
 {% load static %}
 
 <form id="completeTaskForm" action="{% url 'mark_completed' task.pk %}" method="post" class="form-inline"
+    data-start-date="{{ task.start_date|date:'c' }}" data-due-date="{{ task.due_date|date:'c' }}"
     data-status="{{ task.status }}">
     {% csrf_token %}
     <div class="form-check form-switch">

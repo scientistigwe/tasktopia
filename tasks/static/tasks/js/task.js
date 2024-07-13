@@ -1,47 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
   // CATEGORY TOGGLE FUNCTION
-  const categorySelect = document.querySelector('select[name="category_type"]');
+  const categoryTypeField = document.getElementById("id_category_type");
   const otherCategoryDiv = document.getElementById("other-category");
 
   function toggleOtherCategory() {
-    const selectedCategory = categorySelect.value;
-    if (selectedCategory === "other") {
-      otherCategoryDiv.style.display = "block";
-    } else {
-      otherCategoryDiv.style.display = "none";
-    }
+    otherCategoryDiv.style.display =
+      categoryTypeField.value === "other" ? "block" : "none";
   }
 
-  if (document.getElementById("toggleFunction")) {
-    console.log("Task creation page detected!");
+  if (categoryTypeField) {
     toggleOtherCategory();
-    categorySelect.addEventListener("change", toggleOtherCategory);
-  } else {
-    console.log("Not on Tasks creation page");
+    categoryTypeField.addEventListener("change", toggleOtherCategory);
   }
 
   // ALERT MESSAGE HANDLING
-  function cancelMessage(event) {
-    const successMessage = event.target.closest(".dismissible-message");
-    successMessage.style.display = "none";
-  }
+  const dismissibleMessages = document.querySelectorAll(".dismissible-message");
 
   function autoHideMessage(element, delay) {
-    setTimeout(function () {
-      if (element) {
-        element.style.display = "none";
-      }
+    setTimeout(() => {
+      if (element) element.style.display = "none";
     }, delay);
   }
 
-  const dismissibleMessages = document.querySelectorAll(".dismissible-message");
-  dismissibleMessages.forEach(function (message) {
-    autoHideMessage(message, 5000); // 5000 milliseconds = 5 seconds
-  });
+  dismissibleMessages.forEach((message) => autoHideMessage(message, 5000));
 
   function showFormAlert(message, alertType) {
     const alertDiv = document.createElement("div");
-    alertDiv.className = "alert alert-" + alertType + " dismissible-message";
+    alertDiv.className = `alert alert-${alertType} dismissible-message`;
     alertDiv.textContent = message;
 
     const formElement = document.querySelector("form");
@@ -52,131 +37,135 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const formErrors = document.querySelectorAll(".invalid-feedback");
   if (formErrors.length > 0) {
-    formErrors.forEach(function (errorElement) {
+    formErrors.forEach((errorElement) => {
       showFormAlert(errorElement.textContent.trim(), "danger");
     });
   }
 
   // TASK COMPLETION TOGGLE
-  function getCSRFToken() {
-    return document
-      .querySelector('meta[name="csrf-token"]')
-      .getAttribute("content");
-  }
+  const csrfToken = document.querySelector(
+    'input[name="csrfmiddlewaretoken"]'
+  ).value;
+  const checkboxes = document.querySelectorAll(".form-check-input");
 
-  function initializeCheckbox() {
-    const checkboxes = document.querySelectorAll(".form-check-input");
-    checkboxes.forEach(function (checkbox) {
-      const status = checkbox.dataset.status;
-      checkbox.checked = status.toLowerCase() === "completed";
-    });
-  }
-
-  function getCurrentDate() {
-    return new Date().toISOString().split("T")[0]; // YYYY-MM-DD
-  }
-
-  function showAlert(message) {
-    alert(message);
-  }
-
-  function determineStatus(startDate, dueDate) {
-    const currentDate = getCurrentDate();
-    if (currentDate > dueDate) {
-      return "overdue";
-    } else if (currentDate >= startDate && currentDate <= dueDate) {
-      return "in progress";
-    } else {
-      return "pending";
-    }
-  }
-
-  function handleCheckboxChange(event) {
-    const checkbox = event.target;
-    const isChecked = checkbox.checked;
-    const form = checkbox.closest("form");
-    const taskStatus = form.dataset.status;
-    const csrftoken = getCSRFToken();
-    const startDate = form.dataset.startDate;
-    const dueDate = form.dataset.dueDate;
-    const currentDate = getCurrentDate();
-
-    if (isChecked && dueDate > currentDate) {
-      showAlert(
-        "You are trying to complete a task with a due date still in the future."
-      );
-      event.preventDefault();
-      return;
-    }
-
-    if (
-      (isChecked && taskStatus !== "completed") ||
-      (!isChecked && taskStatus === "completed")
-    ) {
-      $.ajax({
-        url: form.action,
-        type: "POST",
-        data: $(form).serialize(),
-        dataType: "json",
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        },
-        success: function (response) {
-          if (response.status === "success") {
-            location.reload();
-          } else {
-            alert("Error: " + response.message);
-          }
-        },
-        error: function (jqXHR, textStatus) {
-          alert("Network error: " + textStatus);
-        },
-      });
-    } else if (!isChecked) {
-      const newStatus = determineStatus(startDate, dueDate);
-      form.dataset.status = newStatus;
-
-      $.ajax({
-        url: form.action.replace("mark_completed", "update_status"),
-        type: "POST",
-        data: {
-          csrfmiddlewaretoken: csrftoken,
-          status: newStatus,
-        },
-        dataType: "json",
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        },
-        success: function (response) {
-          if (response.status === "success") {
-            location.reload();
-          } else {
-            alert("Error: " + response.message);
-          }
-        },
-        error: function (jqXHR, textStatus) {
-          alert("Network error: " + textStatus);
-        },
-      });
-    }
-  }
-
-  initializeCheckbox();
-  document.querySelectorAll(".form-check-input").forEach(function (checkbox) {
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = checkbox.dataset.status.toLowerCase() === "completed";
     checkbox.addEventListener("change", handleCheckboxChange);
   });
 
+  function handleCheckboxChange(event) {
+    const checkbox = event.target;
+    const form = checkbox.closest("form");
+    const isChecked = checkbox.checked;
+    const taskStatus = form.dataset.status;
+    const actionUrl = form.action;
+    const csrfToken = document.querySelector(
+      'input[name="csrfmiddlewaretoken"]'
+    ).value;
+    const startDate = form.dataset.startDate;
+    const dueDate = form.dataset.dueDate;
+    const currentDate = new Date().toISOString().split("T")[0]; // Today's date in YYYY-MM-DD format
+
+    if (isChecked && taskStatus !== "Completed") {
+      completeTask(actionUrl, new FormData(form));
+    } else if (!isChecked && taskStatus === "Completed") {
+      const newStatus = determineStatus(startDate, dueDate, currentDate);
+      updateTaskStatus(
+        actionUrl.replace("mark_completed", "update_status"),
+        csrfToken,
+        form,
+        newStatus
+      );
+    } else if (isChecked && dueDate > currentDate) {
+      alert(
+        "You are trying to complete a task with a due date still in the future."
+      );
+      checkbox.checked = false;
+    } else if (!isChecked) {
+      const newStatus = determineStatus(startDate, dueDate, currentDate);
+      updateTaskStatus(
+        actionUrl.replace("mark_completed", "update_status"),
+        csrfToken,
+        form,
+        newStatus
+      );
+    }
+  }
+
+  function determineStatus(startDate, dueDate, currentDate) {
+    const start = new Date(startDate);
+    const due = new Date(dueDate);
+
+    if (currentDate > due) {
+      return "Overdue";
+    } else if (currentDate >= start && currentDate <= due) {
+      return "In Progress";
+    } else {
+      return "Pending";
+    }
+  }
+
+  function completeTask(actionUrl, formData) {
+    fetch(actionUrl, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": csrfToken,
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          location.reload();
+        } else {
+          alert("Error: " + data.message);
+        }
+      })
+      .catch((error) => {
+        alert("Network error: " + error.message);
+      });
+  }
+
+  function updateTaskStatus(actionUrl, csrfToken, form, newStatus) {
+    fetch(actionUrl, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": csrfToken,
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        csrfmiddlewaretoken: csrfToken,
+        status: newStatus,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          location.reload();
+        } else {
+          alert("Error: " + data.message);
+        }
+      })
+      .catch((error) => {
+        alert("Network error: " + error.message);
+      });
+  }
+
+  function handleTaskCompletionResponse(data) {
+    if (data.status === "success") {
+      location.reload();
+    } else {
+      alert("Error: " + data.message);
+    }
+  }
+
   // Ensure the form is responsive
   const forms = document.querySelectorAll("form.form-inline");
-  forms.forEach(function (form) {
-    if (window.innerWidth <= 768) {
-      form.classList.remove("form-inline");
-      form.classList.add("col-md-12");
-    }
-  });
 
-  window.addEventListener("resize", function () {
-    forms.forEach(function (form) {
+  function toggleFormClass() {
+    forms.forEach((form) => {
       if (window.innerWidth <= 768) {
         form.classList.remove("form-inline");
         form.classList.add("col-md-12");
@@ -185,5 +174,8 @@ document.addEventListener("DOMContentLoaded", function () {
         form.classList.add("form-inline");
       }
     });
-  });
+  }
+
+  toggleFormClass();
+  window.addEventListener("resize", toggleFormClass);
 });

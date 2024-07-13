@@ -5,13 +5,14 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
 
-    
+    # Login, Signup and Profile URLS
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('signup/', views.SignupView.as_view(), name='signup'),
-    path('tasks/', views.TaskListView.as_view(), name='task_list'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('profile/edit/', views.ProfileEditView.as_view(), name='profile_edit'),
+
+    # Password URLs
     path('password_change/', auth_views.PasswordChangeView.as_view(
         template_name='registration/password_change_form.html'
     ), name='password_change'),
@@ -30,5 +31,7 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
         template_name='registration/password_reset_complete.html'
     ), name='password_reset_complete'),
-    path('delete_account/', views.DeleteAccountView.as_view(), name='delete_account'),
+
+    # Account Management URLS
+    path('delete-account/', views.DeleteAccountView.as_view(), name='delete_account'),
 ]
