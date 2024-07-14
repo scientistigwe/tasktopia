@@ -1,8 +1,8 @@
 from rest_framework import generics, permissions
 from django.db.models import Count, Case, When, IntegerField, Sum, F
 from datetime import datetime, timedelta
-from django.utils import timezone  # Import timezone from django.utils
-from django.db.models.functions import TruncDate  # Import TruncDate from django.db.models.functions
+from django.utils import timezone
+from django.db.models.functions import TruncDate
 from tasks.models import Task, Category
 from .serializers import UserSerializer, TaskSerializer, CategorySerializer
 from django.http import HttpRequest, JsonResponse
@@ -11,23 +11,37 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-# View to render dashboard.html
+
 class DashboardView(TemplateView):
+    """
+    Render the dashboard.html template.
+    """
     template_name = 'dashboard/dashboard.html'
 
-# User Views
 class UserListView(generics.ListCreateAPIView):
+    """
+    API view to list and create users.
+    Only accessible by admin users.
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API view to retrieve, update, and delete a user.
+    Only accessible by admin users.
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
-# Category Views
 class CategoryListView(generics.ListCreateAPIView):
+    """
+    API view to list and create categories.
+    Only accessible by authenticated users.
+    Superusers can see all categories, regular users only their own.
+    """
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -36,6 +50,11 @@ class CategoryListView(generics.ListCreateAPIView):
         return Category.objects.all() if user.is_superuser else Category.objects.filter(user=user)
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API view to retrieve, update, and delete a category.
+    Only accessible by authenticated users.
+    Superusers can see all categories, regular users only their own.
+    """
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -43,8 +62,12 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
         user = self.request.user
         return Category.objects.all() if user.is_superuser else Category.objects.filter(user=user)
 
-# Task Views
 class TaskListView(generics.ListCreateAPIView):
+    """
+    API view to list and create tasks.
+    Only accessible by authenticated users.
+    Superusers can see all tasks, regular users only their own.
+    """
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -53,6 +76,11 @@ class TaskListView(generics.ListCreateAPIView):
         return Task.objects.all() if user.is_superuser else Task.objects.filter(user=user)
 
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API view to retrieve, update, and delete a task.
+    Only accessible by authenticated users.
+    Superusers can see all tasks, regular users only their own.
+    """
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -60,7 +88,6 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
         user = self.request.user
         return Task.objects.all() if user.is_superuser else Task.objects.filter(user=user)
 
-# Custom Views for Analysis
 @login_required
 def overdue_tasks(request: HttpRequest) -> JsonResponse:
     """
@@ -69,32 +96,24 @@ def overdue_tasks(request: HttpRequest) -> JsonResponse:
     try:
         user = request.user
 
-        # Check if the user is a superuser to fetch all overdue tasks
         if user.is_superuser:
-            # Fetch all overdue tasks with user_id, title, and status
             overdue_tasks = Task.objects.filter(status='Overdue').values('user_id', 'title', 'status')
-
-            # Fetch user details for the associated users in overdue tasks
             user_ids = [task['user_id'] for task in overdue_tasks]
             user_details = User.objects.filter(id__in=user_ids).values('id', 'username', 'email', 'first_name')
-
-            # Map user details to each task
             user_details_map = {user['id']: user for user in user_details}
             for task in overdue_tasks:
                 task['username'] = user_details_map.get(task['user_id'], {}).get('username', '')
                 task['email'] = user_details_map.get(task['user_id'], {}).get('email', '')
                 task['first_name'] = user_details_map.get(task['user_id'], {}).get('first_name', '')
-
         else:
-            # For regular users, fetch only their own overdue tasks with email, first_name, user_id, title, and status
             overdue_tasks = Task.objects.filter(user=user, status='Overdue').values('user__email', 'user__first_name', 'user_id', 'title', 'status')
 
         data = list(overdue_tasks)
         return JsonResponse(data, safe=False)
-    
+
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-    
+
 @login_required
 def tasks_created_vs_completed(request: HttpRequest) -> JsonResponse:
     """
@@ -143,7 +162,7 @@ def task_completion_by_priority_user(request: HttpRequest) -> JsonResponse:
         return JsonResponse(list(task_completion_data), safe=False)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-    
+
 @login_required
 def category_wise_task_completion(request: HttpRequest) -> JsonResponse:
     """
@@ -180,8 +199,10 @@ def category_wise_task_completion(request: HttpRequest) -> JsonResponse:
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-# KPI Views
 class TotalTasksView(LoginRequiredMixin, View):
+    """
+    View to return the total number of tasks for the current user.
+    """
     def get_queryset(self):
         user = self.request.user
         return Task.objects.all() if user.is_superuser else Task.objects.filter(user=user)
@@ -194,6 +215,9 @@ class TotalTasksView(LoginRequiredMixin, View):
             return JsonResponse({'error': str(e)}, status=500)
 
 class PercentOverdueView(LoginRequiredMixin, View):
+    """
+    View to return the percentage of overdue tasks for the current user.
+    """
     def get_queryset(self):
         user = self.request.user
         return Task.objects.all() if user.is_superuser else Task.objects.filter(user=user)
@@ -210,6 +234,9 @@ class PercentOverdueView(LoginRequiredMixin, View):
             return JsonResponse({'error': str(e)}, status=500)
 
 class PercentCompletedView(LoginRequiredMixin, View):
+    """
+    View to return the percentage of completed tasks for the current user.
+    """
     def get_queryset(self):
         user = self.request.user
         return Task.objects.all() if user.is_superuser else Task.objects.filter(user=user)
@@ -228,19 +255,17 @@ class PercentCompletedView(LoginRequiredMixin, View):
 @login_required
 def task_completion_rate_over_time(request: HttpRequest) -> JsonResponse:
     """
-    Calculate task completion rate over time.
+    Calculate the task completion rate over the last 30 days.
     """
     try:
         thirty_days_ago = timezone.now() - timedelta(days=30)
-        if request.user.is_superuser:
-            tasks = Task.objects.filter(updated_at__gte=thirty_days_ago)
-        else:
-            tasks = Task.objects.filter(user=request.user, updated_at__gte=thirty_days_ago)
+        user = request.user
+        tasks = Task.objects.filter(user=user, updated_at__gte=thirty_days_ago) if not user.is_superuser else Task.objects.filter(updated_at__gte=thirty_days_ago)
 
         completion_rate_data = tasks.annotate(
             date=TruncDate('updated_at')
         ).values('date').annotate(
-            total_tasks=Count('task_id'),
+            total_tasks=Count('id'),
             completed_tasks=Sum(
                 Case(
                     When(status='Completed', then=1),
@@ -256,20 +281,18 @@ def task_completion_rate_over_time(request: HttpRequest) -> JsonResponse:
         return JsonResponse(list(completion_rate_data), safe=False)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-       
+
 @login_required
 def task_priority_distribution(request: HttpRequest) -> JsonResponse:
     """
-    Calculate task count distribution by priority.
+    Calculate the task count distribution by priority.
     """
     try:
-        if request.user.is_superuser:
-            tasks = Task.objects.all()
-        else:
-            tasks = Task.objects.filter(user=request.user)
+        user = request.user
+        tasks = Task.objects.filter(user=user) if not user.is_superuser else Task.objects.all()
 
         priority_distribution = tasks.values('priority').annotate(
-            count=Count('task_id')
+            count=Count('id')
         ).order_by('-count')
 
         data = list(priority_distribution)

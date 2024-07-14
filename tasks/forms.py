@@ -1,10 +1,23 @@
 from django import forms
-from .models import Task, Category
+from .models import Task
+from .models import Category
 
 class TaskForm(forms.ModelForm):
     """
     Form for creating and updating Task instances.
+
+    Attributes:
+        title (CharField): The title of the task.
+        description (CharField): The description of the task.
+        start_date (DateTimeField): The start date and time of the task.
+        due_date (DateTimeField): The due date and time of the task.
+        priority (ChoiceField): The priority level of the task.
+    
+    Methods:
+        clean(): Validates the form instance to ensure start_date is not later than due_date.
+        save(user=None, commit=True): Saves the form and assigns the current user to the task.
     """
+
     title = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'required': 'required'}),
         error_messages={'required': 'Please enter a title.'}
@@ -32,6 +45,12 @@ class TaskForm(forms.ModelForm):
         fields = ['title', 'description', 'start_date', 'due_date', 'priority']
 
     def clean(self):
+        """
+        Validates the form instance to ensure start_date is not later than due_date.
+
+        Raises:
+            ValidationError: If start_date is later than due_date.
+        """
         cleaned_data = super().clean()
         start_date = cleaned_data.get('start_date')
         due_date = cleaned_data.get('due_date')
@@ -43,7 +62,14 @@ class TaskForm(forms.ModelForm):
 
     def save(self, user=None, commit=True):
         """
-        Save the form and assign the current user to the task.
+        Saves the form and assigns the current user to the task.
+
+        Args:
+            user (User, optional): The user object to assign to the task. Defaults to None.
+            commit (bool, optional): If True, saves the task instance to the database. Defaults to True.
+
+        Returns:
+            Task: The saved task instance.
         """
         task = super().save(commit=False)
         if user:
@@ -51,8 +77,19 @@ class TaskForm(forms.ModelForm):
         if commit:
             task.save()
         return task
-    
+
 class CategoryForm(forms.ModelForm):
+    """
+    Form for creating and updating Category instances.
+
+    Attributes:
+        category_type (ChoiceField): The type of the category.
+        category_name (CharField): The name of the category.
+
+    Methods:
+        clean(): Validates the form instance to ensure category_name is provided if category_type is 'other'.
+    """
+
     CATEGORY_CHOICES = [
         ('personal', 'Personal'),
         ('church', 'Church'),
@@ -78,6 +115,12 @@ class CategoryForm(forms.ModelForm):
         fields = ['category_type', 'category_name']
 
     def clean(self):
+        """
+        Validates the form instance to ensure category_name is provided if category_type is 'other'.
+
+        Raises:
+            ValidationError: If category_type is 'other' and category_name is not provided.
+        """
         cleaned_data = super().clean()
         category_type = cleaned_data.get('category_type')
         category_name = cleaned_data.get('category_name')
@@ -86,8 +129,3 @@ class CategoryForm(forms.ModelForm):
             self.add_error('category_name', 'Please specify the category name.')
 
         return cleaned_data
-
-class MarkTaskAsCompletedForm(forms.ModelForm):
-    class Meta:
-        model = Task
-        fields = ['status']

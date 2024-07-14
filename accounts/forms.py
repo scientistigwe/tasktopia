@@ -1,11 +1,13 @@
-# forms.py
+# Import necessary modules and functions from Django
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
-
 class SignupForm(UserCreationForm):
+    """
+    Form for user sign-up. Inherits from Django's UserCreationForm.
+    """
     username = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
         error_messages={'unique': 'A user with that username already exists.'}
@@ -29,6 +31,10 @@ class SignupForm(UserCreationForm):
     )
 
     class Meta:
+        """
+        Metadata for the form.
+        Specifies the model and the fields to be included in the form.
+        """
         model = User
         fields = (
             'username',
@@ -40,12 +46,20 @@ class SignupForm(UserCreationForm):
         )
 
     def clean_username(self):
+        """
+        Custom validation for the username field.
+        Checks if the username already exists in the database.
+        """
         username = self.cleaned_data['username']
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError(self.fields['username'].error_messages['unique'], code='unique')
         return username
 
     def clean(self):
+        """
+        Custom validation for the entire form.
+        Checks if the two password fields match.
+        """
         cleaned_data = super().clean()
         password1 = cleaned_data.get('password1')
         password2 = cleaned_data.get('password2')
@@ -54,6 +68,13 @@ class SignupForm(UserCreationForm):
         return cleaned_data
 
 class CustomUserChangeForm(UserChangeForm):
+    """
+    Form for updating user information. Inherits from Django's UserChangeForm.
+    """
     class Meta:
+        """
+        Metadata for the form.
+        Specifies the model and the fields to be included in the form.
+        """
         model = get_user_model()
         fields = ['username', 'email', 'first_name', 'last_name']

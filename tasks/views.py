@@ -1,15 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.contrib import messages
 from .models import Task, Category
 from .forms import TaskForm, CategoryForm
 from accounts.utils import add_message
+
 
 class TaskListView(LoginRequiredMixin, ListView):
     """
@@ -35,6 +35,7 @@ class TaskListView(LoginRequiredMixin, ListView):
         context['error_message'] = self.request.session.pop('error_message', '')
         return context
 
+
 class TaskCreateView(LoginRequiredMixin, CreateView):
     """
     View to create a new task.
@@ -47,6 +48,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         """
         Process the form and associate the task with the logged-in user.
+        Also handles creation of associated category.
         """
         form.instance.user = self.request.user
 
@@ -65,7 +67,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
     def form_invalid(self, form):
         """
-        Add error message to session and render form again.
+        Add error message to session and render form again if form is invalid.
         """
         add_message(self.request, 'Error creating task. Please correct the errors.', messages.ERROR)
         return super().form_invalid(form)
@@ -79,6 +81,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
             context['category_form'] = CategoryForm()
         return context
 
+
 class TaskDetailView(LoginRequiredMixin, DetailView):
     """
     View to display details of a single task.
@@ -86,6 +89,7 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'tasks/task_details.html'
     context_object_name = 'task'
+
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     """
@@ -96,19 +100,26 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('task_list')
 
     def delete(self, request, *args, **kwargs):
-        """        messages.success(self.request, 'Task deleted successfully!')
+        """
+        Override delete method to add success message upon task deletion.
+        """
+        messages.success(self.request, 'Task deleted successfully!')
         return super().delete(request, *args, **kwargs)
 
-        Override to add a success message upon deletion.
-        """
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    """
+    View to update a task.
+    """
     model = Task
     form_class = TaskForm
     template_name = 'tasks/update_task.html'
     success_url = reverse_lazy('task_list')
 
     def get_context_data(self, **kwargs):
+        """
+        Add category form to context data for updating task.
+        """
         context = super().get_context_data(**kwargs)
         if self.request.POST:
             context['category_form'] = CategoryForm(self.request.POST, instance=self.object.category)
@@ -117,6 +128,9 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
+        """
+        Process the form and associated category form upon successful validation.
+        """
         category_form = CategoryForm(self.request.POST, instance=self.object.category)
         if category_form.is_valid():
             response = super().form_valid(form)
@@ -127,15 +141,19 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
             return self.form_invalid(form)
 
     def form_invalid(self, form):
+        """
+        Add error message to request and render form again if form is invalid.
+        """
         messages.error(self.request, 'Please correct the errors below.')
         context = self.get_context_data(form=form)
         return self.render_to_response(context)
-        
+
+
 @require_POST
 @csrf_exempt
 def mark_completed(request, pk):
     """
-    Marks a task as completed. If the request is via AJAX, returns a JSON response.
+    Marks a task as completed. If request is via AJAX, returns JSON response.
     """
     task = get_object_or_404(Task, pk=pk)
 
@@ -150,11 +168,12 @@ def mark_completed(request, pk):
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 
+
 @require_POST
 @csrf_exempt
 def update_status(request, pk):
     """
-    Updates the status of a task. If the request is via AJAX, returns a JSON response.
+    Updates the status of a task. If request is via AJAX, returns JSON response.
     """
     task = get_object_or_404(Task, pk=pk)
 

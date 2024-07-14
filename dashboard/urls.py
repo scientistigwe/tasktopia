@@ -16,7 +16,7 @@ from .views import (
     PercentOverdueView,
     PercentCompletedView,
     task_completion_rate_over_time,
-    )
+)
 
 urlpatterns = [
     # User URLs
@@ -31,9 +31,11 @@ urlpatterns = [
     path('categories/', CategoryListView.as_view(), name='category-list'),
     path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category-detail'),
 
-    # Dashboard URLs
-    path('dashboard/', DashboardView.as_view(), name='dashboard'), 
-     path('overdue-tasks/', overdue_tasks, name='overdue-tasks'),
+    # Dashboard URL
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
+
+    # Other custom views
+    path('overdue-tasks/', overdue_tasks, name='overdue-tasks'),
     path('task-priority-distribution/', task_priority_distribution, name='task-priority-distribution'),
     path('tasks-created-vs-completed/', tasks_created_vs_completed, name='tasks-created-vs-completed'),
     path('task-completion-by-priority-user/', task_completion_by_priority_user, name='task-completion-by-priority-user'),
