@@ -55,16 +55,6 @@ class DeleteAccountView(LoginRequiredMixin, View):
         
 class SignupView(View):
     template_name = 'registration/signup.html'
-    
-    def post(self, request):
-        form = SignupForm(request.POST)
-
-            
-        add_message(request, 'Error in signup. Please try again.', messages.ERROR)
-        return render(request, self.template_name, {'form': form})
-
-class SignupView(View):
-    template_name = 'registration/signup.html'
 
     def get(self, request):
         form = SignupForm()
