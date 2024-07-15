@@ -265,7 +265,7 @@ def task_completion_rate_over_time(request: HttpRequest) -> JsonResponse:
         completion_rate_data = tasks.annotate(
             date=TruncDate('updated_at')
         ).values('date').annotate(
-            total_tasks=Count('id'),
+            total_tasks=Count('task_id'),
             completed_tasks=Sum(
                 Case(
                     When(status='Completed', then=1),
@@ -292,7 +292,7 @@ def task_priority_distribution(request: HttpRequest) -> JsonResponse:
         tasks = Task.objects.filter(user=user) if not user.is_superuser else Task.objects.all()
 
         priority_distribution = tasks.values('priority').annotate(
-            count=Count('id')
+            count=Count('task_id')
         ).order_by('-count')
 
         data = list(priority_distribution)

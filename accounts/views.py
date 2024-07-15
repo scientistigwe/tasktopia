@@ -1,3 +1,7 @@
+"""
+Views for user authentication and profile management.
+"""
+
 # Import necessary modules and functions from Django and the project
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -73,10 +77,10 @@ class DeleteAccountView(LoginRequiredMixin, View):
             user.delete()
             messages.success(request, f'Your account ({username}) has been deleted.')
             return redirect('index')
-        else:
-            # Password is incorrect
-            messages.error(request, 'Incorrect password. Account not deleted.')
-            return redirect('delete_account')
+        
+        # Password is incorrect
+        messages.error(request, 'Incorrect password. Account not deleted.')
+        return redirect('delete_account')
         
 class SignupView(View):
     """
@@ -99,15 +103,16 @@ class SignupView(View):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+            user = authenticate(username=form.cleaned_data['username'],
+                                password=form.cleaned_data['password1'])
             if user is not None:
                 login(request, user)
                 add_message(request, 'Successfully signed up.', messages.SUCCESS)
                 request.session['first_name'] = form.cleaned_data.get('first_name')
                 return redirect('task_list')
-        else:
-            request.session['error_message'] = 'There was an error with your signup. Please correct the errors below.'
-            return render(request, self.template_name, {'form': form})
+        
+        request.session['error_message'] = 'There was an error with your signup. Please correct the errors below.'
+        return render(request, self.template_name, {'form': form})
 
 class LoginView(View):
     """
