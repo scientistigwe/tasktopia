@@ -6,7 +6,7 @@ from django.views.generic import TemplateView, UpdateView, View
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from .utils import add_message
+from ..utils import add_message
 from django.contrib import messages
 
 class ProfileView(LoginRequiredMixin, TemplateView):

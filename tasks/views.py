@@ -1,4 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
+"""
+Module for handling task-related views.
+"""
+
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -6,9 +10,10 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib import messages
-from .models import Task, Category
+from utils import add_message
+from .models import Task
 from .forms import TaskForm, CategoryForm
-from accounts.utils import add_message
+
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -92,9 +97,7 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
-    """
-    View to delete a task.
-    """
+    """ View to delete a task. """
     model = Task
     template_name = 'tasks/task_confirm_delete.html'
     success_url = reverse_lazy('task_list')
@@ -126,6 +129,14 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
         else:
             context['category_form'] = CategoryForm(instance=self.object.category)
         return context
+    
+    def form_invalid(self, form):
+        """
+        Add error message to request and render form again if form is invalid.
+        """
+        messages.error(self.request, 'Please correct the errors below.')
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)
 
     def form_valid(self, form):
         """
@@ -139,15 +150,6 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
             return response
         else:
             return self.form_invalid(form)
-
-    def form_invalid(self, form):
-        """
-        Add error message to request and render form again if form is invalid.
-        """
-        messages.error(self.request, 'Please correct the errors below.')
-        context = self.get_context_data(form=form)
-        return self.render_to_response(context)
-
 
 @require_POST
 @csrf_exempt
@@ -165,8 +167,7 @@ def mark_completed(request, pk):
             return JsonResponse({'status': 'success'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 
 
 @require_POST
@@ -186,7 +187,5 @@ def update_status(request, pk):
                 return JsonResponse({'status': 'success'})
             except Exception as e:
                 return JsonResponse({'status': 'error', 'message': str(e)})
-        else:
-            return JsonResponse({'status': 'fail', 'message': 'Invalid status'})
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+        return JsonResponse({'status': 'fail', 'message': 'Invalid status'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'})

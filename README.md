@@ -1,21 +1,10 @@
+{% load static %}
 <a name="readme-top"></a>
-
-<!--
-*** Thank you for checking out and/or using this README Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "improvement".
-*** Adapt appropriately and replace all placeholder text with accurate information relating to your project.
-*** Do not forget to take the asset folder along with the README.md file so that the icons link will not be broken.
-*** Remove all *N/B* comments.
-*** Don't forget to give the project a star!
--->
 
 <!-- PROJECT LOGO (N/B: Replace logo url and image to match your project)-->
 <br />
 <div align="center">
-  <a href="https://github.com/scientistigwe/README-Template">
-    <img src="./main-logo.png" alt="Project Logo" width="200" height="200">
-  </a>
+        <a href="https://en.wikipedia.org/wiki/HTML5"><img src="{% static 'registration/images/homepage.png' %}" width="20px" align="top" alt="Project Logo"></a>
 </div>
   <h1 align="center">Tasktopia: Build your dream day, one task at a time.</h1>
 
@@ -254,40 +243,86 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
 
 <h2 id="technology-stack">Technology Stack</h2>
 
-Tasktopia is built using a modern technology stack that ensures scalability, security, and a responsive user experience.
+<p>Tasktopia is built using a modern technology stack that ensures scalability, security, and a responsive user experience.</p>
 
 <h2 id="languages-frameworks-libraries">Backend</h2>
-Python
-Django 
-Django REST API Framework
+<ul>
+    <li>
+        <img src="{% static 'registration/icons/html5.svg' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> Python</a> - Core languge used in building the views/logic of the project.
+    </li>
+    <li>
+        <img src="{% static 'registration/icons/html5.svg' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> Django</a> - Python full-battery fitted framework used in building the project. 
+    </li>
+    <li>
+        <img src="{% static 'registration/icons/html5.svg' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> Django REST API Framework</a> - Used to serve data to the dashboard. 
+    </li>
+</ul>
+
 <h2 id="frontend">Frontend</h2>
-
-- <img src="./assets/icons/html5.svg" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> HTML5</a> - Used for designing the structure of the project.
-
-- <img src="./assets/icons/css3-alt.svg" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/CSS"> CSS3</a> - Used for styling the project.
-- <img src="./assets/icons/bootstrap.png" width="20px" align="top"><a href="[Bootstrap-url]"> Bootstrap</a> - Used for building responsive and mobile-first websites and web applications.
-- <img src="./assets/icons/jquery.png" width="20px" align="top"><a href="[JQuery-url]"> jQuery</a> - Used for simplifying HTML document traversing, event handling, and animation.
-- <img src="./assets/icons/Google.png" width="20px" align="top"><a href="https://fonts.google.com/"> Google Fonts</a> - Provides all of the fonts for this website.
-
-- <img src="./assets/icons/font_awesome.png" width="20px" align="top"><a href="https://fontawesome.com/"> Font Awesome</a> - Used for the site icons.
-
-- <img src="./assets/icons/javascript.png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/JavaScript"> JavaScript</a> - Used for the hamburger navigation and icons.
+<ul>
+    <li>
+        <img src="{% static 'registration/icons/html5.svg' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> HTML5</a> - Used for designing the structure of the project.
+    </li>
+    <li>
+        <img src="{% static 'registration/icons/css3-alt.svg' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/CSS"> CSS3</a> - Used for styling the project.
+    </li>
+    <li>
+        <img src="{% static 'registration/icons/bootstrap.png' %}" width="20px" align="top"><a href="[Bootstrap-url]"> Bootstrap</a> - Used for building responsive and mobile-first websites and web applications.
+    </li>
+    <li>
+        <img src="{% static 'registration/icons/jquery.png' %}" width="20px" align="top"><a href="[JQuery-url]"> jQuery</a> - Used for simplifying HTML document traversing, event handling, and animation.
+    </li>
+    <li>
+        <img src="{% static 'registration/icons/Google.png' %}" width="20px" align="top"><a href="https://fonts.google.com/"> Google Fonts</a> - Provides all of the fonts for this website.
+    </li>
+    <li>
+        <img src="{% static 'registration/icons/font_awesome.png' %}" width="20px" align="top"><a href="https://fontawesome.com/"> Font Awesome</a> - Used for the site icons.
+    </li>
+    <li>
+        <img src="{% static 'registration/icons/javascript.png' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/JavaScript"> JavaScript</a> - Used for the hamburger navigation and icons.
+    </li>
+</ul>
 
 <h2 id="database">Database</h2>
-PostgreSQL - pre-deployment test and production phase
-SQLite3 - developement and testing phase
+<ul>
+    <li>
+        PostgreSQL - pre-deployment test and production phase
+    </li>
+    <li>
+        SQLite3 - development and testing phase
+    </li>
+</ul>
 
 <h2 id="hosting">Hosting</h2>
-Heroku
-<h2 id="version-control-and-agile-implementation">Version Control & Agile Implementation </h2>
-- <img src="./assets/icons/github.png" width="20px" align="top"><a href="https://github.com/IrisSmok"> Github</a> - Used to store the project code.
-<h2 id="hosting">Wireframe & ER Diagram</h2>
-- <img src="./assets/icons/balsamiq.png" width="20px" align="top"><a href="https://balsamiq.com/"> Balsamiq</a> - Used to create site wireframes.
-- <img src="./assets/icons/responsive-devices.png" width="20px" align="top"><a href="http://ami.responsivedesign.is/"> Am I Responsive</a> - Used to check if the site is responsive on different screen sizes.
-<h2 id="code-quality-testing">Code Quality Testing</h2>
-- <img src="./assets/icons/html_formatter.png" width="20px" align="top"><a href="https://www.freeformatter.com/html-formatter.html"> Free Online HTML Formatter</a> - Used to correct indentation issues and get rid of excess whitespace.
+<ul>
+    <li>
+        <img src="{% static 'assets/icons/github.png' %}" width="20px" align="top"><a href="https://github.com/scientistigwe"> Heroku</a> - Used to deploy the project code.
+    </li>
+</ul>
 
-- [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+<h2 id="version-control-and-agile-implementation">Version Control & Agile Implementation </h2>
+<ul>
+    <li>
+        <img src="./accounts/static/registration/icons/github.png" width="20px" align="top"><a href="https://github.com/scientistigwe"> Github</a> - Used to store the project code.
+    </li>
+</ul>
+
+<h2 id="wireframe-and-entity-relationship-diagram">Wireframe & Entity Relationship Diagram</h2>
+<ul>
+    <li>
+        <img src="./accounts/static/registration/icons/balsamiq.png" width="20px" align="top"><a href="https://balsamiq.com/"> Balsamiq</a> - Used to create site wireframes.
+    </li>
+    <li>
+        <img src="{% static 'assets/icons/responsive-devices.png' %}" width="20px" align="top"><a href="http://ami.responsivedesign.is/"> Am I Responsive</a> - Used to check if the site is responsive on different screen sizes.
+    </li>
+</ul>
+
+<h2 id="code-quality-testing">Code Quality Testing</h2>
+<ul>
+    <li>
+        <img src="{% static 'assets/icons/html_formatter.png' %}" width="20px" align="top"><a href="https://www.freeformatter.com/html-formatter.html"> Free Online HTML Formatter</a> - Used to correct indentation issues and get rid of excess whitespace.
+    </li>
+</ul>
 
 <h2 id="management-and-development">Project Management and Development Approach</h2>
 
@@ -357,58 +392,162 @@ This section encompasses the various elements and functionalities aimed at enhan
 
 The key features are:
 
-- <strong>Navigation:</strong> Designed to facilitate users effortlessly access to different sections and pages.
-- <strong>Services:</strong> Provides comprehensive information about the services offered by the project.
-- <strong>Pricing:</strong> Provides corresponding prices on services offered by ["**name-of-project**"], enabling users to make informed decisions about their choices.
-- <strong>Testimonials:</strong> Showcases testimonials and highlights positive experiences from previous clients, fostering trust and credibility among potential customers.
-- <strong>Gallery:</strong> Presents a visually appealing gallery displaying a pictorial representation of ["**name-of-project**"], serving as a source of inspiration for clients.
-- <strong>Contact Form:</strong> Offers a user-friendly contact form that simplifies the process of reaching out to the team. This will empower clients to submit inquiries, book appointments, or provide feedback seamlessly.
-- <strong>Contact Information:</strong> Displays essential contact details of the team prominently on the website, ensuring users can easily reach out to the establishment via phone, email, or physical address.
-- <strong>Social Links:</strong> Includes links to the company's social media profiles, enabling users to stay connected and updated with the latest news, promotions, and announcements.
-- <strong>Responsive Design:</strong> Ensures that the website is accessible and functional across various devices and screen sizes, providing a consistent user experience.
-- <strong>Interactive Elements:</strong> Incorporates interactive elements such as buttons, sliders, and hover effects to enhance user engagement and interactivity, making the browsing experience more enjoyable and intuitive.
+## Core Features
 
-- Other features to be implemented in the future include:
+### Homepage Features
 
-- <strong>Online Booking:</strong> Implementing an online booking system that enables clients to schedule appointments directly through the website, offering convenience and flexibility in selecting desired dates and times for their visits.
+- **Introduction Section:** The homepage features an introductory section that explains the purpose and benefits of Tasktopia. This helps users quickly understand the value of the application and encourages them to explore further.
+- **User-Friendly Navigation:** The homepage includes a navigation bar with links to key sections such as Home, Login, and Sign Up. This design ensures that users can easily access different parts of the application, enhancing the overall user experience.
+- **Responsive Design:** The homepage is designed to be fully responsive, meaning it adjusts seamlessly to various screen sizes, from desktops to mobile devices. This ensures that users have a consistent and accessible experience regardless of the device they use.
 
-- <strong>ChatBot:</strong>: An AI-powered self service system that will guide and direct clients based on their specific needs.
+### Account CRUD Operation
 
-<h2 id="structure-and-navigation">Structure and Navigation</h2>
+- **Create Account:** Users can create a new account by providing their details. This feature is essential for enabling personalized experiences and ensuring secure access to user-specific data.
+- **Read Account Details:** Users can view their account details, which provides transparency and allows users to keep track of their information.
+- **Update Account Information:** Users can update their account information, such as changing their password or updating their email address. This feature is crucial for maintaining up-to-date and accurate user data.
+- **Delete Account:** Users have the option to delete their account if they no longer wish to use the service. This feature respects user autonomy and privacy, ensuring they have full control over their data.
 
-- **File Organisation**
+### Task CRUD Operation
 
-  - The files where structured into folders and clustered based on functionality. Also file naming convention that reflects the functions of the conetent of the file was adopted.
+- **Create Task:** Users can create new tasks, specifying details such as title, description, start date, due date, and priority. This functionality is fundamental for effective task management.
+- **Read Task:** Users can view the details of their tasks, enabling them to keep track of their tasks and deadlines.
+- **Update Task:** Users can update task details, such as changing the due date or marking a task as completed. This feature is crucial for keeping task information current and relevant.
+- **Delete Task:** Users can delete tasks that are no longer relevant, helping them keep their task list organized and clutter-free.
 
-- **Header**
+### Password Management
 
-  - "**name-of-project**" logo positioned [left|right|center]
-  - Appears on every page
+- **Password Reset:** Users can reset their passwords if they forget them by providing their email address. This ensures users can regain access to their accounts securely.
+- **Password Change:** Users can change their passwords from their account settings to maintain account security.
+- **Password Strength Indicator:** When creating or changing passwords, a strength indicator shows how secure the entered password is, encouraging users to create strong, secure passwords.
 
-- **Nav bar**
+### Dashboard Metrics and Insights
 
-  - Appers on every page
-  - Navigation bar on the [left|right|center]
+#### KPI Cards
 
-- **Menu items**
+- **Total Tasks:** Displays the total number of tasks created by the user. This metric provides a quick overview of the user’s workload.
+- **Overdue Tasks:** Shows the number of tasks that have passed their due date. This is crucial for highlighting tasks that need immediate attention.
+- **Completed Tasks:** Indicates the number of tasks that have been completed. This metric helps users see their progress and accomplishments.
 
-  - Appers on every page
-  - Directs users to specific page
+#### Charts
 
-- **Footer**
+- **Task Completion Rate Chart**
 
-  - Includes a [contact information, contact form, newsletter, Resources and social links] (N/B: adjust as appropriate)
-  - Appears on every page
+  - **Purpose:** Shows the ratio of completed tasks to total tasks.
+  - **Insight:** Provides a quick view of task completion efficiency, helping users understand how effectively they are completing their tasks.
 
-- **Home Page**
-  - _Hero image_ - appears at the top-[left|right|center] of the home page, below the header section.
-  - _Testimonials_ - just below the "**name-of-section**" section, responsively arrange to maximize various device screen width and give users a good experience.
-  - _Call to action buttons_ - provides an easy portal to other specific page of "**name-of-project**".
-- **Services** - Services has a dedicated page with a navigation link on both the navbar and one of the call-to-action buttons on the homepage.
-- **Pricing** - Pricing and Plans has a dedicated page with a navigation link on both the navbar and one of the call-to-action buttons on the homepage.
-- **Our Team** - Our Teams has a dedicated page with a navigation link on both the navbar and one of the call-to-action buttons on the homepage.
-- **Gallery** - Gallery has a dedicated page with a navigation link on both the navbar and one of the call-to-action buttons on the homepage.
-- **Contact Us** - This is located at the [left|right|center] of the footer.
+- **Task Priority Distribution Chart**
+
+  - **Purpose:** Displays the distribution of tasks by priority.
+  - **Insight:** Helps in understanding how tasks are prioritized, which can inform users about where they need to focus their efforts.
+
+- **Productivity Trends Chart**
+
+  - **Purpose:** Shows how productivity (tasks created and completed) trends over time.
+  - **Insight:** Tracks productivity variations over a period, enabling users to identify patterns and make informed decisions to improve productivity.
+
+- **Category-wise Task Completion Table**
+
+  - **Purpose:** Shows completion rates by category.
+  - **Insight:** Helps identify categories with high or low completion rates, providing insights into areas that may need more attention or improvement.
+
+- **Overdue Tasks Chart**
+
+  - **Purpose:** Displays the percentage of overdue tasks.
+  - **Insight:** Highlights tasks that are overdue and need attention, allowing users to prioritize and address overdue tasks promptly.
+
+- **Task Completion Rate Over Time Chart**
+
+  - **Purpose:** Shows the task completion rate over time.
+  - **Insight:** Monitors how the completion rate is changing, helping users understand trends and potentially identify factors that influence task completion.
+
+- **Tasks Created vs. Tasks Completed Chart**
+  - **Purpose:** Compares the number of tasks created versus completed.
+  - **Insight:** Helps in understanding the balance between task creation and completion, providing insights into whether users are keeping up with their task load or falling behind.
+
+### Future Implementations
+
+- **Notification on Overdue Tasks:** Implement notifications to alert users when tasks are overdue. This feature will help users stay on top of their tasks and ensure important tasks are not overlooked.
+- **Monthly Automated Report:** Generate and send automated monthly reports to users, summarizing their task activity, completion rates, and productivity trends. This feature will provide users with insights into their performance and areas for improvement.
+- **Enhanced Collaboration Tools:** Introduce features for team collaboration, such as task assignment, shared task lists, and real-time updates. This will make Tasktopia more suitable for team and project management.
+- **Integration with Calendar Apps:** Allow users to integrate their task lists with popular calendar applications like Google Calendar and Outlook. This will help users manage their schedules more effectively.
+- **Mobile App Development:** Develop a mobile application for Tasktopia to provide users with a seamless and accessible task management experience on the go.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#
+
+## Structure and Navigation
+
+- **File Organization**
+
+  - The files were structured into folders and clustered based on functionality. This approach ensures that related files are grouped together, making the project easier to navigate and maintain. The primary directories include:
+
+    - **src/**: Contains all source code files, organized by components, services, and utilities.
+    - **assets/**: Includes static assets such as images, icons, and fonts.
+    - **styles/**: Houses global stylesheets and theme-related files.
+    - **tests/**: Contains all testing files and configurations for unit, integration, and end-to-end tests.
+    - **docs/**: Includes documentation files such as README, user guides, and API documentation.
+    - **public/**: Contains public files like index.html which are served directly to the client.
+
+  - **Naming Conventions**:
+    - **JavaScript/TypeScript Files**: Named using camelCase or PascalCase to reflect their functionality, e.g., `userService.js`, `MainComponent.tsx`.
+    - **Stylesheets**: Named using kebab-case to describe their purpose, e.g., `main-styles.css`, `header-theme.scss`.
+    - **Image Files**: Named descriptively and often include size or purpose in the name, e.g., `logo-192x192.png`, `background-hero.jpg`.
+    - **Configuration Files**: Use standard naming conventions like `webpack.config.js`, `babel.config.json`.
+
+- **Directory Structure**:
+
+  ```plaintext
+  Tasktopia/
+  ├── src/
+  │   ├── components/
+  │   │   ├── Header/
+  │   │   │   ├── Header.js
+  │   │   │   ├── Header.test.js
+  │   │   │   └── Header.css
+  │   │   ├── Footer/
+  │   │   │   ├── Footer.js
+  │   │   │   ├── Footer.test.js
+  │   │   │   └── Footer.css
+  │   ├── services/
+  │   │   ├── apiService.js
+  │   │   └── authService.js
+  │   ├── utils/
+  │   │   ├── helpers.js
+  │   │   └── constants.js
+  ├── assets/
+  │   ├── images/
+  │   │   ├── logo-192x192.png
+  │   │   └── background-hero.jpg
+  │   ├── icons/
+  │   │   └── favicon.ico
+  ├── styles/
+  │   ├── main-styles.css
+  │   ├── variables.scss
+  ├── tests/
+  │   ├── unit/
+  │   │   └── example.test.js
+  │   ├── integration/
+  │   │   └── example.test.js
+  ├── docs/
+  │   ├── README.md
+  │   └── API_DOCUMENTATION.md
+  ├── public/
+  │   ├── index.html
+  │   └── manifest.json
+  ├── .gitignore
+  ├── package.json
+  ├── webpack.config.js
+  └── babel.config.json
+  ```
+
+  - **Navigation**:
+    - The project follows a component-based architecture, making it easy to locate and modify individual components.
+    - Centralized configuration files ensure that build and deployment processes are streamlined and easily manageable.
+    - Documentation is accessible within the `docs/` directory, providing detailed information on the project's setup, usage, and API.
+    - Tests are organized by type within the `tests/` directory, making it straightforward to run and manage different test suites.
+
+This structure not only enhances maintainability and scalability but also ensures that new developers can quickly understand and contribute to the project.
 
 <h2 id="wireframes">Wireframes</h2>
 
@@ -457,92 +596,115 @@ The key features are:
 <h2 id="design-and-styling">Design and Styling</h2>
 
 <h3 id="design">Design</h3>
-
-Given the serene ambiance of the establishment, the website echoes this sentiment through its design. Employing a predominantly white background conveys cleanliness, brightness, and sterility—attributes associated with a tranquil setting. Complementary background hues evoke a sense of calmness, while vibrant and colorful imagery aims to immerse visitors in the **[name of project]** ambiance.
+<p>
+    The design of Tasktopia is focused on providing a clean, intuitive user interface that facilitates efficient task management. The goal is to ensure that users can easily navigate the platform and manage their tasks without any distractions. The design principles are based on simplicity, readability, and accessibility, making use of modern web design standards.
+</p>
+<p>
+    Below is a screenshot showcasing the responsive design of the Tasktopia homepage, demonstrating how it adapts seamlessly across different devices:
+</p>
+<img src="/mnt/data/signup.png" alt="Tasktopia Homepage" style="width:100%; max-width:800px; display:block; margin:auto;">
 
 <h3 id="color">Color</h3>
-
-- **Main background color - **#color hex** (color name)** - I chose this color because **\*\***\***\*\***
-- **h1 headings and nav bar - [color]** - reason
-- **h2 headings - [color]** - reason
-- **p - [color]** - reason
-- **footer - [color]** - reason
+<ul>
+    <li><strong>Main background color - #f5f5f5 (White Smoke)</strong> - I chose this color because it provides a clean, neutral background that ensures good readability and reduces eye strain.</li>
+    <li><strong>h1 headings and nav bar - #333333 (Dark Gray)</strong> - The dark gray color is used for h1 headings and the navigation bar to create a strong visual hierarchy and draw attention to the primary navigation elements.</li>
+    <li><strong>h2 headings - #555555 (Medium Gray)</strong> - Medium gray is used for h2 headings to differentiate them from h1 headings while still maintaining a clear hierarchy.</li>
+    <li><strong>Paragraph text - #666666 (Light Gray)</strong> - Light gray is used for paragraph text to ensure good readability without being too harsh on the eyes.</li>
+    <li><strong>Footer - #333333 (Dark Gray)</strong> - The same dark gray as the navigation bar is used for the footer to maintain consistency and provide a strong foundation for the page.</li>
+</ul>
 
 <h3 id="font">Font</h3>
-
-- main font: Font name
-- Secondary font - Font name
+<ul>
+    <li><strong>Main font:</strong> Open Sans</li>
+    <li><strong>Secondary font:</strong> Roboto</li>
+</ul>
+<p>
+    Open Sans is chosen as the main font for its clean, modern appearance and excellent readability across different devices and screen sizes. Roboto is used as the secondary font to provide a complementary style for headings and other emphasized text elements.
+</p>
 
 <h3 id="media">Media</h3>
-
-**Hero image** - short description and reason for selection
-
-**Contact section** - short description and reason for selection
-
-**Services** - short description and reason for selection
-
-**Plans and Pricing** - short description and reason for selection
-
-**Our Team** - short description and reason for selection
-
-**Gallery** - short description and reason for selection
-
-**Contact Us** - short description and reason for selection
-
-**etc** - short description and reason for selection
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-#
-
-<h1 id="testing-and-validation">SECTION 4: TESTING AND VALIDATION</h1>
-- In this section, the functionalities of the final product was tested and validated to ensure consistency with user stories.
-<h2 id="testing">Testing</h2>
-
-- **Browser Compatibility Testing:** Ensured compatibility with Chrome, Opera, Microsoft Edge, and Firefox desktop browsers.
-
-- **Responsiveness Testing:** Utilized Chrome Developer Tools to verify responsiveness across multiple devices: Desktop, Laptop, Moto G4, Galaxy S5, iPhone 5/SE, iPhone 6/7/8, iPhone 6/7/8 Plus, iPad, iPad Pro, Galaxy Fold
-
-<h2 id="validation">Validation</h2>
-
-The W3C Markup Validator and W3C CSS Validator Services were used to check my code for syntax errors in this project.
-
-- [HTML](https://validator.w3.org/#validate_by_input)- I checked each page by direct input method on HTML validator site
-
-<p align="center">
-<img src="assets/images/readme/html-validator.png" width="400" height="100%">
+<p>
+    Tasktopia makes use of various media elements to enhance the user experience. Icons are used to represent different task categories and actions, providing visual cues that make the interface more intuitive. Images are optimized for fast loading times to ensure that the application remains responsive. Additionally, media queries are implemented to ensure that the design is fully responsive and works well on a variety of devices, from desktop computers to mobile phones.
 </p>
 
-- [CSS](https://jigsaw.w3.org/css-validator/)
+# SECTION 4: TESTING AND VALIDATION
 
-<p align="center">
-<img src="assets/images/readme/css-validator.png" width="400" height="100%">
-</p>
+In this section, the functionalities of Tasktopia were thoroughly tested and validated to ensure alignment with user stories and technical standards.
 
-- I used Lighthouse tools to test my website
-<p align="center">
-<img src="assets/images/readme/lighthouse.png" width="400" height="100%">
-</p>
+## Testing
 
-<h3 id="html-validator-report">HTML Validator Report</h3>
+- **Browser Compatibility Testing:**
+  Ensured compatibility with Chrome, Opera, Microsoft Edge, and Firefox desktop browsers.
 
-- _Warning_ : [details of any warning]
+- **Responsiveness Testing:**
+  Verified responsiveness using Chrome Developer Tools across various devices:
 
-  - [actions taken to remedy it].
+  - Desktop
+  - Laptop
+  - Moto G4
+  - Galaxy S5
+  - iPhone 5/SE, iPhone 6/7/8, iPhone 6/7/8 Plus
+  - iPad, iPad Pro
+  - Galaxy Fold
 
-- _Value Error_ : [details of any error]
+- **Code Linting:**
 
-  - [actions taken to remedy it].
+  - **PythonLint (`pylint`):**
+    Utilized `pylint` to analyze Python code for potential errors, style violations, and best practices.
 
-<h3 id="css-validator-report">CSS Validator Report</h3>
+    ```bash
+    pylint your_python_script.py
+    ```
 
-- _Warning_ : [details of any warning]
+  - **JavaScript Linting (`jshint`):**
+    Used `jshint` to ensure JavaScript code quality and adherence to coding standards.
 
-  - [actions taken to remedy it].
+    ```bash
+    jshint your_javascript_file.js
+    ```
 
-- _Value Error_ : [details of any error]
+## Validation
 
-  - [actions taken to remedy it].
+For validation, Tasktopia's codebase was checked against industry standards and specifications.
+
+- **W3C Markup Validator and CSS Validator:**
+
+  - [W3C HTML Validator](https://validator.w3.org/#validate_by_input):
+    Checked each HTML page using direct input method on the W3C validator site.
+
+    ![HTML Validator](assets/images/readme/html-validator.png)
+
+  - [W3C CSS Validator](https://jigsaw.w3.org/css-validator/):
+    Ensured CSS files passed validation using the W3C CSS validator.
+
+    ![CSS Validator](assets/images/readme/css-validator.png)
+
+- **Lighthouse Audit:**
+  Conducted Lighthouse audits to assess Tasktopia's performance, accessibility, best practices, and SEO.
+
+  ![Lighthouse Report](assets/images/readme/lighthouse.png)
+
+### HTML Validator Report
+
+- **Warning**:
+
+  - [Details of any warning]
+    - [Actions taken to remedy it].
+
+- **Value Error**:
+  - [Details of any error]
+    - [Actions taken to remedy it].
+
+### CSS Validator Report
+
+- **Warning**:
+
+  - [Details of any warning]
+    - [Actions taken to remedy it].
+
+- **Value Error**:
+  - [Details of any error]
+    - [Actions taken to remedy it].
 
 <h2 id="user-story-testing">User Story Testing</h2>
 
@@ -714,38 +876,3 @@ Update status immediately when user modifies progress or marks a task as complet
 Notifications:
 
 Alert users when tasks are nearing their due date or becoming overdue
-
-dashboard metrics and insights
-KPI Cards
-Total Tasks
-Overdue Tasks
-Completed Tasks
-Charts
-Task Completion Rate Chart
-
-Purpose: Shows the ratio of completed tasks to total tasks.
-Insight: Provides a quick view of task completion efficiency.
-Task Priority Distribution Chart
-
-Purpose: Displays the distribution of tasks by priority.
-Insight: Helps in understanding how tasks are prioritized.
-Productivity Trends Chart
-
-Purpose: Shows how productivity (tasks created and completed) trends over time.
-Insight: Tracks productivity variations over a period.
-Category-wise Task Completion Table
-
-Purpose: Shows completion rates by category.
-Insight: Helps identify categories with high or low completion rates.
-Overdue Tasks Chart
-
-Purpose: Displays the percentage of overdue tasks.
-Insight: Highlights tasks that are overdue and need attention.
-Task Completion Rate Over Time Chart
-
-Purpose: Shows the task completion rate over time.
-Insight: Monitors how the completion rate is changing.
-Tasks Created vs. Tasks Completed Chart
-
-Purpose: Compares the number of tasks created versus completed.
-Insight: Helps in understanding the balance between task creation and completion.

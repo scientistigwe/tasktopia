@@ -1,6 +1,9 @@
+"""
+Forms for creating and updating Task and Category instances.
+"""
+
 from django import forms
-from .models import Task
-from .models import Category
+from .models import Task, Category
 
 class TaskForm(forms.ModelForm):
     """
@@ -15,7 +18,7 @@ class TaskForm(forms.ModelForm):
     
     Methods:
         clean(): Validates the form instance to ensure start_date is not later than due_date.
-        save(user=None, commit=True): Saves the form and assigns the current user to the task.
+        save(commit=True): Saves the form and assigns the current user to the task.
     """
 
     title = forms.CharField(
@@ -60,23 +63,23 @@ class TaskForm(forms.ModelForm):
         
         return cleaned_data
 
-    def save(self, user=None, commit=True):
+    def save(self, commit=True):
         """
         Saves the form and assigns the current user to the task.
 
         Args:
-            user (User, optional): The user object to assign to the task. Defaults to None.
             commit (bool, optional): If True, saves the task instance to the database. Defaults to True.
 
         Returns:
             Task: The saved task instance.
         """
         task = super().save(commit=False)
-        if user:
-            task.user = user
+        if self.instance.user:
+            task.user = self.instance.user
         if commit:
             task.save()
         return task
+
 
 class CategoryForm(forms.ModelForm):
     """
