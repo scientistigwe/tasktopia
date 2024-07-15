@@ -134,13 +134,14 @@ a {
 /* Styling for the Tasktopia text */
 #tasktopia strong {
     color: antiquewhite;
-    font-size: 1.3em;
+    font-size: 1em;
 }
 
 /* Styling for the welcome message */
 #welcome-message {
     color: antiquewhite;
     text-decoration: none;
+    font-size: 1.5rem !important;
 }
 
 /* About section styling */
@@ -181,17 +182,6 @@ a {
     margin: 10px 0;
 }
 
-/* Font size for Tasktopia text */
-#tasktopia {
-    font-size: 1.5rem;
-}
-
-/* Font size and margin for the welcome message */
-#welcome-message {
-    font-size: 1rem;
-    margin-top: 1rem;
-}
-
 /************************/
 /* Main section */
 /***********************/
@@ -222,7 +212,7 @@ main {
     font-style: italic;
     font-weight: 400;
     color: #666666 !important;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
 }
 
 /* Signup Styling */
@@ -349,6 +339,27 @@ footer-wrapper {
 /****************************/
 /* Media query for screens up to 768px */
 /* Adjust font sizes and margins for smaller screens */
+@media (max-width: 425px) {
+    .tagline {
+        font-size: 0.8rem;
+    }
+
+    .overview {
+        font-size: 0.8rem;
+    }
+
+    .navbar-brand strong {
+        font-size: 1rem;
+    }
+
+    #welcome-message {
+        font-size: 0.6rem;
+        margin-top: 0.5rem;
+    }
+}
+
+/* Media query for screens up to 768px */
+/* Adjust font sizes and margins for smaller screens */
 @media (max-width: 768px) {
     .tagline {
         font-size: 1.2rem;
@@ -418,3 +429,7 @@ footer-wrapper {
         margin-bottom: 20px;
     }
 }
+
+
+
+    

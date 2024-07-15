@@ -7,102 +7,108 @@
 
 <div id="analyticsInsightsMarker" style="display:none;"></div>
 
-<div class="container-fluid mt-4">
-    <!-- KPI Task container -->
-    <div id="kpiCardsContainer" class="kpi-cards-container row d-flex flex-row justify-content-center">
-        <!-- Total Tasks KPI Card -->
-        <div id="totalTasksCard" class="kpi-card card col-12 col-sm-6 col-md-3 m-2">
-            <div class="kpi-card-content">
-                <h3>Total Tasks</h3>
-                <p id="totalTasksValue" class="kpi-value">Loading...</p>
+<div class="container-fluid mt-4 d-flex justify-content-center">
+    <div class="w-100" style="max-width: 80vw;">
+        <!-- KPI Task container -->
+        <div id="kpiCardsContainer" class="kpi-cards-container row d-flex flex-row justify-content-center">
+            <!-- Total Tasks KPI Card -->
+            <div id="totalTasksCard" class="kpi-card card col-12 col-sm-6 col-md-3 m-2">
+                <div class="kpi-card-content">
+                    <h3>Total Tasks</h3>
+                    <p id="totalTasksValue" class="kpi-value">Loading...</p>
+                </div>
             </div>
-        </div>
-        <!-- Percent Overdue KPI Card -->
-        <div id="percentOverdueCard" class="kpi-card card col-12 col-sm-6 col-md-3 m-2">
-            <div class="kpi-card-content">
-                <h3 style="color: red !important;">Overdue</h3>
-                <p id="percentOverdueValue" class="kpi-value" style="color: red !important;">Loading...</p>
+            <!-- Percent Overdue KPI Card -->
+            <div id="percentOverdueCard" class="kpi-card card col-12 col-sm-6 col-md-3 m-2">
+                <div class="kpi-card-content">
+                    <h3 style="color: red !important;">Overdue</h3>
+                    <p id="percentOverdueValue" class="kpi-value" style="color: red !important;">Loading...</p>
+                </div>
             </div>
-        </div>
-        <!-- Percent Completed KPI Card -->
-        <div id="percentCompletedCard" class="kpi-card card col-12 col-sm-6 col-md-3 m-2">
-            <div class="kpi-card-content">
-                <h3 style="color: green !important;">Completed</h3>
-                <p id="percentCompletedValue" class="kpi-value" style="color: green !important;">Loading...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Charts Row -->
-    <div class="row">
-        <!-- Task Created vs Completed Chart -->
-        <div class="col-12 col-md-4 mb-4">
-            <div class="card">
-                <canvas id="tasksCreatedCompleted" width="400" height="300"></canvas>
-            </div>
-        </div>
-
-        <!-- Task Completion Rate Over Time Chart -->
-        <div class="col-12 col-md-4 mb-4">
-            <div class="card">
-                <canvas id="taskCompletionRateOverTime" width="300" height="300"></canvas>
-            </div>
-        </div>
-
-        <!-- Task Priority Distribution Chart -->
-        <div class="col-12 col-md-4 mb-4">
-            <div class="card">
-                <canvas id="taskPriorityDistributionChart" width="400" height="300"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <!-- Category-wise Task Completion Table -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card">
-                <h2 class="card-header">Category-wise Task Completion</h2>
-                <div class="card-body">
-                    <table class="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th>User ID</th>
-                                <th>Category</th>
-                                <th>Completed Tasks</th>
-                                <th>Total Tasks</th>
-                                <th>Completion Rate (%)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="categoryTaskCompletionTableBody">
-                            <!-- Table rows will be dynamically populated by JavaScript -->
-                        </tbody>
-                    </table>
+            <!-- Percent Completed KPI Card -->
+            <div id="percentCompletedCard" class="kpi-card card col-12 col-sm-6 col-md-3 m-2">
+                <div class="kpi-card-content">
+                    <h3 style="color: green !important;">Completed</h3>
+                    <p id="percentCompletedValue" class="kpi-value" style="color: green !important;">Loading...</p>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Overdue Tasks Table -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card">
-                <h2 class="card-header">Overdue Tasks</h2>
-                <div class="card-body">
-                    <table class="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th>User ID</th>
-                                <th>User Name</th>
-                                <th>First Name</th>
-                                <th>Email</th>
-                                <th>Task Title</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="overdueTasksTableBody">
-                            <!-- Table rows will be dynamically populated by JavaScript -->
-                        </tbody>
-                    </table>
+        <!-- Charts Row -->
+        <div class="row">
+            <!-- Task Created vs Completed Chart -->
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card">
+                    <canvas id="tasksCreatedCompleted" width="400" height="300"></canvas>
+                </div>
+            </div>
+
+            <!-- Task Completion Rate Over Time Chart -->
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card">
+                    <canvas id="taskCompletionRateOverTime" width="300" height="300"></canvas>
+                </div>
+            </div>
+
+            <!-- Task Priority Distribution Chart -->
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card">
+                    <canvas id="taskPriorityDistributionChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category-wise Task Completion Table -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <h2 class="card-header">Category-wise Task Completion</h2>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>User ID</th>
+                                        <th>Category</th>
+                                        <th>Completed Tasks</th>
+                                        <th>Total Tasks</th>
+                                        <th>Completion Rate (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="categoryTaskCompletionTableBody">
+                                    <!-- Table rows will be dynamically populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overdue Tasks Table -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <h2 class="card-header">Overdue Tasks</h2>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>User ID</th>
+                                        <th>User Name</th>
+                                        <th>First Name</th>
+                                        <th>Email</th>
+                                        <th>Task Title</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="overdueTasksTableBody">
+                                    <!-- Table rows will be dynamically populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

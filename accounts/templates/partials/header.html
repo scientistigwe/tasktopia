@@ -181,23 +181,29 @@
             </div>
             <div class="navbar navbar-dark shadow-sm">
                 <div class="container-fluid">
-                    <a href="" class="navbar-brand d-flex align-items-center" id="tasktopia"><img
-                            src="{% static 'registration/images/brand-icon.png' %}" alt="Main icon" width="40"
-                            height="40">
-                        <strong>Tasktopia</strong>
-                    </a>
-                    {% if user.is_authenticated %}
-                    <div
-                        class="d-flex justify-content-between flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h4 id="welcome-message">Welcome, {{ user.first_name }} <img
-                                src="{% static 'tasks/img/clap.png' %}" width="30" height="30" alt="welcome clap">
-                        </h4>
+                    <div class="row align-items-center">
+                        <div class="col-8 col-md-6 d-flex align-items-center">
+                            <a href="" class="navbar-brand d-flex align-items-center" id="tasktopia">
+                                <img src="{% static 'registration/images/brand-icon.png' %}" alt="Main icon" width="40"
+                                    height="40">
+                                <strong>Tasktopia</strong>
+                            </a>
+                        </div>
+                        <div class="col-4 d-flex justify-content-end">
+                            <a class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                                aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </a>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center pb-2 mb-3 flex-nowrap">
+                            {% if user.is_authenticated %}
+                            <h4 id="welcome-message" class="border-bottom">
+                                Welcome, {{ user.first_name }}
+                                <img src="{% static 'tasks/img/clap.png' %}" width="30" height="30" alt="welcome clap">
+                            </h4>
+                            {% endif %}
+                        </div>
                     </div>
-                    {% endif %}
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
-                        aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
                 </div>
             </div>
         </div>

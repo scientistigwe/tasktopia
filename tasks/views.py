@@ -40,7 +40,6 @@ class TaskListView(LoginRequiredMixin, ListView):
         context['error_message'] = self.request.session.pop('error_message', '')
         return context
 
-
 class TaskCreateView(LoginRequiredMixin, CreateView):
     """
     View to create a new task.
@@ -86,7 +85,6 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
             context['category_form'] = CategoryForm()
         return context
 
-
 class TaskDetailView(LoginRequiredMixin, DetailView):
     """
     View to display details of a single task.
@@ -94,7 +92,6 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'tasks/task_details.html'
     context_object_name = 'task'
-
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     """ View to delete a task. """
@@ -108,7 +105,6 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
         """
         messages.success(self.request, 'Task deleted successfully!')
         return super().delete(request, *args, **kwargs)
-
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     """
@@ -169,7 +165,6 @@ def mark_completed(request, pk):
             return JsonResponse({'status': 'error', 'message': str(e)})
     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 
-
 @require_POST
 @csrf_exempt
 def update_status(request, pk):
@@ -182,7 +177,12 @@ def update_status(request, pk):
         new_status = request.POST.get('status')
         if new_status:
             try:
-                task.status = new_status
+                if task.status == Task.Status.COMPLETED:
+                    task.status = new_status
+                    task.is_manually_completed = False  # Reset manual completion flag
+                else:
+                    task.status = Task.Status.COMPLETED
+                    task.is_manually_completed = True  # Mark as manually completed
                 task.save()
                 return JsonResponse({'status': 'success'})
             except Exception as e:
