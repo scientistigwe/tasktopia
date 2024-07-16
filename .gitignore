@@ -1,3 +1,4 @@
 do-not-touch/
 env.py
 future_work
+db.sqlite3
