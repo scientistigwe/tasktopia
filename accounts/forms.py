@@ -1,3 +1,7 @@
+"""
+Forms for user authentication and profile management.
+"""
+
 # Import necessary modules and functions from Django
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -9,7 +13,8 @@ class SignupForm(UserCreationForm):
     Form for user sign-up. Inherits from Django's UserCreationForm.
     """
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+        widget=forms.TextInput(attrs=\
+                               {'class': 'form-control', 'placeholder': 'Username'}),
         error_messages={'unique': 'A user with that username already exists.'}
     )
     password1 = forms.CharField(
@@ -18,13 +23,15 @@ class SignupForm(UserCreationForm):
     )
     password2 = forms.CharField(
         label='Confirm Password',
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm Password'})
+        widget=forms.PasswordInput(attrs=\
+                                   {'class': 'form-control', 'placeholder': 'Confirm Password'})
     )
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'})
     )
     first_name = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'})
+        widget=forms.TextInput(attrs=\
+                               {'class': 'form-control', 'placeholder': 'First Name'})
     )
     last_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'})
@@ -52,7 +59,8 @@ class SignupForm(UserCreationForm):
         """
         username = self.cleaned_data['username']
         if User.objects.filter(username=username).exists():
-            raise forms.ValidationError(self.fields['username'].error_messages['unique'], code='unique')
+            raise forms.ValidationError\
+                (self.fields['username'].error_messages['unique'], code='unique')
         return username
 
     def clean(self):

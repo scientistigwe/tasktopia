@@ -1,15 +1,15 @@
 from rest_framework import generics, permissions
-from django.db.models import Count, Case, When, IntegerField, Sum, F
-from datetime import datetime, timedelta
+from django.db.models import Count, Case, When, IntegerField, Sum
+from datetime import timedelta
 from django.utils import timezone
 from django.db.models.functions import TruncDate
-from tasks.models import Task, Category
-from .serializers import UserSerializer, TaskSerializer, CategorySerializer
 from django.http import HttpRequest, JsonResponse
 from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from tasks.models import Task, Category
+from dashboard.serializers import UserSerializer, TaskSerializer, CategorySerializer
 
 
 class DashboardView(TemplateView):

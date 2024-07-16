@@ -11,8 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib import messages
 from utils import add_message
-from .models import Task
-from .forms import TaskForm, CategoryForm
+from tasks.models import Task
+from tasks.forms import TaskForm, CategoryForm
 
 
 
@@ -121,7 +121,8 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
         """
         context = super().get_context_data(**kwargs)
         if self.request.POST:
-            context['category_form'] = CategoryForm(self.request.POST, instance=self.object.category)
+            context['category_form'] = \
+                CategoryForm(self.request.POST, instance=self.object.category)
         else:
             context['category_form'] = CategoryForm(instance=self.object.category)
         return context

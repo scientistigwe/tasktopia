@@ -322,6 +322,21 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
     <li>
         <img src="{% static 'assets/icons/html_formatter.png' %}" width="20px" align="top"><a href="https://www.freeformatter.com/html-formatter.html"> Free Online HTML Formatter</a> - Used to correct indentation issues and get rid of excess whitespace.
     </li>
+        <li>
+        <img src="./accounts/static/registration/icons/w3s.png" width="20px" align="top"><a href="https://balsamiq.com/"> W3S CSS Validator</a> - This was used to spot and handle errors and warnings in CSS files.
+    </li>
+        <li>
+        <img src="./accounts/static/registration/icons/w3s.png" width="20px" align="top"><a href="https://balsamiq.com/"> W3S Markup Language (HTML) Validator</a> - This was used to spot and handle errors and warnings in HTML files.
+    </li>
+        <li>
+        <img src="./accounts/static/registration/icons/pylint.jpeg" width="20px" align="top"><a href="https://balsamiq.com/"> Pylint</a> - This was used to test and ensure that all python codes conform to minimum best practices.
+    </li>
+        <li>
+        <img src="./accounts/static/registration/icons/jshint.png" width="20px" align="top"><a href="https://balsamiq.com/"> JsHint</a> - This wass used to test the quality and standards of javascript codes.
+    </li>
+        <li>
+        <img src="./accounts/static/registration/icons/saucelab.png" width="20px" align="top"><a href="https://saucelab.com/"> SauceLab</a> - This was used for cross broswer testing. 
+    </li>
 </ul>
 
 <h2 id="management-and-development">Project Management and Development Approach</h2>
@@ -333,9 +348,14 @@ Customer collaboration was prioritized and this ensured that the project remaine
 Adaptability was key allowing for iterative feedback and adjustments. This approach ensured that the project could evolve based on changing requirements.
 
 Delivering functional software was emphasized over comprehensive documentation. The project focused on delivering functional increments in each sprint, promoting early feedback and continuous improvement.
-Throughout the project, **[number of commits]** were made and (
-[![GitHub issues](https://img.shields.io/github/issues-closed/github-username/name-of-repository?)](https://github.com/github-username/name-of-repository/issues) + [![GitHub issues](https://img.shields.io/github/issues/github-username/name-of-repository?)](https://github.com/github-username/name-of-repository/issues) ) GitHub issues, adapting to changing requirements and feedback iteratively.
-**A screenshot of the GitHub project board demonstrates their flexibility.**
+Throughout the project, over **100** were made and (
+[![GitHub issues](https://img.shields.io/github/issues-closed/scientistigwe/tasktopia?)](https://github.com/scientistigwe/tasktopia/issues) + [![GitHub issues](https://img.shields.io/github/issues/scientistigwe/tasktopia?)](https://github.com/scientistigwe/tasktopia/issues) ) GitHub issues, adapting to changing requirements and feedback iteratively.
+
+<div align="center">
+**Kanban Board of Tasktopia**
+
+<img src="./accounts/static/registration/images/tasktopia-kanban-board.png" width="400px" align="centre">
+</div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -347,38 +367,76 @@ Throughout the project, **[number of commits]** were made and (
 
 <h2 id="prerequisites">Prerequisites</h2>
 Python 3.8 or higher
-Node.js and npm
-PostgreSQL:
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
-- etc
 
 <h2 id="installation">Installation</h2>
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+Below are the steps to install and set up the Tasktopia application. This template does not rely on any external dependencies or services.
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
+1. Clone the repository:
 
    ```sh
-   npm install
+   git clone https://github.com/scientistigwe/tasktopia.git
+
    ```
 
-   npm install chartjs-adapter-date-fns
-   (// Import date adapter
-   import 'chartjs-adapter-date-fns';)
+2. Navigate into the project directory:
 
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
+   ```sh
+   cd tasktopia
    ```
+
+3. Create a virtual environment (optional but recommended):
+
+   ```sh
+   python -m venv env
+
+   ```
+
+4. Activate the virtual environment:
+
+- On Windows:
+
+  ```sh
+  .\env\Scripts\activate
+
+  ```
+
+- On macOS and Linux
+
+  ```sh
+  source env/bin/activate
+
+  ```
+
+5. Install dependencies:
+
+   ```sh
+   pip install -r requirements.txt
+
+   ```
+
+6. Apply migrations:
+
+   ```sh
+   python manage.py migrate
+
+   ```
+
+7. Create a superuser (if needed):
+
+   ```sh
+   python manage.py createsuperuser
+
+   ```
+
+8. Start the development server:
+
+   ```sh
+   python manage.py runserver
+
+   ```
+
+9. Open your web browser and navigate to http://localhost:8000 to view the application.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -386,11 +444,9 @@ _Below is an example of how you can instruct your audience on installing and set
 
 <h1 id="features-and-structure">SECTION 3: PROJECT FEATURES AND STRUCTURE</h1>
 
-This section encompasses the various elements and functionalities aimed at enhancing the user experience and achieving the goals of ["**name-of-project**"] website. It outlines the key features and structural components intended to provide visitors with a seamless and informative journey through the platform.
+This section encompasses the various elements and functionalities aimed at enhancing the user experience and achieving the goals of **Tasktopia** website. It outlines the key features and structural components intended to provide visitors with a seamless and informative journey through the platform.
 
 <h1 id="features">Features</h1>
-
-The key features are:
 
 ## Core Features
 
@@ -400,12 +456,24 @@ The key features are:
 - **User-Friendly Navigation:** The homepage includes a navigation bar with links to key sections such as Home, Login, and Sign Up. This design ensures that users can easily access different parts of the application, enhancing the overall user experience.
 - **Responsive Design:** The homepage is designed to be fully responsive, meaning it adjusts seamlessly to various screen sizes, from desktops to mobile devices. This ensures that users have a consistent and accessible experience regardless of the device they use.
 
+<div align="center">
+**Homepage**
+
+<img src="./accounts/static/registration/images/homepage.png" width="400px" align="centre">
+</div>
+
 ### Account CRUD Operation
 
 - **Create Account:** Users can create a new account by providing their details. This feature is essential for enabling personalized experiences and ensuring secure access to user-specific data.
 - **Read Account Details:** Users can view their account details, which provides transparency and allows users to keep track of their information.
 - **Update Account Information:** Users can update their account information, such as changing their password or updating their email address. This feature is crucial for maintaining up-to-date and accurate user data.
 - **Delete Account:** Users have the option to delete their account if they no longer wish to use the service. This feature respects user autonomy and privacy, ensuring they have full control over their data.
+
+<div align="center">
+**Account CRUD**
+
+<img src="./accounts/static/registration/images/tasktopia-kanban-board.png" width="400px" align="centre">
+</div>
 
 ### Task CRUD Operation
 

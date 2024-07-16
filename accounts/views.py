@@ -5,13 +5,13 @@ Views for user authentication and profile management.
 # Import necessary modules and functions from Django and the project
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignupForm, CustomUserChangeForm
 from django.views.generic import TemplateView, UpdateView, View
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from utils import add_message
 from django.contrib import messages
+from accounts.forms import SignupForm, CustomUserChangeForm
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     """
@@ -75,7 +75,8 @@ class DeleteAccountView(LoginRequiredMixin, View):
             # Password is correct, proceed with account deletion
             username = user.username
             user.delete()
-            messages.success(request, f'Your account ({username}) has been deleted.')
+            messages.success(request,\
+                             f'Your account ({username}) has been deleted.')
             return redirect('index')
         
         # Password is incorrect
@@ -111,7 +112,8 @@ class SignupView(View):
                 request.session['first_name'] = form.cleaned_data.get('first_name')
                 return redirect('task_list')
         
-        request.session['error_message'] = 'There was an error with your signup. Please correct the errors below.'
+        request.session['error_message'] = \
+            'There was an error with your signup. Please correct the errors below.'
         return render(request, self.template_name, {'form': form})
 
 class LoginView(View):
@@ -155,7 +157,8 @@ class LogoutView(LoginRequiredMixin, View):
         if request.user.is_authenticated:
             first_name = request.user.first_name
             logout(request)
-            add_message(request, f'{first_name}, you have successfully logged out.', messages.SUCCESS)
+            add_message(request, f'{first_name}, \
+                        you have successfully logged out.', messages.SUCCESS)
         return redirect('index')
 
 class IndexView(TemplateView):

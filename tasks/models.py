@@ -25,6 +25,16 @@ class Category(models.Model):
     """
 
     class CategoryType(models.TextChoices):
+        """
+        Defines the choices for the type of task category.
+
+        Choices:
+            PERSONAL: Personal category.
+            CHURCH: Church-related category.
+            WORK: Work-related category.
+            WALKOUT: Walkout-related category.
+            OTHER: Other category (customizable).
+        """
         PERSONAL = 'personal', _('Personal')
         CHURCH = 'church', _('Church')
         WORK = 'work', _('Work')
@@ -80,11 +90,28 @@ class Task(models.Model):
     """
 
     class Priority(models.TextChoices):
+        """
+        Defines the choices for the priority level of a task.
+
+        Choices:
+            HIGH: High priority.
+            MEDIUM: Medium priority.
+            LOW: Low priority.
+        """
         HIGH = 'High', _('High')
         MEDIUM = 'Medium', _('Medium')
         LOW = 'Low', _('Low')
 
     class Status(models.TextChoices):
+        """
+        Defines the possible status values for tasks.
+
+        Statuses:
+            PENDING: The task is pending and has not started yet.
+            COMPLETED: The task has been completed.
+            OVERDUE: The task is overdue.
+            IN_PROGRESS: The task is currently in progress.
+        """
         PENDING = 'Pending', _('Pending')
         COMPLETED = 'Completed', _('Completed')
         OVERDUE = 'Overdue', _('Overdue')
@@ -162,11 +189,13 @@ class TaskRelationship(models.Model):
         user (ForeignKey): The user associated with this relationship.
 
     Methods:
-        __str__(): Returns a string representation of the task relationship, displaying the user's username and the task's title.
+        __str__(): Returns a string representation
+        of the task relationship, displaying the user's username and the task's title.
     """
 
     task = models.OneToOneField(Task, on_delete=models.CASCADE, verbose_name=_('Task'))
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_relationships', verbose_name=_('User'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE,\
+                             related_name='task_relationships', verbose_name=_('User'))
 
     def __str__(self):
         """

@@ -10,28 +10,9 @@
     <!-- Alert message handler -->
     {% if success_message %}
     <div class="alert alert-success dismissible-message">
-        {{ first_name }} has {{ success_message }}
+        {{ success_message }}
     </div>
     {% endif %}
-
-    <!-- Alert message handler for task creation success -->
-    {% if request.session.task_success_message %}
-    <div class="alert alert-success dismissible-message">
-        {{ request.session.task_success_message }}
-    </div>
-    {% endif %}
-
-    <div class="container mt-5">
-        {% if messages %}
-        {% for message in messages %}
-        {% if 'profile' in message.tags %}
-        <div class="alert alert-success dim alert-message" role="alert">
-            {{ message }}
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-    </div>
 
     <div class="new-task">
         <a href="{% url 'create_task' %}" class="btn btn-primary">

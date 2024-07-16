@@ -3,22 +3,11 @@ Forms for creating and updating Task and Category instances.
 """
 
 from django import forms
-from .models import Task, Category
+from tasks.models import Task, Category
 
 class TaskForm(forms.ModelForm):
     """
     Form for creating and updating Task instances.
-
-    Attributes:
-        title (CharField): The title of the task.
-        description (CharField): The description of the task.
-        start_date (DateTimeField): The start date and time of the task.
-        due_date (DateTimeField): The due date and time of the task.
-        priority (ChoiceField): The priority level of the task.
-    
-    Methods:
-        clean(): Validates the form instance to ensure start_date is not later than due_date.
-        save(commit=True): Saves the form and assigns the current user to the task.
     """
 
     title = forms.CharField(
@@ -26,15 +15,21 @@ class TaskForm(forms.ModelForm):
         error_messages={'required': 'Please enter a title.'}
     )
     description = forms.CharField(
-        widget=forms.Textarea(attrs={'class': 'form-control', 'required': 'required'}),
+        widget=forms.Textarea(
+            attrs={'class': 'form-control', 'required': 'required'}
+        ),
         error_messages={'required': 'Please enter a description.'}
     )
     start_date = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local', 'required': 'required'}),
+        widget=forms.DateTimeInput(
+            attrs={'class': 'form-control', 'type': 'datetime-local', 'required': 'required'}
+        ),
         error_messages={'required': 'Please enter a start date.'}
     )
     due_date = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local', 'required': 'required'}),
+        widget=forms.DateTimeInput(
+            attrs={'class': 'form-control', 'type': 'datetime-local', 'required': 'required'}
+        ),
         error_messages={'required': 'Please enter a due date.'}
     )
     priority = forms.ChoiceField(
@@ -68,7 +63,8 @@ class TaskForm(forms.ModelForm):
         Saves the form and assigns the current user to the task.
 
         Args:
-            commit (bool, optional): If True, saves the task instance to the database. Defaults to True.
+            commit (bool, optional): If True, 
+            saves the task instance to the database. Defaults to True.
 
         Returns:
             Task: The saved task instance.
@@ -84,13 +80,6 @@ class TaskForm(forms.ModelForm):
 class CategoryForm(forms.ModelForm):
     """
     Form for creating and updating Category instances.
-
-    Attributes:
-        category_type (ChoiceField): The type of the category.
-        category_name (CharField): The name of the category.
-
-    Methods:
-        clean(): Validates the form instance to ensure category_name is provided if category_type is 'other'.
     """
 
     CATEGORY_CHOICES = [

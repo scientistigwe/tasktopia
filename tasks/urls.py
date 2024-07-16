@@ -1,5 +1,8 @@
+"""
+URL configuration for task management.
+"""
 from django.urls import path
-from .views import (
+from tasks.views import (
     TaskListView,
     TaskCreateView,
     TaskDetailView,

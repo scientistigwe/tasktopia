@@ -25,12 +25,11 @@ ALLOWED_HOSTS = [
     '*',
     '127.0.0.1',
     '.herokuapp.com',
-    '.dev/amiresponsive'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.herokuapp.com",
-    "https://ui.dev/amiresponsive",
+    "https://ui.dev/amiresponsive?url=https://tasktopia-app-fbb446425a66.herokuapp.com",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
