@@ -1,20 +1,19 @@
-{% load static %}
 <a name="readme-top"></a>
 
-<!-- PROJECT LOGO (N/B: Replace logo url and image to match your project)-->
+<!-- PROJECT LOGO -->
 <br />
 <div align="center">
-        <a href="https://en.wikipedia.org/wiki/HTML5"><img src="{% static 'registration/images/homepage.png' %}" width="20px" align="top" alt="Project Logo"></a>
+<img src="./accounts/static/registration/images/homepage.png" width="100%" align="top" alt="Project Logo">
 </div>
-  <h1 align="center">Tasktopia: Build your dream day, one task at a time.</h1>
+<br>
+  <h1 align="center">TaskTopia</h1>
+  <p align="center">Build your dream day, one task at a time.</p>
 
   <p align="center">
-    A README template that can be adapted to suite your projects!
-    <br>
-    (Replace with a short intro sentence about your project).
+    TaskTopia is a context-aware, intelligent to-do list designed to help individuals and teams organize, track, and complete tasks efficiently. It offers a range of features including task prioritization, category management, notifications, reports, weather forecasting, and event logging. The platform is built with flexibility and scalability in mind, making it suitable for both personal use and organizational workflows.
     <br />
     <br />
-    <a href="https://github.com/path-to-readme-file"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/scientistigwe/tasktopia/blob/main/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
 
@@ -92,19 +91,19 @@ Table of Contents
 
 <h2 id="about-the-project">About The Project</h2>
 
-<p align="center"><a href="https://path-to-deployed-site.com">TaskTopia</a>: a place to build your daily dreams, one task at a time</p>
+<p align="center"><a href="https://tasktopia-app-fbb446425a66.herokuapp.com/">TaskTopia</a>: a place to build your daily dreams, one task at a time</p>
 
-<a href="https://github.com/scientistigwe/README-Template">
-<img src="./assets/images/screenshot.png" alt="Product Screenshot" width="600" height="600">
-</a>
+<div align="center">
+<img src="./accounts/static/registration/images/homepage.png" width="100%" align="top" alt="Project Logo">
+</div>
 
-Tasktopia is a task management application designed to help users efficiently organize and track their tasks. The platform offers a user-friendly interface, robust features for task prioritization, and insights into productivity trends. Tasktopia aims to enhance productivity by providing detailed analytics and insights into task completion and prioritization.
+TaskTopia is a task management application designed to help users efficiently organize and track their tasks. The platform offers a user-friendly interface, robust features for task prioritization, and insights into productivity trends. Tasktopia aims to enhance productivity by providing detailed analytics and insights into task completion and prioritization.
 
 <h2 id="ux">User Experience (UX)</h2>
 
-The UX of Tasktopia focuses on simplicity and efficiency. Users can easily create, prioritize, and track tasks. The dashboard provides a comprehensive view of ongoing tasks, overdue tasks, and completed tasks. Detailed analytics offer insights into task distribution and productivity trends, helping users to manage their time effectively.
+The UX of TaskTopia focuses on simplicity and efficiency. Users can easily create, prioritize, and track tasks. The dashboard provides a comprehensive view of ongoing tasks, overdue tasks, and completed tasks. Detailed analytics offer insights into task distribution and productivity trends, helping users to manage their time effectively.
 
-<h2 id="unique">Uniqueness of Tasktopia</h2>
+<h2 id="unique">Uniqueness of TaskTopia</h2>
 
 - Automation:
 
@@ -129,6 +128,8 @@ The UX of Tasktopia focuses on simplicity and efficiency. Users can easily creat
 You can view the deployed website [here](https://tasktopia-app-fbb446425a66.herokuapp.com/)
 
 <h2 id="user-stories">User Stories</h2>
+
+## Minimum Viable Product
 
 - User Registration and Login
 
@@ -207,7 +208,7 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
   - Changes are saved and reflected in the user profile.
   - User receives confirmation messages for successful updates.
 
-<h2 id="user-stories">User Stories (future implementation)</h2>
+## Future Implementation
 
 - Notifications and Reminders
 
@@ -248,55 +249,55 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
 <h2 id="languages-frameworks-libraries">Backend</h2>
 <ul>
     <li>
-        <img src="{% static 'registration/icons/html5.svg' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> Python</a> - Core languge used in building the views/logic of the project.
+    <img src="./accounts/static/registration/icons/python.png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> Python</a> - Core languge used in building the views/logic of the project.
     </li>
     <li>
-        <img src="{% static 'registration/icons/html5.svg' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> Django</a> - Python full-battery fitted framework used in building the project. 
+        <img src="./accounts/static/registration/icons/django.png" width="20px" align="top"><a href="https://django.com"> Django</a> - Python full-battery fitted framework used in building the project. 
     </li>
     <li>
-        <img src="{% static 'registration/icons/html5.svg' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> Django REST API Framework</a> - Used to serve data to the dashboard. 
+        <img src="./accounts/static/registration/icons/api.png" width="20px" align="top"><a href="https://www.django-rest-framework.org/"> Django REST API Framework</a> - Used to serve data to the dashboard. 
     </li>
 </ul>
 
 <h2 id="frontend">Frontend</h2>
 <ul>
     <li>
-        <img src="{% static 'registration/icons/html5.svg' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> HTML5</a> - Used for designing the structure of the project.
+        <img src="./accounts/static/registration/icons/html.png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> HTML5</a> - Used for designing the structure of the project.
     </li>
     <li>
-        <img src="{% static 'registration/icons/css3-alt.svg' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/CSS"> CSS3</a> - Used for styling the project.
+        <img src="./accounts/static/registration/icons/css..png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/CSS"> CSS3</a> - Used for styling the project.
     </li>
     <li>
-        <img src="{% static 'registration/icons/bootstrap.png' %}" width="20px" align="top"><a href="[Bootstrap-url]"> Bootstrap</a> - Used for building responsive and mobile-first websites and web applications.
+        <img src="./accounts/static/registration/icons/bootstrap.png" width="20px" align="top"><a href="[Bootstrap-url]"> Bootstrap</a> - Used for building responsive and mobile-first websites and web applications.
     </li>
     <li>
-        <img src="{% static 'registration/icons/jquery.png' %}" width="20px" align="top"><a href="[JQuery-url]"> jQuery</a> - Used for simplifying HTML document traversing, event handling, and animation.
+        <img src="./accounts/static/registration/icons/jquery.png" width="20px" align="top"><a href="[JQuery-url]"> jQuery</a> - Used for simplifying HTML document traversing, event handling, and animation.
     </li>
     <li>
-        <img src="{% static 'registration/icons/Google.png' %}" width="20px" align="top"><a href="https://fonts.google.com/"> Google Fonts</a> - Provides all of the fonts for this website.
+        <img src="./accounts/static/registration/icons/Google.png" width="20px" align="top"><a href="https://fonts.google.com/"> Google Fonts</a> - Provides all of the fonts for this website.
     </li>
     <li>
-        <img src="{% static 'registration/icons/font_awesome.png' %}" width="20px" align="top"><a href="https://fontawesome.com/"> Font Awesome</a> - Used for the site icons.
+        <img src="./accounts/static/registration/icons/font_awesome.png" width="20px" align="top"><a href="https://fontawesome.com/"> Font Awesome</a> - Used for the site icons.
     </li>
     <li>
-        <img src="{% static 'registration/icons/javascript.png' %}" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/JavaScript"> JavaScript</a> - Used for the hamburger navigation and icons.
+        <img src="./accounts/static/registration/icons/javascript.png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/JavaScript"> JavaScript</a> - Used for the hamburger navigation and icons.
     </li>
 </ul>
 
 <h2 id="database">Database</h2>
 <ul>
     <li>
-        PostgreSQL - pre-deployment test and production phase
+        <img src="./accounts/static/registration/icons/postgresql.png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/JavaScript"> PostgreSQL</a> - pre-deployment test and production phase
     </li>
     <li>
-        SQLite3 - development and testing phase
+        <img src="./accounts/static/registration/icons/sqlite.png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/JavaScript"> SQLite3</a> - development and testing phase
     </li>
 </ul>
 
 <h2 id="hosting">Hosting</h2>
 <ul>
     <li>
-        <img src="{% static 'assets/icons/github.png' %}" width="20px" align="top"><a href="https://github.com/scientistigwe"> Heroku</a> - Used to deploy the project code.
+        <img src="./accounts/static/registration/icons/heroku.png" width="20px" align="top"><a href="https://heroku.com"> Heroku</a> - Used to deploy the project code.
     </li>
 </ul>
 
@@ -313,14 +314,14 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
         <img src="./accounts/static/registration/icons/balsamiq.png" width="20px" align="top"><a href="https://balsamiq.com/"> Balsamiq</a> - Used to create site wireframes.
     </li>
     <li>
-        <img src="{% static 'assets/icons/responsive-devices.png' %}" width="20px" align="top"><a href="http://ami.responsivedesign.is/"> Am I Responsive</a> - Used to check if the site is responsive on different screen sizes.
+        <img src="./accounts/static/registration/icons/responsive.png" width="20px" align="top"><a href="http://ami.responsivedesign.is/"> Am I Responsive</a> - Used to check if the site is responsive on different screen sizes.
     </li>
 </ul>
 
 <h2 id="code-quality-testing">Code Quality Testing</h2>
 <ul>
     <li>
-        <img src="{% static 'assets/icons/html_formatter.png' %}" width="20px" align="top"><a href="https://www.freeformatter.com/html-formatter.html"> Free Online HTML Formatter</a> - Used to correct indentation issues and get rid of excess whitespace.
+        <img src="./accounts/static/registration/icons/html_formatter.png" width="20px" align="top"><a href="https://www.freeformatter.com/html-formatter.html"> Free Online HTML Formatter</a> - Used to correct indentation issues and get rid of excess whitespace.
     </li>
         <li>
         <img src="./accounts/static/registration/icons/w3s.png" width="20px" align="top"><a href="https://balsamiq.com/"> W3S CSS Validator</a> - This was used to spot and handle errors and warnings in CSS files.
@@ -329,7 +330,7 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
         <img src="./accounts/static/registration/icons/w3s.png" width="20px" align="top"><a href="https://balsamiq.com/"> W3S Markup Language (HTML) Validator</a> - This was used to spot and handle errors and warnings in HTML files.
     </li>
         <li>
-        <img src="./accounts/static/registration/icons/pylint.jpeg" width="20px" align="top"><a href="https://balsamiq.com/"> Pylint</a> - This was used to test and ensure that all python codes conform to minimum best practices.
+        <img src="./accounts/static/registration/icons/pylint.jpeg" width="20px" align="top"><a href="https://pylint.com/"> Pylint</a> - This was used to test and ensure that all python codes conform to minimum best practices.
     </li>
         <li>
         <img src="./accounts/static/registration/icons/jshint.png" width="20px" align="top"><a href="https://balsamiq.com/"> JsHint</a> - This wass used to test the quality and standards of javascript codes.
@@ -354,7 +355,7 @@ Throughout the project, over **100** were made and (
 <div align="center">
 **Kanban Board of Tasktopia**
 
-<img src="./accounts/static/registration/images/tasktopia-kanban-board.png" width="400px" align="centre">
+<img src="./accounts/static/registration/images/tasktopia-kanban-board.png" width="100%" align="centre">
 </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -459,7 +460,7 @@ This section encompasses the various elements and functionalities aimed at enhan
 <div align="center">
 **Homepage**
 
-<img src="./accounts/static/registration/images/homepage.png" width="400px" align="centre">
+<img src="./accounts/static/registration/images/homepage.png" width="100%" align="centre">
 </div>
 
 ### Account CRUD Operation
@@ -472,7 +473,7 @@ This section encompasses the various elements and functionalities aimed at enhan
 <div align="center">
 **Account CRUD**
 
-<img src="./accounts/static/registration/images/tasktopia-kanban-board.png" width="400px" align="centre">
+<img src="./accounts/static/registration/images/tasktopia-kanban-board.png" width="100%" align="centre">
 </div>
 
 ### Task CRUD Operation
@@ -482,11 +483,23 @@ This section encompasses the various elements and functionalities aimed at enhan
 - **Update Task:** Users can update task details, such as changing the due date or marking a task as completed. This feature is crucial for keeping task information current and relevant.
 - **Delete Task:** Users can delete tasks that are no longer relevant, helping them keep their task list organized and clutter-free.
 
+<div align="center">
+**Task**
+
+<img src="./accounts/static/registration/images/homepage.png" width="100%" align="centre">
+</div>
+
 ### Password Management
 
 - **Password Reset:** Users can reset their passwords if they forget them by providing their email address. This ensures users can regain access to their accounts securely.
 - **Password Change:** Users can change their passwords from their account settings to maintain account security.
 - **Password Strength Indicator:** When creating or changing passwords, a strength indicator shows how secure the entered password is, encouraging users to create strong, secure passwords.
+
+<div align="center">
+**Password Management**
+
+<img src="./accounts/static/registration/images/homepage.png" width="100%" align="centre">
+</div>
 
 ### Dashboard Metrics and Insights
 
@@ -496,32 +509,13 @@ This section encompasses the various elements and functionalities aimed at enhan
 - **Overdue Tasks:** Shows the number of tasks that have passed their due date. This is crucial for highlighting tasks that need immediate attention.
 - **Completed Tasks:** Indicates the number of tasks that have been completed. This metric helps users see their progress and accomplishments.
 
+<div align="center">
+**Analytics & Insights: KPI Cards**
+
+<img src="./accounts/static/registration/images/dashboard.png" width="100%" align="centre">
+</div>
+
 #### Charts
-
-- **Task Completion Rate Chart**
-
-  - **Purpose:** Shows the ratio of completed tasks to total tasks.
-  - **Insight:** Provides a quick view of task completion efficiency, helping users understand how effectively they are completing their tasks.
-
-- **Task Priority Distribution Chart**
-
-  - **Purpose:** Displays the distribution of tasks by priority.
-  - **Insight:** Helps in understanding how tasks are prioritized, which can inform users about where they need to focus their efforts.
-
-- **Productivity Trends Chart**
-
-  - **Purpose:** Shows how productivity (tasks created and completed) trends over time.
-  - **Insight:** Tracks productivity variations over a period, enabling users to identify patterns and make informed decisions to improve productivity.
-
-- **Category-wise Task Completion Table**
-
-  - **Purpose:** Shows completion rates by category.
-  - **Insight:** Helps identify categories with high or low completion rates, providing insights into areas that may need more attention or improvement.
-
-- **Overdue Tasks Chart**
-
-  - **Purpose:** Displays the percentage of overdue tasks.
-  - **Insight:** Highlights tasks that are overdue and need attention, allowing users to prioritize and address overdue tasks promptly.
 
 - **Task Completion Rate Over Time Chart**
 
@@ -529,8 +523,42 @@ This section encompasses the various elements and functionalities aimed at enhan
   - **Insight:** Monitors how the completion rate is changing, helping users understand trends and potentially identify factors that influence task completion.
 
 - **Tasks Created vs. Tasks Completed Chart**
+
   - **Purpose:** Compares the number of tasks created versus completed.
   - **Insight:** Helps in understanding the balance between task creation and completion, providing insights into whether users are keeping up with their task load or falling behind.
+
+- **Task Priority Distribution Chart**
+
+  - **Purpose:** Displays the distribution of tasks by priority.
+  - **Insight:** Helps in understanding how tasks are prioritized, which can inform users about where they need to focus their efforts.
+
+<div align="center">
+**Analytics & Insights: Charts Cards**
+
+<img src="./accounts/static/registration/images/dashboard.png" width="100%" align="centre">
+</div>
+
+- **Category-wise Task Completion Table**
+
+  - **Purpose:** Shows completion rates by category.
+  - **Insight:** Helps identify categories with high or low completion rates, providing insights into areas that may need more attention or improvement.
+
+<div align="center">
+**Analytics & Insights: Table 1**
+
+<img src="./accounts/static/registration/images/dashboard2.png" width="100%" align="centre">
+</div>
+
+- **Overdue Task Table**
+
+  - **Purpose:** Shows completion rates by category.
+  - **Insight:** Helps identify users with overdue tasks, providing insights into areas that may need more attention or improvement and potential for auto messaging system which will serve as reminders to those users.
+
+<div align="center">
+**Analytics & Insights: Table 1**
+
+<img src="./accounts/static/registration/images/dashboard1.png" width="100%" align="centre">
+</div>
 
 ### Future Implementations
 
@@ -619,46 +647,52 @@ This structure not only enhances maintainability and scalability but also ensure
 
 <h2 id="wireframes">Wireframes</h2>
 
-### _File Organisation Tree_
-
-<p align="center">
-<img src="wireframe/file_org_tree.png" width="600" height="700">
-</p>
-
 ### _Home Page_
 
 <p align="center">
-<img src="wireframe/home-page.png" width="600" height="700">
+<img src="./accounts/static/registration/wireframes/Homepage.svg" width="100%">
 </p>
 
-### _Services & Prices_
+### _Task_
 
 <p align="center">
-<img src="wireframe/services-prices.png" width="600" height="900">
+<img src="./accounts/static/registration/wireframes/task.svg" width="100%">
 </p>
 
-### _OurTeam_
+### _Dashboard_
 
 <p align="center">
-<img src="wireframe/our-team.png" width="600" height="900">
+<img src="./accounts/static/registration/wireframes/analytics_and_insight.svg" width="100%">
 </p>
 
-### _Gallery_
+### _Account Management_
 
 <p align="center">
-<img src="wireframe/gallery.png" width="600" height="900">
-</p>
-
-### _Contact Us_
-
-<p align="center">
-<img src="wireframe/contact.png" width="600" height="900">
+<img src="./accounts/static/registration/wireframes/analytics_and_insight.svg" width="100%">
 </p>
 
 ### _Mobile View - Home Page_
 
 <p align="center">
 <img src="wireframe/mobile-home-page.png" width="400" height="1000">
+</p>
+
+### \_Mobile View - Task
+
+<p align="center">
+<img src="wireframe/mobile-home-page.png" width="400" height="1000">
+</p>
+
+### \_Mobile View - Dashboard
+
+<p align="center">
+<img src="wireframe/mobile-home-page.png" width="400" height="1000">
+</p>
+
+### \_Mobile View - Account Management
+
+<p align="center">
+<img src="wireframe/mobile-home-page.png" width="200px">
 </p>
 
 <h2 id="design-and-styling">Design and Styling</h2>
@@ -670,7 +704,7 @@ This structure not only enhances maintainability and scalability but also ensure
 <p>
     Below is a screenshot showcasing the responsive design of the Tasktopia homepage, demonstrating how it adapts seamlessly across different devices:
 </p>
-<img src="/mnt/data/signup.png" alt="Tasktopia Homepage" style="width:100%; max-width:800px; display:block; margin:auto;">
+<img src="./accounts/static/registration/images/homepage.png" width="100%" alt="Tasktopia Homepage">
 
 <h3 id="color">Color</h3>
 <ul>
@@ -701,11 +735,8 @@ In this section, the functionalities of Tasktopia were thoroughly tested and val
 
 ## Testing
 
-- **Browser Compatibility Testing:**
-  Ensured compatibility with Chrome, Opera, Microsoft Edge, and Firefox desktop browsers.
-
-- **Responsiveness Testing:**
-  Verified responsiveness using Chrome Developer Tools across various devices:
+- **Cross Browser Compatibility Testing**
+  I ensured compatibility with Chrome, Opera, Microsoft Edge, and Firefox desktop browsers and verified responsiveness using Chrome Developer Tools across various devices including:
 
   - Desktop
   - Laptop
@@ -715,92 +746,107 @@ In this section, the functionalities of Tasktopia were thoroughly tested and val
   - iPad, iPad Pro
   - Galaxy Fold
 
-- **Code Linting:**
+<div align="center">
 
-  - **PythonLint (`pylint`):**
-    Utilized `pylint` to analyze Python code for potential errors, style violations, and best practices.
+**Firefox**
+<img src="./accounts/static/registration/images/cbt-firefox.png" width="100%" align="top" alt="Cross Website Testing - Firefox">
+
+</div>
+<br>
+<div align="center">
+
+**Google Chrome**
+<img src="./accounts/static/registration/images/cbt-chrome.png" width="100%" align="top" alt="Cross Website Testing - Chrome">
+
+</div>
+
+**Test and Validation of Python code**
+
+I utilized [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint) to analyze Python code for potential errors, style violations, and best practices.
 
     ```bash
     pylint your_python_script.py
     ```
 
-  - **JavaScript Linting (`jshint`):**
-    Used `jshint` to ensure JavaScript code quality and adherence to coding standards.
+<div align="center">
 
-    ```bash
-    jshint your_javascript_file.js
-    ```
+<div align="center">
+
+**Pylint - Account views.py, urls.py, and forms.py**
+
+The following screenshots display the results of running Pylint on the `views.py`, `urls.py`, and `forms.py` files in the `accounts` app. Pylint is a static code analysis tool used to identify potential errors, enforce coding standards, and encourage best practices in Python code. By using Pylint, I can ensure the code is maintainable, adheres to coding standards, and minimizes bugs.
+
+<img src="./accounts/static/registration/images/accounts-forms.png" width="100%" align="top" alt="Account forms.py">
+
+<img src="./accounts/static/registration/images/accounts-urls.png" width="100%" align="top" alt="Account urls.py">
+
+<img src="./accounts/static/registration/images/accounts-views.png" width="100%" align="top" alt="Account views.py">
+
+</div>
+
+<div align="center">
+
+**Pylint - Task app views.py, urls.py, models.py, and forms.py**
+
+The following screenshots display the results of running Pylint on the `views.py`, `urls.py`, `models.py`, and `forms.py` files in the `tasks` app. This helps me maintain high code quality across various modules in the Task app, ensuring consistency and reliability.
+
+<img src="./accounts/static/registration/images/tasks-forms.png" width="100%" align="top" alt="Task forms.py">
+
+<img src="./accounts/static/registration/images/tasks-urls.png" width="100%" align="top" alt="Task urls.py">
+
+<img src="./accounts/static/registration/images/tasks-views.png" width="100%" align="top" alt="Task views.py">
+
+<img src="./accounts/static/registration/images/tasks-models.png" width="100%" align="top" alt="Task models.py">
+
+</div>
+
+<br>
+
+**Test and Validation of JavaScript code**
+
+To ensure the quality and adherence to coding standards of my JavaScript code, I used `jshint`. This tool helps detect errors and potential problems in the JavaScript codebase.
+
+<img src="./accounts/static/registration/images/tasks-js.png" width="100%" align="top" alt="task.js">
+
+<img src="./accounts/static/registration/images/registration-js.png" width="100%" align="top" alt="registration.js">
+
+<img src="./accounts/static/registration/images/dashboard-js.png" width="100%" align="top" alt="dashboard.js">
 
 ## Validation
 
-For validation, Tasktopia's codebase was checked against industry standards and specifications.
+For validation, I checked Tasktopia's codebase against industry standards and specifications.
 
-- **W3C Markup Validator and CSS Validator:**
+**W3C HTML and CSS Validation**
 
-  - [W3C HTML Validator](https://validator.w3.org/#validate_by_input):
-    Checked each HTML page using direct input method on the W3C validator site.
+I validated my HTML and CSS using W3C validation tools to ensure that the web pages adhere to web standards, which helps in maintaining compatibility and accessibility across different browsers and devices.
 
-    ![HTML Validator](assets/images/readme/html-validator.png)
+<img src="./accounts/static/registration/images/css.png" width="100%" align="top" alt="w3c-css">
 
-  - [W3C CSS Validator](https://jigsaw.w3.org/css-validator/):
-    Ensured CSS files passed validation using the W3C CSS validator.
+<br>
 
-    ![CSS Validator](assets/images/readme/css-validator.png)
+**Lighthouse Audit:**
 
-- **Lighthouse Audit:**
-  Conducted Lighthouse audits to assess Tasktopia's performance, accessibility, best practices, and SEO.
+I conducted Lighthouse audits to assess Tasktopia's performance, accessibility, best practices, and SEO. Lighthouse provides valuable insights and recommendations for improving web applications.
 
-  ![Lighthouse Report](assets/images/readme/lighthouse.png)
+<img src="./accounts/static/registration/images/lighthouse.png" width="100%" align="top" alt="lighthouse-audit">
 
-### HTML Validator Report
+## App Testing
 
-- **Warning**:
+### Account app
 
-  - [Details of any warning]
-    - [Actions taken to remedy it].
+For the Account app, I implemented various tests to ensure its functionality and reliability. Unit tests were created to test individual functions and methods, while integration tests were used to ensure that different parts of the app worked together seamlessly. I also performed end-to-end tests to simulate real user interactions and verify that the app behaves as expected in a production-like environment.
 
-- **Value Error**:
-  - [Details of any error]
-    - [Actions taken to remedy it].
+### Task app
 
-### CSS Validator Report
+In the Task app, I followed a similar approach. Unit tests were written to cover the core functionalities, such as task creation, updating, and deletion. Integration tests ensured that the interactions between different components, like views and models, were working correctly. End-to-end tests were crucial for validating the user workflows, ensuring that tasks could be managed smoothly from start to finish.
 
-- **Warning**:
+### Dashboard app
 
-  - [Details of any warning]
-    - [Actions taken to remedy it].
+Testing the Dashboard app involved a comprehensive approach. I started with manual tests to verify the correctness of individual components, like data visualization widgets and summary statistics. Unit and Integration tests checked the communication between the frontend and backend, ensuring that data was accurately displayed. Finally, end-to-end tests were performed to validate the overall user experience, making sure that the dashboard provided an intuitive and responsive interface.
 
-- **Value Error**:
-  - [Details of any error]
-    - [Actions taken to remedy it].
+## Bugs and Issues
 
-<h2 id="user-story-testing">User Story Testing</h2>
-
-- **User Story 1:** [user story here]
-
-  - [how it was implemented here]
-
-  (N/B: Use image generated from https://ui.dev/amiresponsive to show the the page in 4 different devices)
-
-  <p align="center">
-  <img src="assets/images/readme/logo-navbar.png" width="700" height="100%">
-  </p>
-
-- **User Story 2:** [user story here]
-
-  - [how it was implemented here]
-
-  (N/B: Use image generated from https://ui.dev/amiresponsive to show the the page in 4 different devices)
-
-  <p align="center">
-  <img src="assets/images/readme/logo-navbar.png" width="700" height="100%">
-  </p>
-
-reapeat for all user stories
-
-<h2 id="bugs-and-issues">Bugs and Issues</h2>
-
-- Detail any bug and/or issues encountered, steps taken to correct it. Add images if possible.
+During the development process, I encountered several bugs and issues. Each issue was documented, and I took steps to correct them, often. For example, I faced a bug where the task creation form was not saving data correctly. After investigating, I discovered a missing field in the form validation process. By adding the missing field and writing additional tests, I was able to resolve the issue and prevent it from happening again.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -808,11 +854,11 @@ reapeat for all user stories
 
 <h2 id="deployment-and-credits">SECTION 5: DEPLOYMENT AND CREDITS</h2>
 
--In this section, the tested and validated product will be deployed and external resources used during this exercise will be mentioned.
+In this section, I will outline the process of deploying the tested and validated product, as well as acknowledge the external resources and inspirations utilized during this exercise.
 
 <h2 id="final-product">Final Product</h2>
 
-- The product is live and can be seen on **[url of deployed site]**
+The product is live and can be seen on **[url of deployed site]**
 
 ### _Home Page_
 
@@ -820,127 +866,104 @@ reapeat for all user stories
 <img src="assets/images/readme/desktop-home-page.png" width="600" height="100%">
 </p>
 
-- Add images of various sections of the final product as above.
+Here are some screenshots of various sections of the final product:
+
+### _Task Management Page_
+
+<p align="center">
+<img src="assets/images/readme/desktop-task-page.png" width="600" height="100%">
+</p>
+
+### _Dashboard_
+
+<p align="center">
+<img src="assets/images/readme/desktop-dashboard.png" width="600" height="100%">
+</p>
+
+- Add images of other relevant sections of the final product as shown above.
+
+<h2 id="deployment-process">Deployment Process</h2>
+
+The deployment process for Tasktopia involved several steps to ensure that the application is running smoothly on a live server. Here's an overview of the steps I followed:
+
+1. **Preparing the Environment:**
+
+   - Ensured that all necessary dependencies were listed in the `requirements.txt` file.
+   - Set up environment variables for sensitive information like database credentials and API keys.
+
+2. **Choosing a Hosting Service:**
+   - Selected [Heroku](https://www.heroku.com/) for deploying the application due to its ease of use and support for Python applications.
+3. **Deploying the Application:**
+
+   - Pushed the code to a GitHub repository.
+   - Connected the GitHub repository to Heroku.
+   - Configured the Heroku environment with necessary buildpacks and settings.
+   - Deployed the application directly from the GitHub repository.
+
+4. **Testing the Live Application:**
+   - Conducted thorough testing on the live application to ensure all features were working as expected.
+   - Fixed any issues that arose during the live testing phase.
+
+### Deployment via Heroku
+
+Deploying Tasktopia to Heroku was a straightforward and efficient process. Here’s a brief overview of the steps I followed:
+
+1. **Create a Heroku Account:**
+
+   - I signed up for a Heroku account at [Heroku's website](https://www.heroku.com/).
+
+2. **Install Heroku CLI:**
+
+   - I installed the Heroku Command Line Interface (CLI) on my local machine to manage the deployment process.
+
+3. **Prepare the Application for Heroku:**
+
+   - Added a `Procfile` to specify the commands Heroku should run to start the application.
+   - Included `requirements.txt` and `runtime.txt` files to specify dependencies and the Python version.
+
+4. **Deploy the Application:**
+
+   - Logged into Heroku using the CLI: `heroku login`
+   - Created a new Heroku app: `heroku create`
+   - Pushed the code to Heroku: `git push heroku main`
+   - Configured environment variables via the Heroku dashboard or CLI.
+
+5. **Monitor and Manage:**
+   - Used the Heroku dashboard to monitor the application’s performance and logs.
+   - Made necessary adjustments to ensure the application runs smoothly on the live server.
 
 <h2 id="credits">Credits</h2>
 
 <h3 id="template">Template</h3>
 
-- This template was adopted and adapted from README.md templates published by <a href="https://github.com/scientistigwe/README-Template" alt="Github page of Chibueze C. Igwe" target="_blank">Chibueze C. Igwe</a>, <a href="https://github.com/Iris-Smok/Vannas-Beauty-Salon_PP1" alt="Github page of Iris Smok" target="_blank">Iris Smok</a> and <a href="https://github.com/othneildrew/Best-README-Template" alt="Github page of Othneil Drew" target="_blank">Othneil Drew</a>.
+- This template was adopted and adapted from README.md templates published by [Chibueze C. Igwe](https://github.com/scientistigwe/README-Template)
 
 <h3 id="content">Content</h3>
 
-- All content was written by [**Your Name**]
-- Mention sections that was not original and the source where it was adopted from.
-
-- I utilized the guidance provided by [Responsive navbar and hamburger menu](https://dev.to/devggaurav/let-s-build-a-responsive-navbar-and-hamburger-menu-using-html-css-and-javascript-4gci) to develop the responsive navbar and hamburger menu.
+- All content was written by **Chibueze C. Igwe**.
 
 <h3 id="media2">Media</h3>
 
-- All images were taken from [Shutterstock](https://www.shutterstock.com/home) and [Unsplash photo](https://unsplash.com/)
+- All images used in the project were sourced from [Google Image Search](https://www.google.com).
 
 <!-- ACKNOWLEDGMENTS -->
 <h2 id="acknowledgments">Acknowledgments</h2>
 
-Use this space to list individuals, groups or resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+I would like to extend my gratitude to the following resources that contributed significantly to the success of this project:
 
 - [Choose an Open Source License](https://choosealicense.com)
 - [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
 - [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
 - [Malven's Grid Cheatsheet](https://grid.malven.co/)
-- [Img Shields](https://shields.io)
-- [GitHub Pages](https://pages.github.com)
+- [GitHub](https://pages.github.com)
 - [Font Awesome](https://fontawesome.com)
-- [React Icons](https://react-icons.github.io/react-icons/search)
 
 <!-- CONTACT -->
-
 <h2 id="contact">Contact</h2>
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+If you have any questions or feedback, feel free to reach out:
 
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 </section>
-
-context-aware, intelligent to-do list. Here's how each feature fits in:
-
-Monthly Report: This feature would analyze completed tasks, missed deadlines, and recurring themes in your to-do lists to provide insights into your productivity patterns. You could see trends in your task completion rate, identify areas for improvement, and adjust your approach based on the data.
-Notification System: Reminders and alerts would be personalized based on the task, weather, and historical data. For example, a high-priority task with a tight deadline might trigger a persistent notification, while a workout task might be accompanied by a weather-based suggestion (e.g., "Go for a run - it's sunny outside!").
-Activity Dashboard: This dashboard would visually represent your daily, weekly, or monthly activity. It could show progress on completed tasks, upcoming deadlines, and task categories that require more attention.
-Weather Report: Integrating weather data allows for context-aware recommendations. The app could suggest outdoor tasks on sunny days or reschedule them for better weather conditions.
-Recommendation System with AI: This feature analyzes past task completion data and reasons for failure (e.g., lack of time, low energy, competing priorities) along with weather and other factors (e.g., time of day, location) to recommend the most suitable tasks for the moment.
-Here are some additional features that would complement this system:
-
-Task Prioritization: The app could suggest priorities based on deadlines, importance, and context (e.g., urgent errands before a meeting).
-Habit Tracking: Integrate a system for tracking habits tied to your to-do lists, allowing you to build positive routines and achieve long-term goals.
-Focus Mode: This mode could eliminate distractions while working on a task, enhancing productivity.
-Benefits of an Intelligent To-Do List:
-
-Increased Productivity: Context-aware recommendations, personalized notifications, and data-driven insights would help you make better use of your time.
-Improved Task Completion: The app would guide you towards realistic goals and suggest appropriate actions based on current circumstances.
-Enhanced Focus: AI-powered prioritization and a focus mode would help you concentrate on the most important tasks at hand.
-Personalized Experience: The to-do list would adapt to your individual needs and preferences.
-Reduced Procrastination: Intelligent recommendations and timely reminders would help you stay on top of your tasks.
-
-Weather Table:
-weather_id: Primary key for the weather record.
-current_date: Date for the current weather record.
-forecast_date: Date for the forecasted weather.
-condition: Weather condition description.
-temperature: Temperature at the time of the record.
-current_location: Current location for the weather record.
-event_location: Location relevant to the weather event.
-user_id: Foreign key linking the weather record to the user.
-Forecast Day Table (New Table):
-forecast_id: Primary key for the forecasted day.
-weather_id: Foreign key linking to the specific weather record.
-forecast_day: Number indicating the projected day (e.g., 1 for current day, 2 for tomorrow).
-forecast_condition: Weather condition forecasted for that day.
-forecast_temperature: Projected temperature for that day.
-forecast_location: Specific location relevant to the forecast.
-
-Automation logic:
-To automate the status updates for your to-do list, you could implement a system that combines due dates, current time, and task progress. Here's a potential approach:
-
-Add required fields:
-
-Due date
-Start date (optional)
-Estimated time to complete
-Progress indicator (e.g., percentage complete)
-
-Automate status updates based on these rules:
-
-Todo:
-
-Task is created but not started
-
-In Progress:
-
-Task has a start date and has been started
-Progress is between 1% and 99%
-Current date is before or on the due date
-
-Completed:
-
-Progress reaches 100%
-
-Overdue:
-
-Current date is past the due date
-Progress is less than 100%
-
-Implement a background process:
-
-Run periodically (e.g., daily or hourly)
-Check all tasks and update statuses based on the rules
-
-Real-time updates:
-
-Update status immediately when user modifies progress or marks a task as complete
-
-Notifications:
-
-Alert users when tasks are nearing their due date or becoming overdue

@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 from tasks.models import Task, Category
 from dashboard.serializers import UserSerializer, TaskSerializer, CategorySerializer
 
-
 class DashboardView(TemplateView):
     """
     Render the dashboard.html template.

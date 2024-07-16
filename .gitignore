@@ -2,3 +2,11 @@ do-not-touch/
 env.py
 future_work
 db.sqlite3
+core.Microsoft*
+core.mongo*
+core.python*
+__pycache__/
+*.py[cod]
+node_modules/
+.github/
+cloudinary_python.txt

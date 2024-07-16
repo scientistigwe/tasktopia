@@ -14,8 +14,6 @@ from utils import add_message
 from tasks.models import Task
 from tasks.forms import TaskForm, CategoryForm
 
-
-
 class TaskListView(LoginRequiredMixin, ListView):
     """
     View to list all tasks for the logged-in user.
