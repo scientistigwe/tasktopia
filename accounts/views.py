@@ -7,6 +7,9 @@ from django.http import JsonResponse
 from utils import add_message
 from django.contrib import messages
 from accounts.forms import SignupForm, CustomUserChangeForm
+import logging
+
+logger = logging.getLogger(__name__)
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     """
@@ -154,10 +157,14 @@ class LogoutView(LoginRequiredMixin, View):
         return redirect('index')
 
 class IndexView(TemplateView):
-    """
-    Display the index page.
-    """
     template_name = 'registration/index.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            return super().get(request, *args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in IndexView: {e}")
+            return render(request, '500.html', status=500)
 
 class ClearMessageView(View):
     """
