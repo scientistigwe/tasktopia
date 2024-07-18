@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import dj_database_url
+import sys
 
 # Check for environment-specific settings file
 if os.path.isfile('env.py'):
@@ -16,7 +17,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 # Allowed hosts from environment variable, default to local and Heroku app domains
-ALLOWED_HOSTS = ['*'] #os.getenv('ALLOWED_HOSTS', '127.0.0.1,.herokuapp.com').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,.herokuapp.com').split(',')
 
 # Trusted origins for CSRF cookies, default to Heroku app domain
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'https://*.herokuapp.com').split(',')
@@ -42,14 +43,14 @@ INSTALLED_APPS = [
 # Middleware configuration
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.storage.CompressedManifestStaticFilesStorage',
 ]
 
 # Default message storage backend
@@ -145,21 +146,3 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'your-email@example.com')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'your-email-password')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'webmaster@localhost')
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': 'django_error.log',
-        },
-    },
-    'loggers': {
-        '': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    },
-}
