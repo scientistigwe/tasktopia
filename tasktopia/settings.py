@@ -118,7 +118,7 @@ STATIC_URL = '/static/'
 
 # Additional directories for static files
 STATICFILES_DIRS = [
-    BASE_DIR / 'accounts' / 'static' / 'accounts',
+    BASE_DIR / 'accounts' / 'static' / 'registration',
     BASE_DIR / 'dashboard' / 'static' / 'dashboard',
     BASE_DIR / 'tasks' / 'static' / 'tasks',
 ]
