@@ -64,15 +64,12 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'accounts/templates/registration'),
             BASE_DIR / 'templates',
             BASE_DIR / 'accounts' / 'templates',
             BASE_DIR / 'accounts' / 'templates' / 'registration',
-            BASE_DIR / 'accounts' / 'templates',
             BASE_DIR / 'dashboard' / 'templates',
             BASE_DIR / 'tasks' / 'templates',
-            ],
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,13 +89,6 @@ WSGI_APPLICATION = 'tasktopia.wsgi.application'
 DATABASES = {
     'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
 }
-
-# # Override for testing
-# if "test" in sys.argv:
-#     DATABASES["default"] = {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": ":memory:",
-#     }
 
 # Password validation settings
 AUTH_PASSWORD_VALIDATORS = [
@@ -127,16 +117,15 @@ STATIC_URL = '/static/'
 
 # Additional directories for static files
 STATICFILES_DIRS = [
-    BASE_DIR / 'accounts' / 'static',
-    BASE_DIR / 'dashboard' / 'static',
-    BASE_DIR / 'tasks' / 'static',
+    BASE_DIR / 'accounts' / 'static' / 'accounts',
+    BASE_DIR / 'dashboard' / 'static' / 'dashboard',
+    BASE_DIR / 'tasks' / 'static' / 'tasks',
 ]
 
 # Location where static files will be collected for deployment
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Static files storage configuration
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 # Default primary key field type
@@ -155,4 +144,3 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() == 'true'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'your-email@example.com')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'your-email-password')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'webmaster@localhost')
-

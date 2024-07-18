@@ -1,0 +1,119 @@
+/************************/
+/* TASK APP */
+/************************/
+
+/*** Create Task ***/
+/* Styling for the create task form */
+.create-task {
+    max-width: 600px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+/*** Task Detail ***/
+/* Styling for individual task details */
+.task-detail {
+    position: relative;
+    margin: auto;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* Hover effect for task detail links */
+.task-detail a:hover {
+    color: white;
+    text-align: center;
+}
+
+/* Padding for task detail card */
+.task-detail .card {
+    padding: 10px;
+}
+
+/*** New Task ***/
+/* Styling for the new task header */
+.new-task {
+    position: relative;
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+/*** Task Status Colors ***/
+/* Color for pending tasks */
+.task-pending {
+    color: purple;
+}
+
+/* Color for overdue tasks */
+.task-overdue {
+    color: red;
+}
+
+/*** Custom Progress Bar ***/
+/* Styling for the custom progress bar */
+.custom-progress-bar {
+    transition: width 0.6s ease;
+    background-color: #007bff;
+    height: 20px;
+}
+
+/*** To Do ***/
+/* Styling for the to-do section */
+.to_do {
+    background-color: transparent;
+}
+
+/*** Task List ***/
+/* Styling for the task list */
+.task-list {
+    width: 80vw;
+    position: relative;
+    margin: auto;
+}
+
+/* Styling for new task text */
+#new-task-text {
+    color: #040303;
+    font-size: 1.5em;
+    margin-top: -10px;
+    margin-right: 5px;
+}
+
+/* Remove list styling for task list items */
+.task-list ul {
+    list-style: none;
+}
+
+/* Padding for task list items */
+.task-list li {
+    margin-left: 0;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+/* Remove underline from task list links */
+.task-list a {
+    text-decoration: none;
+}
+
+/* Center-align task list headers */
+.task-list h4 {
+    text-align: center;
+}
+
+/*** Task Details Icon ***/
+/* Positioning and styling for task details icon */
+.task-details-icon {
+    position: absolute;
+    right: 2px;
+    border-radius: 50%;
+    border-style: groove;
+}
+
+/*** My Task ***/
+/* Styling for the "My Task" section header */
+#my-task h4 {
+    color: rgb(250, 215, 219);
+}
