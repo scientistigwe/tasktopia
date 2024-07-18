@@ -7,7 +7,6 @@ from django.http import JsonResponse
 from utils import add_message
 from django.contrib import messages
 from accounts.forms import SignupForm, CustomUserChangeForm
-from django.contrib.auth.decorators import login_required  # Import login_required decorator
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     """
