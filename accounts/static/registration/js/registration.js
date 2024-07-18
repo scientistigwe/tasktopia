@@ -1,7 +1,5 @@
 // ALERT MESSAGE HANDLING
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Starting Message Handling Function");
-
   function autoHideMessage(element, delay) {
     setTimeout(function () {
       if (element && element.classList.contains("dismissible-message")) {

@@ -263,10 +263,11 @@ const updateTaskCompletionRateOverTimeChart = async () => {
       }
     );
   } catch (error) {
-    console.error(
-      "Error updating Task Completion Rate Over Time chart:",
-      error
-    );
+    console
+      .error
+      // "Error updating Task Completion Rate Over Time chart:",
+      // error
+      ();
   }
 };
 
@@ -309,7 +310,7 @@ const updateTaskPriorityDistributionChart = async () => {
       }
     );
   } catch (error) {
-    console.error("Error updating Task Priority Distribution chart:", error);
+    // console.error("Error updating Task Priority Distribution chart:", error);
   }
 };
 
@@ -323,7 +324,7 @@ const refreshDashboard = async () => {
     await updateCategoryTaskCompletionTable();
     await updateOverdueTasksTable();
   } catch (error) {
-    console.error("Error refreshing dashboard:", error);
+    // console.error("Error refreshing dashboard:", error);
   }
 };
 
@@ -336,6 +337,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     refreshDashboard();
   } else {
-    console.log("Not on Analytics and Insights page");
+    // console.log("Not on Analytics and Insights page");
   }
 });
