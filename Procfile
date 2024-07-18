@@ -1,1 +1,1 @@
-web: gunicorn tasktopia.wsgi --log-file -
+web: python manage.py collectstatic --noinput && gunicorn tasktopia.wsgi --log-file -
