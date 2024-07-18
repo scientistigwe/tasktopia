@@ -59,7 +59,7 @@ and a checkbox to mark the task as completed.
                 <small class="text-danger">Overdue</small>
                 {% endif %}
             </div>
-            <span class="col-md-6">
+            <div class="col-md-6">
                 <form id="completeTaskForm{{ task.id }}" action="{% url 'mark_completed' task.pk %}" method="post"
                     class="form-inline" data-status="{{ task.status }}" data-start-date="{{ task.start_date }}"
                     data-due-date="{{ task.due_date }}">
@@ -72,7 +72,7 @@ and a checkbox to mark the task as completed.
                         <label class="form-check-label" for="cSwitch{{ task.id }}">Mark as Completed</label>
                     </div>
                 </form>
-            </span>
+            </div>
         </div>
     </div>
 </li>

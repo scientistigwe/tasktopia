@@ -846,7 +846,47 @@ Testing the Dashboard app involved a comprehensive approach. I started with manu
 
 ## Bugs and Issues
 
-During the development process, I encountered several bugs and issues. Each issue was documented, and I took steps to correct them, often. For example, I faced a bug where the task creation form was not saving data correctly. After investigating, I discovered a missing field in the form validation process. By adding the missing field and writing additional tests, I was able to resolve the issue and prevent it from happening again.
+During the development process, I encountered several bugs and issues. Each issue was documented, and I took steps to correct them, often. For example, I faced a bug where the task creation form was not saving data correctly. After investigating, I discovered a missing field in the form validation process. By adding the missing field and writing additional tests, I was able to resolve the issue and prevent it from happening again. Main bug i encountered that took me over 12hours to resolve is `Server Error 500`. See details below.
+
+### Summary of Error 500 Resolution
+
+**Error Description:**
+The Error 500 (Internal Server Error) occurred persistently when accessing the deployed application on Heroku. This error indicates an unexpected issue on the server side, preventing successful request completion.
+
+**Likely Cause:**
+The main cause of the Error 500 was related to the misconfiguration of static file serving in the Django application. Specifically, the application failed to locate and serve static files such as CSS, JavaScript, and image assets required for proper rendering of web pages.
+
+**Steps Taken to Resolve:**
+
+1. **Static Files Configuration:**
+
+   - Updated `settings.py` to define correct paths for static files (`STATIC_URL`, `STATICFILES_DIRS`, `STATIC_ROOT`).
+   - Ensured inclusion of all static file directories (`accounts/static`, `dashboard/static`, `tasks/static`) in `STATICFILES_DIRS`.
+
+2. **Deployment Adjustments:**
+
+   - Verified `STATIC_ROOT` setting to correctly collect static files for deployment (`BASE_DIR / 'staticfiles'`).
+   - Adjusted deployment settings to ensure Heroku correctly served static files in its environment.
+
+3. **Custom Error Handling:**
+
+   - Created `500.html` template to display user-friendly error messages during Error 500 occurrences, improving user experience.
+   - Implemented `error_views.py` for custom error handling within the Django application, enabling detailed error logging and debugging.
+
+4. **Debugging and Logging:**
+
+   - Implemented logging to capture static file serving errors and warnings during application runtime.
+   - Utilized Heroku logs (`heroku logs --tail -a tasktopia-app`) to identify specific issues and monitor improvements after each configuration adjustment.
+
+5. **Testing and Validation:**
+   - Deployed the application multiple times to Heroku, systematically testing pages and functionalities to ensure correct static file serving.
+   - Used browser developer tools and Heroku logs to confirm static file requests (`CSS`, `JavaScript`, `images`) returned `200` (OK) status codes.
+
+**Resolution Outcome:**
+By addressing static file configuration, implementing custom error handling with `500.html` and `error_views.py`, and ensuring correct deployment practices, the Error 500 was successfully resolved. The application now serves static files correctly, ensuring proper functionality and user experience.
+
+**Conclusion:**
+Correctly configuring static file handling and implementing robust error handling mechanisms are crucial for preventing and resolving Error 500 issues in Django applications. By following best practices and leveraging debugging tools effectively, such issues can be efficiently identified and resolved, ensuring a stable deployment environment.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -858,29 +898,43 @@ In this section, I will outline the process of deploying the tested and validate
 
 <h2 id="final-product">Final Product</h2>
 
-The product is live and can be seen on **[url of deployed site]**
+The product is live and can be seen on here: **[Live Preview](https://tasktopia-app-fbb446425a66.herokuapp.com/)**
 
 ### _Home Page_
 
 <p align="center">
-<img src="assets/images/readme/desktop-home-page.png" width="600" height="100%">
+<img src="./accounts/static/registration/images/homepage.png" width="100%">
 </p>
 
-Here are some screenshots of various sections of the final product:
+### _Signup_
+
+<p align="center">
+<img src="./accounts/static/registration/images/signup-page.png" width="100%">
+</p>
+
+### _Login_
+
+<p align="center">
+<img src="./accounts/static/registration/images/login-page.png" width="100%">
+</p>
+
+### _Profile_
+
+<p align="center">
+<img src="./accounts/static/registration/images/profile-page.png" width="100%">
+</p>
 
 ### _Task Management Page_
 
 <p align="center">
-<img src="assets/images/readme/desktop-task-page.png" width="600" height="100%">
+<img src="./accounts/static/registration/images/taskpage.png" width="100%">
 </p>
 
-### _Dashboard_
+### _Analytics & Insights_
 
 <p align="center">
-<img src="assets/images/readme/desktop-dashboard.png" width="600" height="100%">
+<img src="./accounts/static/registration/images/dashboardpage.png" width="100%">
 </p>
-
-- Add images of other relevant sections of the final product as shown above.
 
 <h2 id="deployment-process">Deployment Process</h2>
 
