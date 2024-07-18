@@ -83,12 +83,12 @@ DATABASES = {
     'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
 }
 
-# Override for testing
-if "test" in sys.argv:
-    DATABASES["default"] = {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
-    }
+# # Override for testing
+# if "test" in sys.argv:
+#     DATABASES["default"] = {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": ":memory:",
+#     }
 
 # Password validation settings
 AUTH_PASSWORD_VALIDATORS = [
