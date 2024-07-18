@@ -40,36 +40,44 @@ const updateChart = (chartId, chartType, chartData, chartOptions) => {
 
 // Function to update a KPI card
 const updateKPICard = async (url, elementId, formatFunc) => {
-  const data = await fetchData(url);
-  if (!data) return;
+  try {
+    const data = await fetchData(url);
+    if (!data) return;
 
-  const element = document.getElementById(elementId);
-  if (element) {
-    element.textContent = formatFunc(data);
-  } else {
-    console.error(`Element with ID ${elementId} not found.`);
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.textContent = formatFunc(data);
+    } else {
+      console.error(`Element with ID ${elementId} not found.`);
+    }
+  } catch (error) {
+    console.error(`Error updating KPI card for ${elementId}:`, error);
   }
 };
 
 // Function to update all KPI cards
 const updateKPIs = async () => {
-  await Promise.all([
-    updateKPICard(
-      "/dashboard/total-tasks/",
-      "totalTasksValue",
-      (data) => data.total_tasks
-    ),
-    updateKPICard(
-      "/dashboard/percent-overdue/",
-      "percentOverdueValue",
-      (data) => `${data.percent_overdue.toFixed(1)}%`
-    ),
-    updateKPICard(
-      "/dashboard/percent-completed/",
-      "percentCompletedValue",
-      (data) => `${data.percent_completed.toFixed(1)}%`
-    ),
-  ]);
+  try {
+    await Promise.all([
+      updateKPICard(
+        "/dashboard/total-tasks/",
+        "totalTasksValue",
+        (data) => data.total_tasks
+      ),
+      updateKPICard(
+        "/dashboard/percent-overdue/",
+        "percentOverdueValue",
+        (data) => `${data.percent_overdue.toFixed(1)}%`
+      ),
+      updateKPICard(
+        "/dashboard/percent-completed/",
+        "percentCompletedValue",
+        (data) => `${data.percent_completed.toFixed(1)}%`
+      ),
+    ]);
+  } catch (error) {
+    console.error("Error updating KPIs:", error);
+  }
 };
 
 // Function to update Category Task Completion Table
@@ -144,34 +152,39 @@ const updateCategoryTaskCompletionTable = async () => {
 
 // Function to update Tasks Created vs Completed Chart
 const updateTasksCreatedCompletedChart = async () => {
-  const data = await fetchData("/dashboard/tasks-created-vs-completed/");
-  if (!data) return;
+  try {
+    const data = await fetchData("/dashboard/tasks-created-vs-completed/");
+    if (!data) return;
 
-  updateChart(
-    "tasksCreatedCompleted",
-    "doughnut",
-    {
-      labels: ["Tasks created", "Tasks completed"],
-      datasets: [
-        {
-          data: [data.tasks_created, data.tasks_completed],
-          backgroundColor: ["#36A2EB", "#FF6384"],
-        },
-      ],
-    },
-    {
-      responsive: true,
-      plugins: {
-        legend: { position: "top" },
-        title: { display: true, text: "Task Completed vs Task Created" },
-        tooltip: {
-          callbacks: {
-            label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
+    updateChart(
+      "tasksCreatedCompleted",
+      "doughnut",
+      {
+        labels: ["Tasks created", "Tasks completed"],
+        datasets: [
+          {
+            data: [data.tasks_created, data.tasks_completed],
+            backgroundColor: ["#36A2EB", "#FF6384"],
+          },
+        ],
+      },
+      {
+        responsive: true,
+        plugins: {
+          legend: { position: "top" },
+          title: { display: true, text: "Task Completed vs Task Created" },
+          tooltip: {
+            callbacks: {
+              label: (tooltipItem) =>
+                `${tooltipItem.label}: ${tooltipItem.raw}`,
+            },
           },
         },
-      },
-    }
-  );
+      }
+    );
+  } catch (error) {
+    console.error("Error updating Tasks Created vs Completed chart:", error);
+  }
 };
 
 // Function to update Overdue Tasks Table
@@ -206,100 +219,116 @@ const updateOverdueTasksTable = async () => {
 
 // Function to update Task Completion Rate Over Time Chart
 const updateTaskCompletionRateOverTimeChart = async () => {
-  const data = await fetchData("/dashboard/task-completion-rate-over-time/");
-  if (!data) {
-    console.log("No data fetched");
-    return;
-  }
+  try {
+    const data = await fetchData("/dashboard/task-completion-rate-over-time/");
+    if (!data) {
+      console.log("No data fetched");
+      return;
+    }
 
-  // Validate data format
-  if (
-    !Array.isArray(data) ||
-    !data.every((item) => "date" in item && "completion_rate" in item)
-  ) {
-    return;
-  }
+    // Validate data format
+    if (
+      !Array.isArray(data) ||
+      !data.every((item) => "date" in item && "completion_rate" in item)
+    ) {
+      console.error("Invalid data format for Task Completion Rate Over Time");
+      return;
+    }
 
-  updateChart(
-    "taskCompletionRateOverTime",
-    "line",
-    {
-      labels: data.map((item) => item.date),
-      datasets: [
-        {
-          label: "Completion Rate",
-          data: data.map((item) => item.completion_rate),
-          borderColor: "#36A2EB",
-          fill: false,
-        },
-      ],
-    },
-    {
-      responsive: true,
-      plugins: {
-        legend: { position: "top" },
-        title: { display: true, text: "Task Completion Rate Over Time" },
-        tooltip: {
-          callbacks: {
-            label: (tooltipItem) => `Rate: ${tooltipItem.raw}%`,
+    updateChart(
+      "taskCompletionRateOverTime",
+      "line",
+      {
+        labels: data.map((item) => item.date),
+        datasets: [
+          {
+            label: "Completion Rate",
+            data: data.map((item) => item.completion_rate),
+            borderColor: "#36A2EB",
+            fill: false,
+          },
+        ],
+      },
+      {
+        responsive: true,
+        plugins: {
+          legend: { position: "top" },
+          title: { display: true, text: "Task Completion Rate Over Time" },
+          tooltip: {
+            callbacks: {
+              label: (tooltipItem) => `Rate: ${tooltipItem.raw}%`,
+            },
           },
         },
-      },
-    }
-  );
+      }
+    );
+  } catch (error) {
+    console.error(
+      "Error updating Task Completion Rate Over Time chart:",
+      error
+    );
+  }
 };
 
 // Function to update Task Priority Distribution Chart
 const updateTaskPriorityDistributionChart = async () => {
-  const data = await fetchData("/dashboard/task-priority-distribution/");
-  if (!data) return;
+  try {
+    const data = await fetchData("/dashboard/task-priority-distribution/");
+    if (!data) return;
 
-  updateChart(
-    "taskPriorityDistributionChart",
-    "pie",
-    {
-      labels: data.map((item) => item.priority),
-      datasets: [
-        {
-          data: data.map((item) => item.count),
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4BC0C0",
-            "#9966FF",
-          ],
-        },
-      ],
-    },
-    {
-      responsive: true,
-      plugins: {
-        legend: { position: "top" },
-        title: { display: true, text: "Task Priority Distribution" },
-        tooltip: {
-          callbacks: {
-            label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
+    updateChart(
+      "taskPriorityDistributionChart",
+      "pie",
+      {
+        labels: data.map((item) => item.priority),
+        datasets: [
+          {
+            data: data.map((item) => item.count),
+            backgroundColor: [
+              "#FF6384",
+              "#36A2EB",
+              "#FFCE56",
+              "#4BC0C0",
+              "#9966FF",
+            ],
+          },
+        ],
+      },
+      {
+        responsive: true,
+        plugins: {
+          legend: { position: "top" },
+          title: { display: true, text: "Task Priority Distribution" },
+          tooltip: {
+            callbacks: {
+              label: (tooltipItem) =>
+                `${tooltipItem.label}: ${tooltipItem.raw}`,
+            },
           },
         },
-      },
-    }
-  );
+      }
+    );
+  } catch (error) {
+    console.error("Error updating Task Priority Distribution chart:", error);
+  }
 };
 
 // Main function to refresh the entire dashboard
 const refreshDashboard = async () => {
-  await updateKPIs();
-  await updateTasksCreatedCompletedChart();
-  await updateTaskCompletionRateOverTimeChart();
-  await updateTaskPriorityDistributionChart();
-  await updateCategoryTaskCompletionTable();
-  await updateOverdueTasksTable();
+  try {
+    await updateKPIs();
+    await updateTasksCreatedCompletedChart();
+    await updateTaskCompletionRateOverTimeChart();
+    await updateTaskPriorityDistributionChart();
+    await updateCategoryTaskCompletionTable();
+    await updateOverdueTasksTable();
+  } catch (error) {
+    console.error("Error refreshing dashboard:", error);
+  }
 };
 
 // Event listener for DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
-  refreshDashboard();
   if (document.getElementById("analyticsInsightsMarker")) {
     console.log(
       "Analytics and Insights page detected, refreshing dashboard..."
