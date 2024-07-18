@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 import dj_database_url
-import sys
 
 # Check for environment-specific settings file
 if os.path.isfile('env.py'):
@@ -17,7 +16,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 # Allowed hosts from environment variable, default to local and Heroku app domains
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,.herokuapp.com').split(',')
+ALLOWED_HOSTS = ['*'] #os.getenv('ALLOWED_HOSTS', '127.0.0.1,.herokuapp.com').split(',')
 
 # Trusted origins for CSRF cookies, default to Heroku app domain
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'https://*.herokuapp.com').split(',')
