@@ -8,9 +8,11 @@ from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from tasks.models import Task, Category
 from dashboard.serializers import UserSerializer, TaskSerializer, CategorySerializer
+from django.utils.decorators import method_decorator
+from tasks.models import Task, Category
 
+@method_decorator(login_required, name='dispatch')
 class DashboardView(TemplateView):
     """
     Render the dashboard.html template.
