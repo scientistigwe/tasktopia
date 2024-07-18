@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 from accounts import views
 
+
 # URL patterns for the application
 urlpatterns = [
     # Index URL
@@ -63,5 +64,5 @@ urlpatterns = [
     ),
 
     # Account management URLs
-    path('delete-account/', views.DeleteAccountView.as_view(), name='delete_account'),
+    path('delete-account/', views.DeleteAccountView.as_view(), name='delete_account'),   
 ]

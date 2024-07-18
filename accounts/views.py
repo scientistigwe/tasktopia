@@ -1,8 +1,3 @@
-"""
-Views for user authentication and profile management.
-"""
-
-# Import necessary modules and functions from Django and the project
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import TemplateView, UpdateView, View
@@ -12,6 +7,7 @@ from django.http import JsonResponse
 from utils import add_message
 from django.contrib import messages
 from accounts.forms import SignupForm, CustomUserChangeForm
+from django.contrib.auth.decorators import login_required  # Import login_required decorator
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     """
@@ -50,7 +46,7 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         """
         messages.error(self.request, 'Error updating profile. Please correct the errors.')
         return super().form_invalid(form)
-    
+
 class DeleteAccountView(LoginRequiredMixin, View):
     """
     Handle account deletion requests.
@@ -69,20 +65,19 @@ class DeleteAccountView(LoginRequiredMixin, View):
         """
         user = request.user
         password = request.POST.get('password')
-        
+
         # Authenticate the user
         if user.check_password(password):
             # Password is correct, proceed with account deletion
             username = user.username
             user.delete()
-            messages.success(request,\
-                             f'Your account ({username}) has been deleted.')
+            messages.success(request, f'Your account ({username}) has been deleted.')
             return redirect('index')
-        
+
         # Password is incorrect
         messages.error(request, 'Incorrect password. Account not deleted.')
         return redirect('delete_account')
-        
+
 class SignupView(View):
     """
     Handle user sign-up requests.
@@ -112,8 +107,7 @@ class SignupView(View):
                 request.session['first_name'] = form.cleaned_data.get('first_name')
                 return redirect('task_list')
         
-        request.session['error_message'] = \
-            'There was an error with your signup. Please correct the errors below.'
+        request.session['error_message'] = 'There was an error with your signup. Please correct the errors below.'
         return render(request, self.template_name, {'form': form})
 
 class LoginView(View):
@@ -157,8 +151,7 @@ class LogoutView(LoginRequiredMixin, View):
         if request.user.is_authenticated:
             first_name = request.user.first_name
             logout(request)
-            add_message(request, f'{first_name}, \
-                        you have successfully logged out.', messages.SUCCESS)
+            add_message(request, f'{first_name}, you have successfully logged out.', messages.SUCCESS)
         return redirect('index')
 
 class IndexView(TemplateView):
