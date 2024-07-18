@@ -5,7 +5,7 @@ from django.views.generic.base import TemplateView
 
 # Application-specific imports
 from dashboard.views import DashboardView 
-from .error_views import handler500
+from error_views import handler500
 
 handler500 = handler500
 
