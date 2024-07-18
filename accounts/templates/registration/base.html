@@ -13,7 +13,7 @@
     <title>{% block title %}Home | Tasktopia{% endblock %}</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'accounts/images/brand-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'registration/images/brand-icon.png' %}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,9 +27,9 @@
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'accounts/css/registration.css' %}">
+    <link rel="stylesheet" href="{% static 'registration/css/registration.css' %}">
     <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
-    <link rel="stylesheet" href="{% static 'tasks/css/tasks.css' %}">
+    <link rel="stylesheet" href="{% static 'tasks/css/task.css' %}">
 
     <style>
         /* Background container styling */
@@ -40,7 +40,7 @@
             left: 0;
             min-width: 100vw;
             min-height: 100vh;
-            background-image: url("{% static 'accounts/images/bg-img.jpg' %}") !important;
+            background-image: url("{% static 'registration/images/bg-img.jpg' %}") !important;
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
@@ -146,8 +146,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <!-- Custom JS Link -->
-    <script src="{% static 'accounts/js/registration.js' %}" defer></script>
-    <script src="{% static 'tasks/js/tasks.js' %}" defer></script>
+    <script src="{% static 'registration/js/registration.js' %}" defer></script>
+    <script src="{% static 'tasks/js/task.js' %}" defer></script>
     <script src="{% static 'dashboard/js/dashboard.js' %}" defer></script>
 </body>
 
