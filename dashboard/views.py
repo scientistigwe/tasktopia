@@ -105,7 +105,11 @@ def overdue_tasks(request: HttpRequest) -> JsonResponse:
                 task['email'] = user_details_map.get(task['user_id'], {}).get('email', '')
                 task['first_name'] = user_details_map.get(task['user_id'], {}).get('first_name', '')
         else:
-            overdue_tasks = Task.objects.filter(user=user, status='Overdue').values('user__email', 'user__first_name', 'user_id', 'title', 'status')
+            overdue_tasks = Task.objects.filter(user=user, status='Overdue').values('user_id', 'title', 'status')
+            for task in overdue_tasks:
+                task['username'] = user.username
+                task['email'] = user.email
+                task['first_name'] = user.first_name
 
         data = list(overdue_tasks)
         return JsonResponse(data, safe=False)

@@ -3,7 +3,6 @@ const charts = {}; // Object to store chart instances
 // Utility function to fetch data from the server
 const fetchData = async (url) => {
   try {
-    console.log(`Fetching data from ${url}`); // Log the URL
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -207,21 +206,17 @@ const updateOverdueTasksTable = async () => {
 
 // Function to update Task Completion Rate Over Time Chart
 const updateTaskCompletionRateOverTimeChart = async () => {
-  console.log("Calling updateTaskCompletionRateOverTimeChart"); // Log function call
   const data = await fetchData("/dashboard/task-completion-rate-over-time/");
   if (!data) {
     console.log("No data fetched");
     return;
   }
 
-  console.log(`TCR: ${JSON.stringify(data)}`);
-
   // Validate data format
   if (
     !Array.isArray(data) ||
     !data.every((item) => "date" in item && "completion_rate" in item)
   ) {
-    console.error("Invalid data format");
     return;
   }
 
