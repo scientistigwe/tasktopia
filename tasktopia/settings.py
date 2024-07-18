@@ -66,10 +66,10 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR / 'templates',
-            BASE_DIR / 'accounts' / 'templates',
-            BASE_DIR / 'accounts' / 'templates' / 'registration',
-            BASE_DIR / 'dashboard' / 'templates',
-            BASE_DIR / 'tasks' / 'templates',
+            # BASE_DIR / 'accounts' / 'templates',
+            # BASE_DIR / 'accounts' / 'templates' / 'registration',
+            # BASE_DIR / 'dashboard' / 'templates',
+            # BASE_DIR / 'tasks' / 'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -118,22 +118,22 @@ STATIC_URL = '/static/'
 
 # Additional directories for static files
 STATICFILES_DIRS = [
-    BASE_DIR / 'accounts' / 'static' / 'registration',
-    BASE_DIR / 'dashboard' / 'static' / 'dashboard',
-    BASE_DIR / 'tasks' / 'static' / 'tasks',
+    BASE_DIR / 'accounts' / 'static',
+    BASE_DIR / 'dashboard' / 'static',
+    BASE_DIR / 'tasks' / 'static',
 ]
 
 # Location where static files will be collected for deployment
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Static files storage configuration
-#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Login URL and redirection settings
-LOGIN_URL = 'index'
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'task_list'
 LOGOUT_REDIRECT_URL = 'index'
 
