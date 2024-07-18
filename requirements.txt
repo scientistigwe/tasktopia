@@ -1,79 +1,75 @@
-amqp==5.2.0
-annotated==0.0.2
+# Asynchronous and Messaging
 asgiref==3.8.1
-astroid==3.2.3
-blinker==1.8.2
-certifi==2024.6.2
-cffi==1.16.0
 channels==4.1.0
-charset-normalizer==3.3.2
-click==8.1.7
-colorama==0.4.6
-cryptography==42.0.8
-dash==2.9.3
-dash-bootstrap-components==1.6.0
-dash-core-components==2.0.0
-dash-html-components==2.0.0
-dash-table==5.0.0
-dill==0.3.8
-dj-database-url==2.2.0
-Django==5.0.6
-django-allauth==0.63.3
-django-cors-headers==4.4.0
-django-crispy-forms==2.2
-django-db-connection-pool==1.2.5
-django-db-geventpool==4.0.6
-django-heroku==0.3.1
-django-plotly-dash==2.3.1
-django-postgrespool2==2.0.5
-djangorestframework==3.15.2
-dpd_components==0.1.0
-Flask==3.0.3
-greenlet==3.0.3
-gunicorn==22.0.0
-idna==3.7
-isort==5.13.2
-itsdangerous==2.2.0
-Jinja2==3.1.4
-markdown-it-py==3.0.0
-MarkupSafe==2.1.5
-mccabe==0.7.0
-mysqlclient==2.2.4
-numba==0.59.1
-numpy==1.26.4
-packaging==24.1
-pandas==2.2.2
-patsy==0.5.6
-pillow==10.4.0
-platformdirs==4.2.2
-plotly==5.22.0
-psycopg2==2.9.9
-psycopg2-binary==2.9.9
-pycparser==2.22
-pydantic==2.8.2
-pydantic_core==2.20.1
-pyenchant==3.2.2
-PyJWT==2.8.0
-pylint==3.2.5
-python-dateutil==2.9.0.post0
-python-dotenv==1.0.1
-pytz==2024.1
-requests==2.32.3
-scikit-learn==1.5.1
-scipy==1.14.0
-shellingham==1.5.4
-six==1.16.0
-solus==1.2.2
-sortedcontainers==2.4.0
-SQLAlchemy==2.0.31
-sqlparams==6.0.1
-sqlparse==0.5.0
-tenacity==8.5.0
-tomlkit==0.13.0
-typing_extensions==4.12.2
-tzdata==2024.1
-urllib3==2.2.2
 uvicorn==0.30.1
 websockets==12.0
+
+# Utilities and Helpers
+blinker==1.8.2
+click==8.1.7
+colorama==0.4.6
+itsdangerous==2.2.0
+shellingham==1.5.4
+six==1.16.0
+sortedcontainers==2.4.0
+typing_extensions==4.12.2
+
+# SSL and Encryption
+certifi==2024.6.2
+cryptography==42.0.8
+cffi==1.16.0
+pycparser==2.22
+
+# Django and Related Libraries
+Django==5.0.6
+django-allauth==0.63.3
+django-heroku==0.3.1
+djangorestframework==3.15.2
+django-cors-headers==4.4.0
+
+# Database and ORM
+dj-database-url==2.2.0
+mysqlclient==2.2.4
+psycopg2==2.9.9
+psycopg2-binary==2.9.9
+sqlparse==0.5.0
+
+# Web and WSGI Servers
+gunicorn==22.0.0
 Werkzeug==3.0.3
 whitenoise==6.7.0
+
+# Template Engines
+Jinja2==3.1.4
+MarkupSafe==2.1.5
+
+# Data and Science
+numpy==1.26.4
+pandas==2.2.2
+patsy==0.5.6
+
+# JSON and JWT
+PyJWT==2.8.0
+python-dateutil==2.9.0.post0
+
+# Environment Variables
+python-dotenv==1.0.1
+
+# HTTP and Requests
+charset-normalizer==3.3.2
+idna==3.7
+requests==2.32.3
+urllib3==2.2.2
+
+# Time and Timezones
+pytz==2024.1
+tzdata==2024.1
+
+# Linting and Spellchecking
+pylint==3.2.5
+
+# Markdown and Parsing
+markdown-it-py==3.0.0
+
+# Pydantic and Data Validation
+pydantic_core==2.20.1
