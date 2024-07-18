@@ -1,26 +1,31 @@
+# django imports
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import TemplateView, UpdateView, View
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from utils import add_message
 from django.contrib import messages
+
+# local imports
+from utils import add_message
 from accounts.forms import SignupForm, CustomUserChangeForm
+
+# standard library imports
 import logging
 
 logger = logging.getLogger(__name__)
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     """
-    Display the user's profile page.
+    View to display the user's profile page.
     Only accessible if the user is logged in.
     """
     template_name = 'registration/profile.html'
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     """
-    Allow the user to edit their profile information.
+    View to allow the user to edit their profile information.
     Only accessible if the user is logged in.
     """
     form_class = CustomUserChangeForm
@@ -51,7 +56,7 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
 class DeleteAccountView(LoginRequiredMixin, View):
     """
-    Handle account deletion requests.
+    View to handle account deletion requests.
     Only accessible if the user is logged in.
     """
     def get(self, request, *args, **kwargs):
@@ -82,7 +87,7 @@ class DeleteAccountView(LoginRequiredMixin, View):
 
 class SignupView(View):
     """
-    Handle user sign-up requests.
+    View to handle user sign-up requests.
     """
     template_name = 'registration/signup.html'
 
@@ -114,7 +119,7 @@ class SignupView(View):
 
 class LoginView(View):
     """
-    Handle user login requests.
+    View to handle user login requests.
     """
     template_name = 'registration/login.html'
 
@@ -143,7 +148,7 @@ class LoginView(View):
 
 class LogoutView(LoginRequiredMixin, View):
     """
-    Handle user logout requests.
+    View to handle user logout requests.
     Only accessible if the user is logged in.
     """
     def get(self, request):
@@ -157,18 +162,24 @@ class LogoutView(LoginRequiredMixin, View):
         return redirect('index')
 
 class IndexView(TemplateView):
+    """
+    View to display the index page.
+    """
     template_name = 'registration/index.html'
 
     def get(self, request, *args, **kwargs):
+        """
+        Handle GET request to the index page.
+        """
         try:
             return super().get(request, *args, **kwargs)
         except Exception as e:
-            logger.error(f"Error in IndexView: {e}")
+            logger.error(f"Error in IndexView: {e}", exc_info=True)
             return render(request, '500.html', status=500)
 
 class ClearMessageView(View):
     """
-    Handle requests to clear a specific session message.
+    View to handle requests to clear a specific session message.
     """
     def post(self, request):
         """
