@@ -8,10 +8,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 
 # local imports
-from utils import add_message
 from accounts.forms import SignupForm, CustomUserChangeForm
-
-# standard library imports
 import logging
 
 logger = logging.getLogger(__name__)
@@ -49,21 +46,23 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
     def form_invalid(self, form):
         """
         Handle an invalid form submission.
-        Display an error message and proceed with the default behavior.
+        Display an error message and re-render the form with errors.
         """
         messages.error(self.request, 'Error updating profile. Please correct the errors.')
-        return super().form_invalid(form)
+        return self.render_to_response(self.get_context_data(form=form))
 
 class DeleteAccountView(LoginRequiredMixin, View):
     """
     View to handle account deletion requests.
     Only accessible if the user is logged in.
     """
+    template_name = 'registration/delete_account.html'
+
     def get(self, request, *args, **kwargs):
         """
         Display the account deletion confirmation page.
         """
-        return render(request, 'registration/delete_account.html')
+        return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
         """
@@ -110,11 +109,10 @@ class SignupView(View):
                                 password=form.cleaned_data['password1'])
             if user is not None:
                 login(request, user)
-                add_message(request, 'Successfully signed up.', messages.SUCCESS)
-                request.session['first_name'] = form.cleaned_data.get('first_name')
+                messages.success(request, 'Successfully signed up.')
                 return redirect('task_list')
         
-        request.session['error_message'] = 'There was an error with your signup. Please correct the errors below.'
+        messages.error(request, 'There was an error with your signup. Please correct the errors below.')
         return render(request, self.template_name, {'form': form})
 
 class LoginView(View):
@@ -140,10 +138,10 @@ class LoginView(View):
 
         if user:
             login(request, user)
-            add_message(request, 'Successfully logged in.', messages.SUCCESS)
+            messages.success(request, 'Successfully logged in.')
             return redirect('task_list')
         
-        add_message(request, 'Invalid credentials.', messages.ERROR)
+        messages.error(request, 'Invalid credentials.')
         return redirect('login')
 
 class LogoutView(LoginRequiredMixin, View):
@@ -155,10 +153,9 @@ class LogoutView(LoginRequiredMixin, View):
         """
         Log the user out and display a success message.
         """
-        if request.user.is_authenticated:
-            first_name = request.user.first_name
-            logout(request)
-            add_message(request, f'{first_name}, you have successfully logged out.', messages.SUCCESS)
+        first_name = request.user.first_name
+        logout(request)
+        messages.success(request, f'{first_name}, you have successfully logged out.')
         return redirect('index')
 
 class IndexView(TemplateView):
@@ -171,11 +168,7 @@ class IndexView(TemplateView):
         """
         Handle GET request to the index page.
         """
-        try:
-            return super().get(request, *args, **kwargs)
-        except Exception as e:
-            logger.error(f"Error in IndexView: {e}", exc_info=True)
-            return render(request, '500.html', status=500)
+        return super().get(request, *args, **kwargs)
 
 class ClearMessageView(View):
     """

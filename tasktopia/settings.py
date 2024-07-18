@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 import dj_database_url
 import logging
+import sys
 
 # Check for environment-specific settings file
 if os.path.isfile('env.py'):
@@ -82,6 +83,13 @@ WSGI_APPLICATION = 'tasktopia.wsgi.application'
 DATABASES = {
     'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
 }
+
+# Override for testing
+if "test" in sys.argv:
+    DATABASES["default"] = {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ":memory:",
+    }
 
 # Password validation settings
 AUTH_PASSWORD_VALIDATORS = [

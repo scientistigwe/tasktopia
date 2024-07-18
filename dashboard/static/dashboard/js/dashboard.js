@@ -299,6 +299,7 @@ const refreshDashboard = async () => {
 
 // Event listener for DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
+  refreshDashboard();
   if (document.getElementById("analyticsInsightsMarker")) {
     console.log(
       "Analytics and Insights page detected, refreshing dashboard..."

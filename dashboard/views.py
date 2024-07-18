@@ -91,12 +91,8 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 @login_required
 def overdue_tasks(request: HttpRequest) -> JsonResponse:
-    """
-    Retrieve all overdue tasks.
-    """
     try:
         user = request.user
-
         if user.is_superuser:
             overdue_tasks = Task.objects.filter(status='Overdue').values('user_id', 'title', 'status')
             user_ids = [task['user_id'] for task in overdue_tasks]
@@ -115,7 +111,6 @@ def overdue_tasks(request: HttpRequest) -> JsonResponse:
 
         data = list(overdue_tasks)
         return JsonResponse(data, safe=False)
-
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
@@ -145,9 +140,6 @@ def tasks_created_vs_completed(request: HttpRequest) -> JsonResponse:
 
 @login_required
 def task_completion_by_priority_user(request: HttpRequest) -> JsonResponse:
-    """
-    Calculate task completion by priority segregated by user.
-    """
     try:
         if request.user.is_superuser:
             tasks = Task.objects.all()
@@ -155,11 +147,11 @@ def task_completion_by_priority_user(request: HttpRequest) -> JsonResponse:
             tasks = Task.objects.filter(user=request.user)
 
         task_completion_data = tasks.values('priority', 'user_id').annotate(
-            total_tasks=Count('task_id'),
-            completed_tasks=Count(Case(When(status='completed', then=1))),
+            total_tasks=Count('id'),
+            completed_tasks=Count(Case(When(status='Completed', then=1))),
             completion_rate=Case(
                 When(total_tasks=0, then=0),
-                default=(Count(Case(When(status='completed', then=1))) * 100) / Count('task_id'),
+                default=(Count(Case(When(status='Completed', then=1))) * 100) / Count('id'),
                 output_field=IntegerField()
             )
         )
@@ -170,9 +162,6 @@ def task_completion_by_priority_user(request: HttpRequest) -> JsonResponse:
 
 @login_required
 def category_wise_task_completion(request: HttpRequest) -> JsonResponse:
-    """
-    Calculate aggregated completion rate of tasks by category.
-    """
     try:
         if request.user.is_superuser:
             categories_queryset = Category.objects.annotate(

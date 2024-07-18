@@ -2,8 +2,16 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
+from django.contrib.auth import authenticate
+from tasktopia.settings import *
 
-# Create your tests here.
+# Override default DATABASES setting
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+}
 class AccountViewTests(TestCase):
     """
     Functional tests for the account views. These tests simulate user interactions
@@ -14,7 +22,9 @@ class AccountViewTests(TestCase):
         """
         Set up the test environment. Create a test user and initialize the client.
         """
-        self.user = User.objects.create_user(username='testuser', password='testpassword', email='test@example.com', first_name='Test', last_name='User')
+        self.user = User.objects.create_user(
+            username='testuser', password='testpassword', email='test@example.com', first_name='Test', last_name='User'
+        )
         self.client = Client()
 
     def test_index_view(self):
@@ -138,3 +148,33 @@ class AccountViewTests(TestCase):
         self.assertTrue(User.objects.filter(username='testuser2').exists())
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any('Incorrect password. Account not deleted.' in str(message) for message in messages))
+
+    def test_password_change_view(self):
+        """
+        Test the password change view. Verify that it handles GET and POST requests correctly,
+        including password change success and validation errors.
+        """
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(reverse('password_change'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/password_change_form.html')
+
+        # Test the password change view POST request with valid data
+        response = self.client.post(reverse('password_change'), {
+            'old_password': 'testpassword',
+            'new_password1': 'newpassword',
+            'new_password2': 'newpassword',
+        })
+        self.assertRedirects(response, reverse('password_change_done'))
+        user = authenticate(username='testuser', password='newpassword')
+        self.assertIsNotNone(user)
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any('Your password was successfully updated' in str(message) for message in messages))
+
+        # Test the password change view POST request with incorrect old password
+        response = self.client.post(reverse('password_change'), {
+            'old_password': 'wrongpassword',
+            'new_password1': 'newpassword',
+            'new_password2': 'newpassword',
+        })
+        self.assertFormError(response, 'form', 'old_password', 'Your old password was entered incorrectly. Please enter it again.')
