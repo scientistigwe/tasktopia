@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-import dj_database_url
+# import dj_database_url
 import sys
 
 # Check for environment-specific settings file
