@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 # Middleware configuration
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.storage.CompressedManifestStaticFilesStorage',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -116,13 +117,13 @@ STATIC_URL = '/static/'
 
 # Additional directories for static files
 STATICFILES_DIRS = [
-    BASE_DIR / 'accounts' / 'static',
-    BASE_DIR / 'dashboard' / 'static',
-    BASE_DIR / 'tasks' / 'static',
+    os.path.join(BASE_DIR, 'static'),
+    # os.path.join(BASE_DIR, 'dashboard' / 'static'),
+    # os.path.join(BASE_DIR, 'tasks/static'),
 ]
 
 # Location where static files will be collected for deployment
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Static files storage configuration
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
