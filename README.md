@@ -27,9 +27,9 @@ Table of Contents
   <summary><a href="#introduction">SECTION 1: INTRODUCTION</a></summary>
         <li><a href="#about-the-project">About The Project</a>
         <li><a href='#ux'>User Experience (UX)</a></li>
+        <li><a href='#unique'>Uniqueness of TaskTopia</a></li>
         <li><a href='#user-stories'>User Stories</a></li>
         <li><a href="#technology-stack">Technology Stack</a></li>
-        <li><a href="#languages-frameworks-libraries">Languages, Frameworks and Libraries</a></li>
         <li><a href="#management-and-development">Project Management and Development Approach</a></li>
     </details>
     <!-- PROJECT SETUP SECTION -->
@@ -57,14 +57,9 @@ Table of Contents
 <summary><a href="#testing-and-validation">SECTION 4: TESTING AND VALIDATION</a>
 </summary>
     <li><a href="#testing">Testing</a></li>
-        <li><a href="#validation">Validation</a>
-        <ol>
-        <li><a href="#html-validator-report">HTML Validator Report</a></li>
-        <li><a href="#css-validator-report">CSS Validator Report</a></li>
-        </ol>
-        </li>
-        <li><a href="#user-story-testing">User Story Testing</a></li>
-        <li><a href="#bugs-and-issues">Bugs and Issues</a></li>
+    <li><a href="#validation">Validation</a></li>
+    <li><a href="#user-story-testing">App (User Story) Testing</a></li>
+    <li><a href="#bugs-and-issues">Bugs and Issues</a></li>
 </details>
 <details>
 <summary><a href="#deployment-and-credits">SECTION 5: DEPLOYMENT AND CREDITS</a>
@@ -246,7 +241,7 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
 
 <p>Tasktopia is built using a modern technology stack that ensures scalability, security, and a responsive user experience.</p>
 
-<h2 id="languages-frameworks-libraries">Backend</h2>
+<h3 id="languages-frameworks-libraries">Backend</h3>
 <ul>
     <li>
     <img src="./accounts/static/registration/icons/python.png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> Python</a> - Core languge used in building the views/logic of the project.
@@ -259,7 +254,7 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
     </li>
 </ul>
 
-<h2 id="frontend">Frontend</h2>
+<h3 id="frontend">Frontend</h2>
 <ul>
     <li>
         <img src="./accounts/static/registration/icons/html.png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/HTML5"> HTML5</a> - Used for designing the structure of the project.
@@ -284,7 +279,7 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
     </li>
 </ul>
 
-<h2 id="database">Database</h2>
+<h3 id="database">Database</h3>
 <ul>
     <li>
         <img src="./accounts/static/registration/icons/postgresql.png" width="20px" align="top"><a href="https://en.wikipedia.org/wiki/JavaScript"> PostgreSQL</a> - pre-deployment test and production phase
@@ -294,21 +289,21 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
     </li>
 </ul>
 
-<h2 id="hosting">Hosting</h2>
+<h3 id="hosting">Hosting</h3>
 <ul>
     <li>
         <img src="./accounts/static/registration/icons/heroku.png" width="20px" align="top"><a href="https://heroku.com"> Heroku</a> - Used to deploy the project code.
     </li>
 </ul>
 
-<h2 id="version-control-and-agile-implementation">Version Control & Agile Implementation </h2>
+<h3 id="version-control-and-agile-implementation">Version Control & Agile Implementation </h3>
 <ul>
     <li>
         <img src="./accounts/static/registration/icons/github.png" width="20px" align="top"><a href="https://github.com/scientistigwe"> Github</a> - Used to store the project code.
     </li>
 </ul>
 
-<h2 id="wireframe-and-entity-relationship-diagram">Wireframe & Entity Relationship Diagram</h2>
+<h3 id="wireframe-and-entity-relationship-diagram">Wireframe & Entity Relationship Diagram</h3>
 <ul>
     <li>
         <img src="./accounts/static/registration/icons/balsamiq.png" width="20px" align="top"><a href="https://balsamiq.com/"> Balsamiq</a> - Used to create site wireframes.
@@ -318,7 +313,7 @@ You can view the deployed website [here](https://tasktopia-app-fbb446425a66.hero
     </li>
 </ul>
 
-<h2 id="code-quality-testing">Code Quality Testing</h2>
+<h3 id="code-quality-testing">Code Quality Testing</h3>
 <ul>
     <li>
         <img src="./accounts/static/registration/icons/html_formatter.png" width="20px" align="top"><a href="https://www.freeformatter.com/html-formatter.html"> Free Online HTML Formatter</a> - Used to correct indentation issues and get rid of excess whitespace.
@@ -349,10 +344,11 @@ Customer collaboration was prioritized and this ensured that the project remaine
 Adaptability was key allowing for iterative feedback and adjustments. This approach ensured that the project could evolve based on changing requirements.
 
 Delivering functional software was emphasized over comprehensive documentation. The project focused on delivering functional increments in each sprint, promoting early feedback and continuous improvement.
-Throughout the project, over **100** were made and (
+Throughout the project, over **150** were made and (
 [![GitHub issues](https://img.shields.io/github/issues-closed/scientistigwe/tasktopia?)](https://github.com/scientistigwe/tasktopia/issues) + [![GitHub issues](https://img.shields.io/github/issues/scientistigwe/tasktopia?)](https://github.com/scientistigwe/tasktopia/issues) ) GitHub issues, adapting to changing requirements and feedback iteratively.
 
 <div align="center">
+
 **Kanban Board of Tasktopia**
 
 <img src="./accounts/static/registration/images/tasktopia-kanban-board.png" width="100%" align="centre">
@@ -473,9 +469,10 @@ This section encompasses the various elements and functionalities aimed at enhan
 - **Delete Account:** Users have the option to delete their account if they no longer wish to use the service. This feature respects user autonomy and privacy, ensuring they have full control over their data.
 
 <div align="center">
+
 **Account CRUD**
 
-<img src="./accounts/static/registration/images/tasktopia-kanban-board.png" width="100%" align="centre">
+<img src="./accounts/static/registration/images/account-crud.png" width="100%" align="centre">
 </div>
 
 ### Task CRUD Operation
@@ -486,9 +483,10 @@ This section encompasses the various elements and functionalities aimed at enhan
 - **Delete Task:** Users can delete tasks that are no longer relevant, helping them keep their task list organized and clutter-free.
 
 <div align="center">
-**Task**
 
-<img src="./accounts/static/registration/images/homepage.png" width="100%" align="centre">
+**Task CRUD**
+
+<img src="./accounts/static/registration/images/task-crud.png" width="100%" align="centre">
 </div>
 
 ### Password Management
@@ -498,9 +496,10 @@ This section encompasses the various elements and functionalities aimed at enhan
 - **Password Strength Indicator:** When creating or changing passwords, a strength indicator shows how secure the entered password is, encouraging users to create strong, secure passwords.
 
 <div align="center">
+
 **Password Management**
 
-<img src="./accounts/static/registration/images/homepage.png" width="100%" align="centre">
+<img src="./accounts/static/registration/images/profile-page.png" width="100%" align="centre">
 </div>
 
 ### Dashboard Metrics and Insights
@@ -645,6 +644,7 @@ This section encompasses the various elements and functionalities aimed at enhan
   │   ├
   │   └
   ├── .gitignore
+  └── catch-error-500-index.html
   ├── manage.py
   ├── requirements.txt
   └── env.py
@@ -889,7 +889,7 @@ With a perfect SEO score, TaskTopia is well-optimized for search engines. This m
 
 <img src="./accounts/static/registration/images/lighthouse.png" width="100%" align="top" alt="lighthouse-audit">
 
-## App Testing
+## App (User Story) Testing
 
 ### Account app
 
