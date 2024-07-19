@@ -455,9 +455,11 @@ This section encompasses the various elements and functionalities aimed at enhan
 
 - **Introduction Section:** The homepage features an introductory section that explains the purpose and benefits of Tasktopia. This helps users quickly understand the value of the application and encourages them to explore further.
 - **User-Friendly Navigation:** The homepage includes a navigation bar with links to key sections such as Home, Login, and Sign Up. This design ensures that users can easily access different parts of the application, enhancing the overall user experience.
+
 - **Responsive Design:** The homepage is designed to be fully responsive, meaning it adjusts seamlessly to various screen sizes, from desktops to mobile devices. This ensures that users have a consistent and accessible experience regardless of the device they use.
 
 <div align="center">
+
 **Homepage**
 
 <img src="./accounts/static/registration/images/homepage.png" width="100%" align="centre">
@@ -574,7 +576,7 @@ This section encompasses the various elements and functionalities aimed at enhan
 
 ## Structure and Navigation
 
-- **File Organization**
+- **File Organization (High Level Overview)**
 
   - The files were structured into folders and clustered based on functionality. This approach ensures that related files are grouped together, making the project easier to navigate and maintain. The primary directories include:
 
@@ -595,49 +597,64 @@ This section encompasses the various elements and functionalities aimed at enhan
 
   ```plaintext
   Tasktopia/
-  ├── src/
-  │   ├── components/
-  │   │   ├── Header/
-  │   │   │   ├── Header.js
-  │   │   │   ├── Header.test.js
-  │   │   │   └── Header.css
-  │   │   ├── Footer/
-  │   │   │   ├── Footer.js
-  │   │   │   ├── Footer.test.js
-  │   │   │   └── Footer.css
-  │   ├── services/
-  │   │   ├── apiService.js
-  │   │   └── authService.js
+  ├── accounts/
+  │   ├── migrations/
+  │   │   ├───|__pycache__
+  │   │   │   └── __init__py
+  │   │   │
+  │   │   │
+  │   ├── static/registration
+  │   │   ├── css/registration.css
+  │   │   └── icons/<core folder for all icons>
+  │   │   ├── images/<core folder for all images used>
+  │   │   └── js/registration.js
+  │   │   └── wireframes
+  │   ├── templates
+  │   │   ├── partials/footer.html, header.html,sidebar.html
+  │   │   └── registration/base.html, accounts|tasks|dashboard-htmls
+  │   │   │
+  │   ├── __init__.py
+  │   ├── admin.py
+  │   ├── apps.py
+  │   ├── forms.py
+  │   ├── tests.py
+  │   ├── urls.py
+  │   ├── views.py
+  │   ├
+  ├── dashboard/
+  │   ├── <Similar file structure as accounts app>
+  │   ├
+  │   │
+  ├── tasks/
+  │   ├── <similar file structure as accounts app>
+  │   ├
+  ├── tasktopia/
   │   ├── utils/
-  │   │   ├── helpers.js
-  │   │   └── constants.js
-  ├── assets/
-  │   ├── images/
-  │   │   ├── logo-192x192.png
-  │   │   └── background-hero.jpg
-  │   ├── icons/
-  │   │   └── favicon.ico
-  ├── styles/
-  │   ├── main-styles.css
-  │   ├── variables.scss
-  ├── tests/
-  │   ├── unit/
-  │   │   └── example.test.js
-  │   ├── integration/
-  │   │   └── example.test.js
-  ├── docs/
-  │   ├── README.md
-  │   └── API_DOCUMENTATION.md
-  ├── public/
-  │   ├── index.html
-  │   └── manifest.json
+  │   │   └── utils.py
+  │   ├── __init__.py
+  │   ├── asgi.py
+  │   ├── error_views.py
+  │   ├── settings.py
+  │   ├── urls.py
+  │   ├── wsgi.py
+  │   │
+  ├── documentations/
+  │   ├
+  │   └
+  ├── tasktopia-venv/
+  │   ├
+  │   └
   ├── .gitignore
-  ├── package.json
-  ├── webpack.config.js
-  └── babel.config.json
+  ├── manage.py
+  ├── requirements.txt
+  └── env.py
+  └── Procfile
+  └── README.md
+
   ```
 
   - **Navigation**:
+
     - The project follows a component-based architecture, making it easy to locate and modify individual components.
     - Centralized configuration files ensure that build and deployment processes are streamlined and easily manageable.
     - Documentation is accessible within the `docs/` directory, providing detailed information on the project's setup, usage, and API.
@@ -674,25 +691,19 @@ This structure not only enhances maintainability and scalability but also ensure
 ### _Mobile View - Home Page_
 
 <p align="center">
-<img src="wireframe/mobile-home-page.png" width="400" height="1000">
+<img src="./accounts/static/registration/wireframes/mobile-wireframe.png" width="100%">
 </p>
 
 ### \_Mobile View - Task
 
 <p align="center">
-<img src="wireframe/mobile-home-page.png" width="400" height="1000">
+<img src="./accounts/static/registration/wireframes/mobile-task-wireframe.png" width="100%">
 </p>
 
 ### \_Mobile View - Dashboard
 
 <p align="center">
-<img src="wireframe/mobile-home-page.png" width="400" height="1000">
-</p>
-
-### \_Mobile View - Account Management
-
-<p align="center">
-<img src="wireframe/mobile-home-page.png" width="200px">
+<img src="./accounts/static/registration/wireframes/mobile-dashboard-wireframe.png" width="100%">
 </p>
 
 <h2 id="design-and-styling">Design and Styling</h2>
@@ -760,7 +771,7 @@ In this section, the functionalities of Tasktopia were thoroughly tested and val
 
 </div>
 
-**Test and Validation of Python code**
+**Testing and Validation of Python code**
 
 I utilized [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint) to analyze Python code for potential errors, style violations, and best practices.
 
@@ -802,7 +813,7 @@ The following screenshots display the results of running Pylint on the `views.py
 
 <br>
 
-**Test and Validation of JavaScript code**
+**Testing and Validation of JavaScript code**
 
 To ensure the quality and adherence to coding standards of my JavaScript code, I used `jshint`. This tool helps detect errors and potential problems in the JavaScript codebase.
 
@@ -820,13 +831,61 @@ For validation, I checked Tasktopia's codebase against industry standards and sp
 
 I validated my HTML and CSS using W3C validation tools to ensure that the web pages adhere to web standards, which helps in maintaining compatibility and accessibility across different browsers and devices.
 
+# HTML Validation
+
+To ensure the highest quality and adherence to web standards, I used the W3C Markup Validation Service to validate the HTML of various pages in Tasktopia. This process helps identify any coding errors, deprecated tags, or potential issues that could affect the functionality and accessibility of the web application.
+
+**Homepage**
+
+The homepage is the first impression users get of Tasktopia. Ensuring that the HTML is error-free and well-structured is crucial for a seamless user experience. The W3C validation for the homepage confirmed that all elements, from headers to footers, are properly nested and compliant with HTML5 standards.
+
+<img src="./accounts/static/registration/images/home-html.png" width="100%" align="top" alt="w3c-homepage-html">
+
+**Tasks page**
+
+The tasks page is central to the functionality of Tasktopia, allowing users to manage their tasks efficiently. Validation of this page's HTML ensures that all interactive elements, forms, and buttons are correctly implemented, enhancing user interaction and accessibility.
+
+<img src="./accounts/static/registration/images/task-html.png" width="100%" align="top" alt="w3c-taskpage-html">
+
+**Analytics & Insights page**
+
+The analytics and insights page provides users with valuable data visualizations and insights into their productivity. Validating the HTML of this page is essential to ensure that all charts, graphs, and data tables render correctly across different browsers, providing a consistent user experience.
+
+<img src="./accounts/static/registration/images/analytics-and-insights-html.png" width="100%" align="top" alt="w3c-dashboard-html">
+
+# CSS Validation
+
+CSS validation was performed using the W3C CSS Validation Service to ensure that the stylesheets used in Tasktopia are free from errors and adhere to the latest CSS standards. Proper CSS validation helps in maintaining consistent styling across different devices and browsers, enhancing the overall aesthetic and usability of the web application.
+
+Validating CSS involves checking for syntax errors, ensuring the use of valid properties and values, and confirming that there are no issues that could lead to rendering problems. This process helps in delivering a visually appealing and user-friendly interface.
+
 <img src="./accounts/static/registration/images/css.png" width="100%" align="top" alt="w3c-css">
 
 <br>
 
-**Lighthouse Audit:**
+**Lighthouse Testing Results for TaskTopia**
 
-I conducted Lighthouse audits to assess Tasktopia's performance, accessibility, best practices, and SEO. Lighthouse provides valuable insights and recommendations for improving web applications.
+Overview:
+I conducted Lighthouse audits to assess Tasktopia's performance, accessibility, best practices, and SEO. Lighthouse is an open-source, automated tool for improving the quality of web pages. It audits performance, accessibility, best practices, and SEO of web applications. The Lighthouse testing results for TaskTopia demonstrate its high standards in these areas, ensuring a fast, accessible, and user-friendly experience.
+
+Results Summary:
+
+- Performance: 99
+
+TaskTopia delivers an almost perfect performance score. This high score indicates that the application loads quickly and efficiently, providing users with a seamless experience. Optimizations such as efficient resource loading, minimized render-blocking resources, and optimal image sizes contribute to this score.
+
+- Accessibility: 99
+
+Accessibility is crucial for making web applications usable by people with diverse abilities. TaskTopia achieves a near-perfect accessibility score, ensuring that all users, including those with disabilities, can effectively navigate and interact with the application. Features such as proper ARIA roles, keyboard navigation, and text contrast contribute to this high score.
+Best Practices: 100
+
+TaskTopia adheres to all recommended best practices, earning a perfect score in this category. This includes following modern web standards, ensuring secure connections, and avoiding deprecated APIs. Such adherence not only improves the application's stability and security but also enhances the overall user experience.
+SEO: 100
+
+With a perfect SEO score, TaskTopia is well-optimized for search engines. This means that the application is easily discoverable, with well-structured data, mobile-friendly design, and fast load times. Effective SEO practices ensure that TaskTopia reaches a wider audience and ranks higher in search engine results.
+
+- Conclusion:
+  The Lighthouse testing results affirm TaskTopia's commitment to delivering a high-quality web application. By excelling in performance, accessibility, best practices, and SEO, TaskTopia provides a fast, inclusive, and reliable experience for all users, meeting modern web standards and ensuring broad discoverability.
 
 <img src="./accounts/static/registration/images/lighthouse.png" width="100%" align="top" alt="lighthouse-audit">
 
@@ -834,7 +893,7 @@ I conducted Lighthouse audits to assess Tasktopia's performance, accessibility, 
 
 ### Account app
 
-For the Account app, I implemented various tests to ensure its functionality and reliability. Unit tests were created to test individual functions and methods, while integration tests were used to ensure that different parts of the app worked together seamlessly. I also performed end-to-end tests to simulate real user interactions and verify that the app behaves as expected in a production-like environment.
+For the Account app, I implemented various tests to ensure its functionality and reliability. Unit tests were created to test individual functions and methods, while integration tests were used to ensure that different parts of the app worked together seamlessly. I also performed end-to-end tests to simulate real user interactions and verify that the app behaves as expected in a production-like environment. I utilised testcase and client module from django.test modules.
 
 ### Task app
 
@@ -980,7 +1039,7 @@ Deploying Tasktopia to Heroku was a straightforward and efficient process. Here�
    - Logged into Heroku using the CLI: `heroku login`
    - Created a new Heroku app: `heroku create`
    - Pushed the code to Heroku: `git push heroku main`
-   - Configured environment variables via the Heroku dashboard or CLI.
+   - Configured environment variables via the Heroku dashboard (and occasionally CLI).
 
 5. **Monitor and Manage:**
    - Used the Heroku dashboard to monitor the application’s performance and logs.
@@ -1003,21 +1062,14 @@ Deploying Tasktopia to Heroku was a straightforward and efficient process. Here�
 <!-- ACKNOWLEDGMENTS -->
 <h2 id="acknowledgments">Acknowledgments</h2>
 
-I would like to extend my gratitude to the following resources that contributed significantly to the success of this project:
-
-- [Choose an Open Source License](https://choosealicense.com)
-- [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-- [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-- [Malven's Grid Cheatsheet](https://grid.malven.co/)
-- [GitHub](https://pages.github.com)
-- [Font Awesome](https://fontawesome.com)
+I would like to extend my gratitude to CodeInstitute for empowering me to do this project.
 
 <!-- CONTACT -->
 <h2 id="contact">Contact</h2>
 
 If you have any questions or feedback, feel free to reach out:
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+[Github Link](https://github.com/scientistigwe)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 </section>

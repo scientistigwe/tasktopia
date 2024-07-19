@@ -2,32 +2,32 @@
 <div class="container-fluid">
     <nav id="sidebarMenu" class="col-md-12 d-md-block sidebar">
         <div class="position-sticky pt-3">
-            <ul class="nav flex-column navigation-item row d-flex justify-content-between">
+            <ul class="nav flex-column navigation-item row">
                 {% csrf_token %}
                 {% if user.is_authenticated %}
-                <li class="nav-item col-sm-2">
+                <li class="nav-item col-4 col-sm-4 col-md-2 mb-2">
                     <a class="nav-link active" aria-current="page" href="{% url 'task_list' %}">Tasks</a>
                 </li>
-                <li class="nav-item col-sm-2">
+                <li class="nav-item col-4 col-sm-4 col-md-2 mb-2">
                     <a class="nav-link disabled" aria-current="page" href="#">Reports</a>
                 </li>
-                <li class="nav-item col-sm-2">
+                <li class="nav-item col-4 col-sm-4 col-md-2 mb-2">
                     <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                 </li>
-                <li class="nav-item col-sm-2">
+                <li class="nav-item col-4 col-sm-4 col-md-2 mb-2">
                     <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">Profile</a>
                 </li>
-                <li class="nav-item col-sm-4">
+                <li class="nav-item col-8 col-sm-6 col-md-4 mb-2">
                     <a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">Analytics & Insights</a>
                 </li>
                 {% else %}
-                <li class="nav-item col-sm-3">
+                <li class="nav-item col-3 col-sm-4 mb-2">
                     <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                 </li>
-                <li class="nav-item col-sm-3">
+                <li class="nav-item col-3 col-sm-4 mb-2">
                     <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
                 </li>
-                <li class="nav-item col-sm-6">
+                <li class="nav-item col-6 col-sm-6 mb-2">
                     <a class="nav-link active" aria-current="page" href="{% url 'signup' %}">Sign Up</a>
                 </li>
                 {% endif %}
@@ -35,4 +35,5 @@
         </div>
     </nav>
 </div>
+
 <!-- End: Sidebar -->

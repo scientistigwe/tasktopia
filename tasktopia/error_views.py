@@ -13,7 +13,7 @@ def handler500(request):
     logger.error(f"accounts/templates/registration contents: {os.listdir(os.path.join(settings.BASE_DIR, 'accounts', 'templates', 'registration'))}")
     
     try:
-        return render(request, 'registration/500.html', status=500)
+        return render(request, 'registration/catch-error-500-index.html', status=500)
     except Exception as e:
         logger.error(f"Error rendering 500.html: {str(e)}")
         return HttpResponse("500 Internal Server Error", status=500)
